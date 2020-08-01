@@ -10,6 +10,14 @@ import androidx.appcompat.app.AppCompatActivity
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        setTheme(R.style.AppTheme_NoActionBar)
+        try {
+            Thread.sleep(300)
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+
         setContentView(R.layout.activity_main);
 
         val cookieManager = CookieManager.getInstance()
