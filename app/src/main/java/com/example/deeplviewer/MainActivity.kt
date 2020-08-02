@@ -2,6 +2,7 @@ package com.example.deeplviewer
 
 import android.os.Bundle
 import android.view.WindowManager
+import android.view.animation.AlphaAnimation
 import android.webkit.CookieManager
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -30,6 +31,9 @@ class MainActivity : AppCompatActivity() {
                         "\$('footer').hide();" +
                         "\$('a').css('pointer-events','none');" +
                         "")
+                val animation = AlphaAnimation(0.0F, 1.0F)
+                animation.duration = 200
+                webView.startAnimation(animation)
                 webView.alpha = 1.0F
                 window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
             }
