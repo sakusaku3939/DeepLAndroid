@@ -1,6 +1,7 @@
 package com.example.deeplviewer
 
 import android.os.Bundle
+import android.view.WindowManager
 import android.webkit.CookieManager
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -10,14 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        setTheme(R.style.AppTheme_NoActionBar)
-        try {
-            Thread.sleep(300)
-        } catch (e: InterruptedException) {
-            e.printStackTrace()
-        }
-
+        window.addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
         setContentView(R.layout.activity_main);
 
         val cookieManager = CookieManager.getInstance()
@@ -36,6 +30,8 @@ class MainActivity : AppCompatActivity() {
                         "\$('footer').hide();" +
                         "\$('a').css('pointer-events','none');" +
                         "")
+                webView.alpha = 1.0F
+                window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
             }
         }
         webView.webViewClient = webViewClient
