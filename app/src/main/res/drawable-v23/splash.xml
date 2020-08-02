@@ -6,7 +6,9 @@
 
     <item android:drawable="@color/splashBackground" />
 
-    <item android:drawable="@drawable/deepl_logo"
+    <item android:width="220dp"
+        android:height="75dp"
+        android:drawable="@drawable/deepl_logo"
         android:gravity="center"/>
 
 </layer-list>
