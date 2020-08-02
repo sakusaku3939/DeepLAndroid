@@ -1,5 +1,6 @@
 package com.example.deeplviewer
 
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.WindowManager
 import android.view.animation.AlphaAnimation
@@ -12,8 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main)
 
         val cookieManager = CookieManager.getInstance()
         cookieManager.setCookie("https://www.deepl.com/translator"
@@ -31,11 +31,7 @@ class MainActivity : AppCompatActivity() {
                         "\$('footer').hide();" +
                         "\$('a').css('pointer-events','none');" +
                         "")
-                val animation = AlphaAnimation(0.0F, 1.0F)
-                animation.duration = 200
-                webView.startAnimation(animation)
                 webView.alpha = 1.0F
-                window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
             }
         }
         webView.webViewClient = webViewClient
