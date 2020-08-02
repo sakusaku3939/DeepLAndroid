@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">DeepL翻訳</string>
+    <string name="copy_clipboard">テキストをコピーしました</string>
+</resources>

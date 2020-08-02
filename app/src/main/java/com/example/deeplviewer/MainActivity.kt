@@ -57,9 +57,10 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-class WebAppInterface(private val mContext: Context) {
+class WebAppInterface(private val context: Context) {
     @JavascriptInterface
     fun copyClipboard() {
-        Toast.makeText(mContext, "Text has been Copied", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, context.getString(R.string.copy_clipboard), Toast.LENGTH_SHORT)
+            .show()
     }
 }

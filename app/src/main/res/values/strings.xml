@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">DeepLViewer</string>
+    <string name="app_name">DeepL</string>
+    <string name="copy_clipboard">Text has been Copied</string>
 </resources>
