@@ -1,9 +1,6 @@
 package com.example.deeplviewer
 
-import android.graphics.Bitmap
 import android.os.Bundle
-import android.view.WindowManager
-import android.view.animation.AlphaAnimation
 import android.webkit.CookieManager
 import android.webkit.WebView
 import android.webkit.WebViewClient
