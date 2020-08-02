@@ -1,5 +1,7 @@
 package com.example.deeplviewer
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.webkit.CookieManager
 import android.webkit.WebView
@@ -21,6 +23,11 @@ class MainActivity : AppCompatActivity() {
 
         val webView: WebView = findViewById(R.id.webview)
         val webViewClient = object : WebViewClient() {
+            override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                startActivity(intent)
+                return true
+            }
             override fun onPageFinished(view: WebView, url: String) {
                 view.loadUrl("javascript:" +
                         "\$('#dl_translator').siblings().hide();" +
