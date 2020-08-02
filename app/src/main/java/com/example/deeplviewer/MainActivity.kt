@@ -1,16 +1,20 @@
 package com.example.deeplviewer
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.webkit.CookieManager
+import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 
 class MainActivity : AppCompatActivity() {
+    @SuppressLint("AddJavascriptInterface")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -39,7 +43,8 @@ class MainActivity : AppCompatActivity() {
                             "\$('#dl_translator').siblings().hide();" +
                             "\$('.dl_header_menu_v2__buttons__menu').hide();" +
                             "\$('footer').hide();" +
-                            "\$('a').css('pointer-events','none');"
+                            "\$('a').css('pointer-events','none');" +
+                            "\$('.lmt__translations_as_text__copy_button').on('click',function(){Android.copyClipboard()});"
                 )
                 webView.alpha = 1.0F
             }
@@ -47,6 +52,14 @@ class MainActivity : AppCompatActivity() {
         @SuppressLint("SetJavaScriptEnabled")
         webView.settings.javaScriptEnabled = true
         webView.webViewClient = webViewClient
+        webView.addJavascriptInterface(WebAppInterface(this), "Android")
         webView.loadUrl("https://www.deepl.com/translator")
+    }
+}
+
+class WebAppInterface(private val mContext: Context) {
+    @JavascriptInterface
+    fun copyClipboard() {
+        Toast.makeText(mContext, "Text has been Copied", Toast.LENGTH_SHORT).show()
     }
 }
