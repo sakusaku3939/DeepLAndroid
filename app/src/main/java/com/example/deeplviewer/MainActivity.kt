@@ -1,6 +1,8 @@
 package com.example.deeplviewer
 
 import android.annotation.SuppressLint
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -44,7 +46,10 @@ class MainActivity : AppCompatActivity() {
                             "\$('.dl_header_menu_v2__buttons__menu').hide();" +
                             "\$('footer').hide();" +
                             "\$('a').css('pointer-events','none');" +
-                            "\$('.lmt__translations_as_text__copy_button').on('click',function(){Android.copyClipboard()});"
+                            "\$('.lmt__translations_as_text__copy_button').on('click',function(){" +
+                            "const text = \$('.lmt__translations_as_text__text_btn').text();" +
+                            "Android.copyClipboard(text);" +
+                            "});"
                 )
                 webView.alpha = 1.0F
             }
@@ -59,8 +64,10 @@ class MainActivity : AppCompatActivity() {
 
 class WebAppInterface(private val context: Context) {
     @JavascriptInterface
-    fun copyClipboard() {
-        Toast.makeText(context, context.getString(R.string.copy_clipboard), Toast.LENGTH_SHORT)
-            .show()
+    fun copyClipboard(text: String) {
+        val clipboard: ClipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip: ClipData = ClipData.newPlainText("translation_text", text)
+        clipboard.setPrimaryClip(clip)
+        Toast.makeText(context, context.getString(R.string.copy_clipboard), Toast.LENGTH_SHORT).show()
     }
 }
