@@ -7,11 +7,10 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import android.view.animation.AlphaAnimation
-import android.webkit.CookieManager
-import android.webkit.JavascriptInterface
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.webkit.*
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
@@ -66,6 +65,27 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 webView.alpha = 1.0F
+            }
+
+            override fun onReceivedError(
+                view: WebView?,
+                request: WebResourceRequest,
+                error: WebResourceError?
+            ) {
+                setContentView(R.layout.network_err)
+                val button: ImageButton = findViewById(R.id.reload)
+                val listener = ReloadButtonListener()
+                button.setOnClickListener(listener)
+            }
+
+            private inner class ReloadButtonListener : View.OnClickListener {
+                override fun onClick(view: View) {
+                    val i = Intent(this@MainActivity, MainActivity::class.java)
+                    finish()
+                    overridePendingTransition(0, 0)
+                    startActivity(i)
+                    overridePendingTransition(0, 0)
+                }
             }
         }
         @SuppressLint("SetJavaScriptEnabled")
