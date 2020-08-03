@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.animation.AlphaAnimation
 import android.webkit.CookieManager
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
@@ -32,6 +33,7 @@ class MainActivity : AppCompatActivity() {
 
         val webView: WebView = findViewById(R.id.webview)
         val webViewClient = object : WebViewClient() {
+            var isSplashFadeDone = false
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
                 startActivity(intent)
@@ -54,6 +56,14 @@ class MainActivity : AppCompatActivity() {
                             "const text = \$('.lmt__translations_as_text__text_btn').eq(0).text();" +
                             "Android.copyClipboard(text);});"
                 )
+
+                if (!isSplashFadeDone) {
+                    isSplashFadeDone = true
+                    val animation = AlphaAnimation(0.0F, 1.0F)
+                    animation.duration = 100
+                    webView.startAnimation(animation)
+                }
+
                 webView.alpha = 1.0F
             }
         }
