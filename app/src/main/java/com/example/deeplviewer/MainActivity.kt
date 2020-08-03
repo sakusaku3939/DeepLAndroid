@@ -48,6 +48,7 @@ class MainActivity : AppCompatActivity() {
                             "\$('.dl_header_menu_v2__buttons__menu').hide();" +
                             "\$('.dl_header_menu_v2__buttons__item').hide();" +
                             "\$('.dl_header_menu_v2__links__item').hide();" +
+                            "\$('.lmt__language_container_sec').hide();" +
                             "\$('.docTrans_translator_upload_button__inner_button').hide();" +
                             "\$('.lmt__target_toolbar__save').hide();" +
                             "\$('footer').hide();" +
