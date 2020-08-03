@@ -44,12 +44,15 @@ class MainActivity : AppCompatActivity() {
                             "\$('button').css('-webkit-tap-highlight-color','rgba(0, 0, 0, 0)');" +
                             "\$('#dl_translator').siblings().hide();" +
                             "\$('.dl_header_menu_v2__buttons__menu').hide();" +
+                            "\$('.dl_header_menu_v2__buttons__item').hide();" +
+                            "\$('.dl_header_menu_v2__links__item').hide();" +
+                            "\$('.docTrans_translator_upload_button__inner_button').hide();" +
+                            "\$('.lmt__target_toolbar__save').hide();" +
                             "\$('footer').hide();" +
                             "\$('a').css('pointer-events','none');" +
-                            "\$('.lmt__translations_as_text__copy_button').on('click',function(){" +
-                            "const text = \$('.lmt__translations_as_text__text_btn').text();" +
-                            "Android.copyClipboard(text);" +
-                            "});"
+                            "\$('.lmt__translations_as_text__copy_button, .lmt__target_toolbar__copy').on('click',function(){" +
+                            "const text = \$('.lmt__translations_as_text__text_btn').eq(0).text();" +
+                            "Android.copyClipboard(text);});"
                 )
                 webView.alpha = 1.0F
             }
