@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         val cookieManager = CookieManager.getInstance()
         cookieManager.setCookie(
             "https://www.deepl.com/translator",
-            "privacySettings=%7B%22v%22%3A%221%22%2C%22t%22%3A1596240000%2C%22consent%22%3A%5B%22NECESSARY%22%2C%22PERFORMANCE%22%2C%22COMFORT%22%5D%7D;" +
+            "privacySettings=%7B%22v%22%3A%221%22%2C%22t%22%3A1598745600%2C%22m%22%3A%22LAX%22%2C%22consent%22%3A%5B%22NECESSARY%22%2C%22PERFORMANCE%22%2C%22COMFORT%22%5D%7D;" +
                     "domain=.deepl.com;" +
                     "path=/;" +
                     "max-age=31536000;"
