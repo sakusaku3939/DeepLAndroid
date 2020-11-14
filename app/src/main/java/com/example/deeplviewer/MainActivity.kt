@@ -21,6 +21,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val floatingText =
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                "#en/en/" + (intent.getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT)?.toString()
+                    ?: "")
+            } else ""
+
         val cookieManager = CookieManager.getInstance()
         cookieManager.setCookie(
             "https://www.deepl.com/translator",
@@ -92,7 +98,7 @@ class MainActivity : AppCompatActivity() {
         webView.settings.javaScriptEnabled = true
         webView.webViewClient = webViewClient
         webView.addJavascriptInterface(WebAppInterface(this), "Android")
-        webView.loadUrl("https://www.deepl.com/translator")
+        webView.loadUrl("https://www.deepl.com/translator$floatingText")
     }
 }
 
