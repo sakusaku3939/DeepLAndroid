@@ -27,15 +27,6 @@ class MainActivity : AppCompatActivity() {
                     ?: "")
             } else ""
 
-        val cookieManager = CookieManager.getInstance()
-        cookieManager.setCookie(
-            "https://www.deepl.com/translator",
-            "privacySettings=%7B%22v%22%3A%221%22%2C%22t%22%3A1598745600%2C%22m%22%3A%22LAX%22%2C%22consent%22%3A%5B%22NECESSARY%22%2C%22PERFORMANCE%22%2C%22COMFORT%22%5D%7D;" +
-                    "domain=.deepl.com;" +
-                    "path=/;" +
-                    "max-age=31536000;"
-        )
-
         val webView: WebView = findViewById(R.id.webview)
         val webViewClient = object : WebViewClient() {
             var isSplashFadeDone = false
@@ -53,6 +44,9 @@ class MainActivity : AppCompatActivity() {
                             "\$('.dl_header_menu_v2__buttons__menu').hide();" +
                             "\$('.dl_header_menu_v2__buttons__item').hide();" +
                             "\$('.dl_header_menu_v2__links__item').hide();" +
+                            "\$('.dl_header_menu_v2__separator').hide();" +
+                            "\$('.lmt__bottom_text--mobile').hide();" +
+                            "\$('#dl_cookieBanner').hide();" +
                             "\$('.lmt__language_container_sec').hide();" +
                             "\$('.docTrans_translator_upload_button__inner_button').hide();" +
                             "\$('.lmt__target_toolbar__save').hide();" +
