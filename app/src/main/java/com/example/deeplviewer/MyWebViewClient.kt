@@ -24,22 +24,25 @@ class MyWebViewClient(
     override fun onPageFinished(view: WebView, url: String) {
         view.loadUrl(
             "javascript:" +
-                    "\$('button').css('-webkit-tap-highlight-color','rgba(0, 0, 0, 0)');" +
-                    "\$('#dl_translator').siblings().hide();" +
-                    "\$('.dl_header_menu_v2__buttons__menu').hide();" +
-                    "\$('.dl_header_menu_v2__buttons__item').hide();" +
-                    "\$('.dl_header_menu_v2__links__item').hide();" +
-                    "\$('.dl_header_menu_v2__separator').hide();" +
-                    "\$('.lmt__bottom_text--mobile').hide();" +
-                    "\$('#dl_cookieBanner').hide();" +
-                    "\$('.lmt__language_container_sec').hide();" +
-                    "\$('.docTrans_translator_upload_button__inner_button').hide();" +
-                    "\$('.lmt__target_toolbar__save').hide();" +
-                    "\$('footer').hide();" +
-                    "\$('a').css('pointer-events','none');" +
-                    "\$('.lmt__translations_as_text__copy_button, .lmt__target_toolbar__copy').on('click',function(){" +
-                    "const text = \$('.lmt__translations_as_text__text_btn').eq(0).text();" +
-                    "Android.copyClipboard(text);});"
+                    """
+                        $('button').css('-webkit-tap-highlight-color','rgba(0, 0, 0, 0)');
+                        $('#dl_translator').siblings().hide();
+                        $('.dl_header_menu_v2__buttons__menu').hide();
+                        $('.dl_header_menu_v2__buttons__item').hide();
+                        $('.dl_header_menu_v2__links__item').hide();
+                        $('.dl_header_menu_v2__separator').hide();
+                        $('.lmt__bottom_text--mobile').hide();
+                        $('#dl_cookieBanner').hide();
+                        $('.lmt__language_container_sec').hide();
+                        $('.docTrans_translator_upload_button__inner_button').hide();
+                        $('.lmt__target_toolbar__save').hide();
+                        $('footer').hide();
+                        $('a').css('pointer-events','none');
+                        $('.lmt__translations_as_text__copy_button, .lmt__target_toolbar__copy').on('click',function() {
+                            const text = $('.lmt__translations_as_text__text_btn').eq(0).text();
+                            Android.copyClipboard(text);
+                        });
+                    """
         )
 
         if (!isSplashFadeDone) {
