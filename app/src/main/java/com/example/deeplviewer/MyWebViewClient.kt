@@ -38,6 +38,7 @@ class MyWebViewClient(
                         $('.lmt__target_toolbar__save').hide();
                         $('footer').hide();
                         $('a').css('pointer-events','none');
+                        $('.lmt__sides_container').css('margin-bottom','32px');
                         $('.lmt__translations_as_text__copy_button, .lmt__target_toolbar__copy').on('click',function() {
                             const text = $('.lmt__translations_as_text__text_btn').eq(0).text();
                             Android.copyClipboard(text);
