@@ -15,6 +15,10 @@ class MyWebViewClient(
     private val webView: WebView
 ) : WebViewClient() {
     private var isSplashFadeDone: Boolean = false
+    private var param: String = ""
+
+    val urlParam: String get() = param
+
     override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         activity.startActivity(intent)
@@ -52,8 +56,9 @@ class MyWebViewClient(
             animation.duration = 100
             webView.startAnimation(animation)
         }
-
         webView.alpha = 1.0F
+
+        Regex("""#(.+?)/(.+?)/""").find(webView.url)?.let { param = it.value }
     }
 
     override fun onReceivedError(
