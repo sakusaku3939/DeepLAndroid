@@ -1,4 +1,4 @@
-### [EN](https://github.com/sakusaku3939/DeepLAndroid#readme) | [JA](https://github.com/sakusaku3939/DeepLAndroid/blob/master/README_JA.md)
+###  [JA](https://github.com/sakusaku3939/DeepLAndroid/blob/master/README_JA.md) | [EN](https://github.com/sakusaku3939/DeepLAndroid#readme)
 # DeepL Android
 ![platform](https://img.shields.io/badge/platform-android-green) ![release](https://img.shields.io/github/v/release/sakusaku3939/DeepLAndroid.svg) ![license](https://img.shields.io/github/license/sakusaku3939/DeepLAndroid)  
 
