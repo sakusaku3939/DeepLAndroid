@@ -1,10 +1,19 @@
-# DeepLAndroid
-DeepL翻訳の非公式Androidアプリです。  
-AndroidのGUIコンポーネントの「WebView」といわれる技術を使用してDeepL翻訳をネイティブアプリ風にしてみました。  
-JavaScriptを使用して必要な要素以外は隠しています。アプリの言語は英語・日本語の二ヶ国語に対応しています。  
+# DeepL Android
+![platform](https://img.shields.io/badge/platform-android-green) ![release](https://img.shields.io/github/v/release/sakusaku3939/DeepLAndroid.svg) ![license](https://img.shields.io/github/license/sakusaku3939/DeepLAndroid)  
 
 This is an unofficial Android app for DeepL translation.  
-I used a technology called WebView, an Android GUI component, to make it look like a native app.  
-I used JavaScript to hide all but the necessary elements. The app is bilingual in English and Japanese.
+It uses a technology called WebView, an Android GUI component, to make it look like a native app.  
+JavaScript is used to hide all but the most necessary elements.  
 
-![2020-08-05](https://user-images.githubusercontent.com/53967490/89320092-fe2fdf00-d6bb-11ea-97d6-84fd66f73395.png)
+![image](https://user-images.githubusercontent.com/53967490/89320092-fe2fdf00-d6bb-11ea-97d6-84fd66f73395.png)
+
+## Features
+- Display only the translation screen by WebView
+- Copy or share translation results
+- Launch DeepL from floating text selection action
+
+## Notes
+This project has been translated using DeepL. If there are any mistranslations, please feel free to send a pull request!
+
+## Licence
+[MIT](https://github.com/tdu-isl/cuckoo-vm/blob/develop/LICENSE)
