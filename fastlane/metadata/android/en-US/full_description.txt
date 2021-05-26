@@ -1,0 +1,7 @@
+This is an unofficial Android app for DeepL translation. It uses a technology called WebView, an Android GUI component, to make it look like a native app. JavaScript is used to hide all but the most necessary elements.
+
+<b>Features:</b>
+
+* Display only the translation screen by WebView
+* Copy or share translation results
+* Launch DeepL from floating text selection action
