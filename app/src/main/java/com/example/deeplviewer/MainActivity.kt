@@ -3,9 +3,11 @@ package com.example.deeplviewer
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.webkit.WebView
 import androidx.appcompat.app.AppCompatActivity
+import java.net.URLEncoder
 
 class MainActivity : AppCompatActivity() {
     lateinit var webViewClient: MyWebViewClient
@@ -36,7 +38,9 @@ class MainActivity : AppCompatActivity() {
         webView.settings.javaScriptEnabled = true
         webView.webViewClient = webViewClient
         webView.addJavascriptInterface(WebAppInterface(this), "Android")
-        webView.loadUrl("https://www.deepl.com/translator$urlParam$floatingText")
+        webView.loadUrl(
+            "https://www.deepl.com/translator$urlParam${Uri.encode(floatingText)}"
+        )
     }
 
     override fun onPause() {
