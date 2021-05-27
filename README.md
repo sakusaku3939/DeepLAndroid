@@ -17,4 +17,4 @@ JavaScript is used to hide all but the most necessary elements.
 This project has been translated using DeepL. If there are any mistranslations, please feel free to send a pull request!
 
 ## Licence
-[MIT](https://github.com/tdu-isl/cuckoo-vm/blob/develop/LICENSE)
+[MIT](https://github.com/sakusaku3939/DeepLAndroid/blob/master/LICENSE)
