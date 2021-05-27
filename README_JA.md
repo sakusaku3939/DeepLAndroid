@@ -17,4 +17,4 @@ AndroidのGUIコンポーネントの「WebView」といわれる技術を使用
 このプロジェクトはDeepLを利用して翻訳されています。もし誤訳等がありましたら、お気軽にプルリクエストを送ってください！
 
 ## Licence
-[MIT](https://github.com/tdu-isl/cuckoo-vm/blob/develop/LICENSE)
+[MIT](https://github.com/sakusaku3939/DeepLAndroid/blob/master/LICENSE)
