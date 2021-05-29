@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">DeepL</string>
+    <string name="image">Изображение</string>
+    <string name="copy_clipboard">Текст скопирован в буфер обмена</string>
+    <string name="network_err">Не удалось подключиться к серверам DeepL</string>
+</resources>
