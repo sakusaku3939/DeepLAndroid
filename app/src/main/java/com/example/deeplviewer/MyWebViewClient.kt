@@ -33,7 +33,7 @@ class MyWebViewClient(
                         $('#dl_translator').siblings().hide();
                         $('.dl_header_menu_v2__buttons__menu').hide();
                         $('.dl_header_menu_v2__buttons__item').hide();
-                        $('.dl_header_menu_v2__links__item').hide();
+                        $('.dl_header_menu_v2__links').children().not('#dl_menu_translator_simplified').hide();
                         $('.dl_header_menu_v2__separator').hide();
                         $('.lmt__bottom_text--mobile').hide();
                         $('#dl_cookieBanner').hide();
