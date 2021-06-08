@@ -73,6 +73,11 @@ class MyWebViewClient(
             val button: ImageButton = activity.findViewById(R.id.reload)
             val listener = ReloadButtonListener()
             button.setOnClickListener(listener)
+
+            val errorDescription =
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) error?.description.toString() else ""
+            Toast.makeText(activity, errorDescription, Toast.LENGTH_LONG).show()
+            Log.e("onReceivedError", errorDescription)
         }
     }
 
