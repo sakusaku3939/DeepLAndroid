@@ -2,6 +2,10 @@
 # DeepL Android
 ![platform](https://img.shields.io/badge/platform-android-green) ![release](https://img.shields.io/github/v/release/sakusaku3939/DeepLAndroid.svg) ![license](https://img.shields.io/github/license/sakusaku3939/DeepLAndroid)  
 
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
+    alt="Get it on F-Droid"
+    height="80">](https://f-droid.org/packages/com.example.deeplviewer)
+
 This is an unofficial Android app for DeepL translation.  
 It uses a technology called WebView, an Android GUI component, to make it look like a native app.  
 JavaScript is used to hide all but the most necessary elements.  
