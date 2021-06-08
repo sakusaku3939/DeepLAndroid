@@ -58,7 +58,7 @@ class MyWebViewClient(
         }
         webView.alpha = 1.0F
 
-        Regex("""#(.+?)/(.+?)/""").find(webView.url)?.let { param = it.value }
+        Regex("""#(.+?)/(.+?)/""").find(webView.url ?: "")?.let { param = it.value }
     }
 
     override fun onReceivedError(
