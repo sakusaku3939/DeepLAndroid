@@ -2,6 +2,7 @@ package com.example.deeplviewer
 
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.webkit.WebResourceError
@@ -9,6 +10,7 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.ImageButton
+import android.widget.Toast
 
 class MyWebViewClient(
     private val activity: MainActivity,
@@ -66,10 +68,12 @@ class MyWebViewClient(
         request: WebResourceRequest,
         error: WebResourceError?
     ) {
-        activity.setContentView(R.layout.network_err)
-        val button: ImageButton = activity.findViewById(R.id.reload)
-        val listener = ReloadButtonListener()
-        button.setOnClickListener(listener)
+        if (request.isForMainFrame) {
+            activity.setContentView(R.layout.network_err)
+            val button: ImageButton = activity.findViewById(R.id.reload)
+            val listener = ReloadButtonListener()
+            button.setOnClickListener(listener)
+        }
     }
 
     private inner class ReloadButtonListener : View.OnClickListener {
