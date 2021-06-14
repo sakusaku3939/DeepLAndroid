@@ -17,7 +17,7 @@ class MyWebViewClient(
     private val webView: WebView
 ) : WebViewClient() {
     private var isSplashFadeDone: Boolean = false
-    private var param: String = ""
+    private var param: String = "#en/en/"
 
     val urlParam: String get() = param
 
