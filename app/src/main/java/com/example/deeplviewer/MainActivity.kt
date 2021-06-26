@@ -7,7 +7,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.webkit.WebView
 import androidx.appcompat.app.AppCompatActivity
-import java.net.URLEncoder
 
 class MainActivity : AppCompatActivity() {
     lateinit var webViewClient: MyWebViewClient
@@ -25,7 +24,10 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("SetJavaScriptEnabled", "AddJavascriptInterface")
     private fun createWebView(intent: Intent?) {
-        val floatingText = intent?.getStringExtra("FLOATING_TEXT") ?: ""
+        val floatingText = intent?.getStringExtra("FLOATING_TEXT")
+        val shareText = intent?.getStringExtra(Intent.EXTRA_TEXT)
+        val receivedText = floatingText ?: (shareText ?: "")
+
         val defParamValue = "#en/en/"
         val urlParam = getSharedPreferences("config", Context.MODE_PRIVATE).getString(
             "urlParam",
@@ -39,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         webView.webViewClient = webViewClient
         webView.addJavascriptInterface(WebAppInterface(this), "Android")
         webView.loadUrl(
-            "https://www.deepl.com/translator$urlParam${Uri.encode(floatingText)}"
+            "https://www.deepl.com/translator$urlParam${Uri.encode(receivedText)}"
         )
     }
 
