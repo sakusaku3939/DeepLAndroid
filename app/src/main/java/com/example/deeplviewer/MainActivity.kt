@@ -47,6 +47,7 @@ class MainActivity : AppCompatActivity() {
         webViewClient = MyWebViewClient(this, webView)
 
         webView.settings.javaScriptEnabled = true
+        webView.settings.domStorageEnabled = true
         webView.webViewClient = webViewClient
         webView.webChromeClient = MyWebChromeClient()
         webView.addJavascriptInterface(WebAppInterface(this), "Android")
