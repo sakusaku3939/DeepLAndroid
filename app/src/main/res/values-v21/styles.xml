@@ -1,0 +1,7 @@
+<resources>
+
+    <style name="AppTheme.ReloadButton" parent="AppTheme">
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+    </style>
+
+</resources>
