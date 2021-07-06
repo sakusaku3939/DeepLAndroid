@@ -52,7 +52,14 @@ class MainActivity : AppCompatActivity() {
         webView.webChromeClient = MyWebChromeClient()
         webView.addJavascriptInterface(WebAppInterface(this), "Android")
         webView.loadUrl(
-            "https://www.deepl.com/translator$urlParam${Uri.encode(receivedText)}"
+            "https://www.deepl.com/translator$urlParam${
+                Uri.encode(
+                    receivedText.replace(
+                        "/",
+                        "\\/"
+                    )
+                )
+            }"
         )
     }
 
