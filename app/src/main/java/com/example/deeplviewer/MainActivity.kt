@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
-        createWebView(intent)
+        createWebView(this.intent)
     }
 
     @SuppressLint("SetJavaScriptEnabled", "AddJavascriptInterface")
