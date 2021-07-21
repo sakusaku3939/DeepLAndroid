@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        createWebView(intent)
+        createWebView(intent, savedInstanceState)
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -32,10 +32,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     @SuppressLint("SetJavaScriptEnabled", "AddJavascriptInterface")
-    private fun createWebView(intent: Intent?) {
+    private fun createWebView(intent: Intent?, savedInstanceState: Bundle? = null) {
         val floatingText = intent?.getStringExtra("FLOATING_TEXT")
         val shareText = intent?.getStringExtra(Intent.EXTRA_TEXT)
-        val receivedText = floatingText ?: (shareText ?: "")
+        val savedText = savedInstanceState?.getString("SavedText")
+        val receivedText = floatingText ?: (shareText ?: (savedText ?: ""))
 
         val defParamValue = "#en/en/"
         val urlParam = getSharedPreferences("config", Context.MODE_PRIVATE).getString(
@@ -83,6 +84,25 @@ class MainActivity : AppCompatActivity() {
                 uploadMessage = null
             }
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        val webView: WebView = findViewById(R.id.webview)
+        val defParamValue = "#en/en/"
+        val urlParam = getSharedPreferences("config", Context.MODE_PRIVATE).getString(
+            "urlParam",
+            defParamValue
+        ) ?: defParamValue
+        val startUrl = "https://www.deepl.com/translator$urlParam"
+        val inputText =
+            Uri.decode((webView.url)
+                ?.substring(startUrl.length))
+                .replace(
+                    "\\/",
+                    "/"
+                )
+        outState.putString("SavedText", inputText)
     }
 
     inner class MyWebChromeClient : WebChromeClient() {

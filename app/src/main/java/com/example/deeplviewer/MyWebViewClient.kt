@@ -1,6 +1,7 @@
 package com.example.deeplviewer
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.net.Uri
 import android.util.Log
 import android.view.View
@@ -11,6 +12,8 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.ImageButton
 import android.widget.Toast
+import androidx.webkit.WebSettingsCompat
+import androidx.webkit.WebViewFeature
 
 class MyWebViewClient(
     private val activity: MainActivity,
@@ -59,6 +62,12 @@ class MyWebViewClient(
             webView.startAnimation(animation)
         }
         webView.alpha = 1.0F
+
+        if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
+            val nightMode = (webView.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
+            val forceDarkMode = if (nightMode) WebSettingsCompat.FORCE_DARK_ON else WebSettingsCompat.FORCE_DARK_OFF
+            WebSettingsCompat.setForceDark(webView.settings, forceDarkMode)
+        }
 
         Regex("""#(.+?)/(.+?)/""").find(webView.url ?: "")?.let { param = it.value }
     }
