@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         val floatingText = intent?.getStringExtra("FLOATING_TEXT")
         val shareText = intent?.getStringExtra(Intent.EXTRA_TEXT)
         val savedText = savedInstanceState?.getString("SavedText")
-        val receivedText = floatingText ?: (shareText ?: (savedText ?: ""))
+        val receivedText = savedText ?: (floatingText ?: (shareText ?: ""))
 
         val defParamValue = "#en/en/"
         val urlParam = getSharedPreferences("config", Context.MODE_PRIVATE).getString(
