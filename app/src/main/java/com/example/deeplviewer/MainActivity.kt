@@ -15,15 +15,23 @@ import androidx.appcompat.app.AppCompatActivity
 class MainActivity : AppCompatActivity() {
     private lateinit var webViewClient: MyWebViewClient
     private var uploadMessage: ValueCallback<Array<Uri>>? = null
+    private val startUrl by lazy {
+        val urlParam = getSharedPreferences("config", Context.MODE_PRIVATE).getString(
+            "urlParam",
+            defParamValue
+        ) ?: defParamValue
+        return@lazy "https://www.deepl.com/translator$urlParam"
+    }
 
     companion object {
         private const val REQUEST_SELECT_FILE = 100
+        private const val defParamValue = "#en/en/"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        createWebView(intent)
+        createWebView(intent, savedInstanceState)
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -32,16 +40,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     @SuppressLint("SetJavaScriptEnabled", "AddJavascriptInterface")
-    private fun createWebView(intent: Intent?) {
+    private fun createWebView(intent: Intent?, savedInstanceState: Bundle? = null) {
         val floatingText = intent?.getStringExtra("FLOATING_TEXT")
         val shareText = intent?.getStringExtra(Intent.EXTRA_TEXT)
-        val receivedText = floatingText ?: (shareText ?: "")
-
-        val defParamValue = "#en/en/"
-        val urlParam = getSharedPreferences("config", Context.MODE_PRIVATE).getString(
-            "urlParam",
-            defParamValue
-        ) ?: defParamValue
+        val savedText = savedInstanceState?.getString("SavedText")
+        val receivedText = savedText ?: (floatingText ?: (shareText ?: ""))
 
         val webView: WebView = findViewById(R.id.webview)
         webViewClient = MyWebViewClient(this, webView)
@@ -52,14 +55,13 @@ class MainActivity : AppCompatActivity() {
         webView.webChromeClient = MyWebChromeClient()
         webView.addJavascriptInterface(WebAppInterface(this), "Android")
         webView.loadUrl(
-            "https://www.deepl.com/translator$urlParam${
-                Uri.encode(
-                    receivedText.replace(
-                        "/",
-                        "\\/"
-                    )
+            startUrl + Uri.encode(
+                receivedText.replace(
+                    "/",
+                    "\\/"
                 )
-            }"
+            )
+
         )
     }
 
@@ -82,6 +84,18 @@ class MainActivity : AppCompatActivity() {
                 message.onReceiveValue(result)
                 uploadMessage = null
             }
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        val webView: WebView = findViewById(R.id.webview)
+        val url = webView.url ?: ""
+        if (url.length > startUrl.length) {
+            val inputText =
+                Uri.decode(url.substring(startUrl.length))
+                    .replace("\\/", "/")
+            outState.putString("SavedText", inputText)
         }
     }
 

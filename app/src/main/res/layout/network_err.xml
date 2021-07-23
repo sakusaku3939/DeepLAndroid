@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="#ffffff"
+    android:background="@color/background"
     xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <ImageView

@@ -5,5 +5,6 @@
     <color name="colorPrimary">#204060</color>
     <color name="colorPrimaryDark">#204060</color>
     <color name="colorAccent">#204060</color>
-    <color name="splashBackground">#FFFFFF</color>
+    <color name="background">@color/background_material_light</color>
+    <color name="splashBackground">@color/background</color>
 </resources>
