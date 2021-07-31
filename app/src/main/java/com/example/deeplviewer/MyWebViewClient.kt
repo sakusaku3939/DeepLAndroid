@@ -124,11 +124,11 @@ class MyWebViewClient(
         }
     }
 
-    private inline fun String.toBase64String(): String {
+    private fun String.toBase64String(): String {
         return Base64.encodeToString(this.toByteArray(), Base64.DEFAULT)
     }
 
-    private inline fun getAssetsString(context: Context, fileName: String): String {
+    private fun getAssetsString(context: Context, fileName: String): String {
         return context.assets.open(fileName).reader(charset = Charsets.UTF_8).use { it.readText() }
     }
 }
