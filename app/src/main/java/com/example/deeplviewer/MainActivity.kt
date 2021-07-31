@@ -10,7 +10,7 @@ import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-
+import androidx.appcompat.app.AppCompatDelegate
 
 class MainActivity : AppCompatActivity() {
     private lateinit var webViewClient: MyWebViewClient
@@ -45,6 +45,10 @@ class MainActivity : AppCompatActivity() {
         val shareText = intent?.getStringExtra(Intent.EXTRA_TEXT)
         val savedText = savedInstanceState?.getString("SavedText")
         val receivedText = savedText ?: (floatingText ?: (shareText ?: ""))
+        val darkMode = if (intent?.getStringExtra("Shortcut") == "Dark")
+            AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
+
+        AppCompatDelegate.setDefaultNightMode(darkMode)
 
         val webView: WebView = findViewById(R.id.webview)
         webViewClient = MyWebViewClient(this, webView)

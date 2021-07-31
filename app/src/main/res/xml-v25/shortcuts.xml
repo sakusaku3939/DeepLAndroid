@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:icon="@drawable/ic_baseline_brightness_4_24"
+        android:shortcutId="shortcut"
+        android:shortcutShortLabel="@string/dark_mode_label">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.example.deeplviewer.MainActivity"
+            android:targetPackage="com.example.deeplviewer">
+            <extra
+                android:name="Shortcut"
+                android:value="Dark" />
+        </intent>
+    </shortcut>
+</shortcuts>
