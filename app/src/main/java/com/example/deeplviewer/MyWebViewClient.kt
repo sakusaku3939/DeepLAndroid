@@ -1,8 +1,10 @@
 package com.example.deeplviewer
 
+import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.net.Uri
+import android.util.Base64
 import android.util.Log
 import android.view.View
 import android.view.animation.AlphaAnimation
@@ -64,9 +66,30 @@ class MyWebViewClient(
         webView.alpha = 1.0F
 
         if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
-            val nightMode = (webView.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
-            val forceDarkMode = if (nightMode) WebSettingsCompat.FORCE_DARK_ON else WebSettingsCompat.FORCE_DARK_OFF
+            val nightMode =
+                (webView.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
+            val forceDarkMode =
+                if (nightMode) WebSettingsCompat.FORCE_DARK_ON else WebSettingsCompat.FORCE_DARK_OFF
             WebSettingsCompat.setForceDark(webView.settings, forceDarkMode)
+            if (nightMode) {
+                webView.loadUrl(
+                    "javascript:" +
+                            """
+                            $('.dl_header_menu_v2__logo__img').attr('src','data:image/svg+xml;base64,${
+                                getAssetsString(
+                                    webView.context,
+                                    "DeepL_Logo_lightBlue_v2.svg"
+                                ).toBase64String()
+                            }');
+                            $('.dl_logo_text').attr('src','data:image/svg+xml;base64,${
+                                getAssetsString(
+                                    webView.context,
+                                    "DeepL_Text_light.svg"
+                                ).toBase64String()
+                            }');
+                    """
+                )
+            }
         }
 
         Regex("""#(.+?)/(.+?)/""").find(webView.url ?: "")?.let { param = it.value }
@@ -97,5 +120,13 @@ class MyWebViewClient(
             activity.overridePendingTransition(0, 0)
             activity.startActivity(i)
         }
+    }
+
+    private inline fun String.toBase64String(): String {
+        return Base64.encodeToString(this.toByteArray(), Base64.DEFAULT)
+    }
+
+    private inline fun getAssetsString(context: Context, fileName: String): String {
+        return context.assets.open(fileName).reader(charset = Charsets.UTF_8).use { it.readText() }
     }
 }
