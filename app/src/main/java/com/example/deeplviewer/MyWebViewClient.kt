@@ -65,13 +65,11 @@ class MyWebViewClient(
         }
         webView.alpha = 1.0F
 
-        if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
-            val nightMode =
-                (webView.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
-            val forceDarkMode =
-                if (nightMode) WebSettingsCompat.FORCE_DARK_ON else WebSettingsCompat.FORCE_DARK_OFF
-            WebSettingsCompat.setForceDark(webView.settings, forceDarkMode)
-            if (nightMode) {
+        val nightMode =
+            (webView.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
+        if (nightMode) {
+            if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
+                WebSettingsCompat.setForceDark(webView.settings, WebSettingsCompat.FORCE_DARK_ON)
                 webView.loadUrl(
                     "javascript:" +
                             """
@@ -89,9 +87,9 @@ class MyWebViewClient(
                             }');
                     """
                 )
+            } else {
+                Toast.makeText(activity, "Dark mode cannot be used because FORCE_DARK is not supported", Toast.LENGTH_LONG).show()
             }
-        } else {
-            Toast.makeText(activity, "Dark mode cannot be used because FORCE_DARK is not supported", Toast.LENGTH_LONG).show()
         }
 
         Regex("""#(.+?)/(.+?)/""").find(webView.url ?: "")?.let { param = it.value }
