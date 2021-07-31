@@ -90,6 +90,8 @@ class MyWebViewClient(
                     """
                 )
             }
+        } else {
+            Toast.makeText(activity, "Dark mode cannot be used because FORCE_DARK is not supported", Toast.LENGTH_LONG).show()
         }
 
         Regex("""#(.+?)/(.+?)/""").find(webView.url ?: "")?.let { param = it.value }
