@@ -54,6 +54,20 @@ class MyWebViewClient(
                             const text = $('.lmt__translations_as_text__text_btn').eq(0).text();
                             Android.copyClipboard(text);
                         });
+                        
+                        if (!$('#lang_switch').length) $('\
+                            <div id="lang_switch" style="display: block;z-index: 11;padding: 9px;border-radius: 3px;border: 1px solid #e3e3e3;background-color: #fff;margin-top: -10px;margin-left: -28px;margin-right: 10px;height: 44px;width: 44px;" data-testid="deepl-ui-tooltip-target">\
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="transition: .24s transform ease-out;height: 24px;width: 24px;">\
+                                    <path d="M5 13.8317L6.57731 12.2972V15.3661L5 13.8317ZM5 13.8317H14.5" stroke="#0F2B46" stroke-width="2"></path>\
+                                    <path d="M14.5 6.53448L12.9227 5V8.06897L14.5 6.53448ZM14.5 6.53448H5" stroke="#0F2B46" stroke-width="2"></path>\
+                                </svg>\
+                            </div>\
+                        ').click(function(){
+                            window.location = window.location.href.split('#')[0] +
+                                '#' + document.getElementsByClassName('lmt__language_select lmt__language_select--target')[0].getAttribute('dl-selected-lang').split('-')[0] +
+                                '/' + document.getElementsByClassName('lmt__language_select lmt__language_select--source')[0].getAttribute('dl-selected-lang').split('-')[0] + 
+                                '/' + encodeURI(document.getElementsByClassName('lmt__textarea lmt__target_textarea lmt__textarea_base_style')[0].value);
+                        }).prependTo($('.lmt__language_container')[1]);
                     """
         )
 
