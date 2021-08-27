@@ -8,11 +8,9 @@ import android.os.Bundle
 import android.webkit.ValueCallback
 import android.webkit.WebChromeClient
 import android.webkit.WebView
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var webViewClient: MyWebViewClient
@@ -34,17 +32,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         createWebView(intent, savedInstanceState)
-
-        val button = findViewById<Button>(R.id.buttonLangSwitch)
-        button.setOnClickListener {
-            webview.loadUrl("""javascript:(function(){
-                window.location = window.location.href.split('#')[0] +
-                    '#' + document.getElementsByClassName('lmt__language_select lmt__language_select--target')[0].getAttribute('dl-selected-lang').split('-')[0] +
-                    '/' + document.getElementsByClassName('lmt__language_select lmt__language_select--source')[0].getAttribute('dl-selected-lang').split('-')[0] + 
-                    '/' + encodeURI(document.getElementsByClassName('lmt__textarea lmt__target_textarea lmt__textarea_base_style')[0].value)
-                })();"""
-            );
-        }
     }
 
     override fun onNewIntent(intent: Intent?) {
