@@ -1,0 +1,2 @@
+$('.dl_header_menu_v2__logo__img').attr('src','data:image/svg+xml;base64,' + Android.stringToBase64String(Android.getAssetsText('DeepL_Logo_lightBlue_v2.svg')));
+$('.dl_logo_text').attr('src','data:image/svg+xml;base64,' + Android.stringToBase64String(Android.getAssetsText('DeepL_Text_light.svg')));
