@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:shortcutId="openSettingsActivity"
+        android:shortcutShortLabel="@string/title_activity_settings">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.example.deeplviewer.SettingsActivity"
+            android:targetPackage="com.example.deeplviewer"></intent>
+    </shortcut>
+</shortcuts>
