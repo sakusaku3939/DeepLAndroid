@@ -3,5 +3,6 @@
     <string name="image">Image</string>
     <string name="copy_clipboard">Text has been Copied</string>
     <string name="network_err">Oops, failed to connect to DeepL server</string>
+    <string name="light_mode_label" translatable="false">Light mode</string>
     <string name="dark_mode_label" translatable="false">Dark mode</string>
 </resources>
