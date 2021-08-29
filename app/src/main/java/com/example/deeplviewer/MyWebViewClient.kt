@@ -33,7 +33,17 @@ class MyWebViewClient(
     override fun onPageFinished(view: WebView, url: String) {
         view.loadJavaScript("init.js")
         view.loadJavaScript("patch-clipboard.js")
-        view.loadJavaScript("patch-swapLanguage.js")
+
+        val config = view.context.getSharedPreferences("config", Context.MODE_PRIVATE)
+        val isEnabledSwapLanguageButton =
+            config.getBoolean(
+                "isEnabledSwapLangButton",
+                true
+            )
+        if (isEnabledSwapLanguageButton) {
+            view.loadJavaScript("patch-swapLanguage.js")
+        }
+
         if (!isSplashFadeDone) {
             isSplashFadeDone = true
             val animation = AlphaAnimation(0.0F, 1.0F)

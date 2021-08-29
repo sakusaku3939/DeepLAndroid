@@ -6,9 +6,10 @@
     <string name="title_activity_settings">設定</string>
     <string name="themeSettings">テーマの設定</string>
     <string name="theme">テーマ</string>
-
     <string name="theme_light">ライト</string>
     <string name="theme_dark">ダーク</string>
     <string name="theme_battery">バッテリーセーバーによる設定</string>
     <string name="theme_default">システムのデフォルト</string>
+    <string name="translation_screen_options">翻訳画面のオプション</string>
+    <string name="show_switch_lang_button">言語入れ替えボタンを表示する</string>
 </resources>

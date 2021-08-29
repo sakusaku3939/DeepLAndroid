@@ -11,6 +11,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.preference.DropDownPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.SwitchPreference
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -33,11 +34,15 @@ class SettingsActivity : AppCompatActivity() {
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
             preferenceManager.sharedPreferencesName = "config"
-            val dataPref = findPreference<DropDownPreference>(darkModeKey)
-            dataPref?.value = preferenceManager.sharedPreferences.getString(
+            val preferences = preferenceManager.sharedPreferences
+            val darkMode = findPreference<DropDownPreference>(darkModeKey)
+            darkMode?.value = preferences.getString(
                 darkModeKey,
                 AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM.toString()
             )
+            val swapLangSettingButton = findPreference<SwitchPreference>("isEnabledSwapLangButton")
+            swapLangSettingButton?.isChecked =
+                preferences.getBoolean("isEnabledSwapLangButton", true)
         }
 
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {

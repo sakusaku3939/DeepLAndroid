@@ -9,4 +9,10 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory app:title="@string/translation_screen_options">
+        <SwitchPreference
+            app:key="isEnabledSwapLangButton"
+            app:title="@string/show_switch_lang_button" />
+    </PreferenceCategory>
+
 </PreferenceScreen>

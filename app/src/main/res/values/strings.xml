@@ -6,9 +6,10 @@
     <string name="title_activity_settings">Settings</string>
     <string name="themeSettings">theme settings</string>
     <string name="theme">theme</string>
-
     <string name="theme_light">Light</string>
     <string name="theme_dark">Dark</string>
     <string name="theme_battery">Set by Battery Saver</string>
     <string name="theme_default">System default</string>
+    <string name="translation_screen_options">translation screen options</string>
+    <string name="show_switch_lang_button">Show switch language button</string>
 </resources>
