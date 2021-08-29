@@ -12,4 +12,7 @@
     <string name="theme_default">System default</string>
     <string name="translation_screen_options">translation screen options</string>
     <string name="show_switch_lang_button">Show switch language button</string>
+
+    <string name="key_dark_mode" translatable="false">defaultDarkMode</string>
+    <string name="key_switch_lang_button" translatable="false">isEnabledSwapLangButton</string>
 </resources>

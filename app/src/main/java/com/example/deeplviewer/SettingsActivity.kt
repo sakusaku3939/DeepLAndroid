@@ -31,6 +31,9 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeListener {
+        private val darkModeKey get() = getString(R.string.key_dark_mode)
+        private val switchLangButtonKey get() = getString(R.string.key_switch_lang_button)
+
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
             preferenceManager.sharedPreferencesName = "config"
@@ -40,15 +43,15 @@ class SettingsActivity : AppCompatActivity() {
                 darkModeKey,
                 AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM.toString()
             )
-            val swapLangSettingButton = findPreference<SwitchPreference>("isEnabledSwapLangButton")
+            val swapLangSettingButton = findPreference<SwitchPreference>(switchLangButtonKey)
             swapLangSettingButton?.isChecked =
-                preferences.getBoolean("isEnabledSwapLangButton", true)
+                preferences.getBoolean(switchLangButtonKey, true)
         }
 
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
-            val preference = findPreference<DropDownPreference>(darkModeKey)
-            preference?.onPreferenceChangeListener = this
+            val darkModePreference = findPreference<DropDownPreference>(darkModeKey)
+            darkModePreference?.onPreferenceChangeListener = this
         }
 
 
@@ -60,7 +63,7 @@ class SettingsActivity : AppCompatActivity() {
                         MODE_PRIVATE
                     )
                     var darkThemeMode = data.getString(
-                        preference.key,
+                        darkModeKey,
                         AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM.toString()
                     )!!
                     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q && darkThemeMode == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM.toString()) {
@@ -71,9 +74,5 @@ class SettingsActivity : AppCompatActivity() {
             }
             return true
         }
-    }
-
-    companion object {
-        private const val darkModeKey = "defaultDarkMode"
     }
 }

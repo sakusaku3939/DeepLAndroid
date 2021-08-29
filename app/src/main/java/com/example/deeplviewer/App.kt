@@ -16,7 +16,7 @@ class App : Application() {
         val config = getSharedPreferences("config", Context.MODE_PRIVATE)
         var darkThemeMode =
             config.getString(
-                "defaultDarkMode",
+                getString(R.string.key_dark_mode),
                 AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM.toString()
             )!!
 

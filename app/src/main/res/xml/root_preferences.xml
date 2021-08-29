@@ -3,7 +3,7 @@
         <DropDownPreference
             app:entries="@array/darkTheme"
             app:entryValues="@array/darkThemeValue"
-            app:key="defaultDarkMode"
+            app:key="@string/key_dark_mode"
             app:title="@string/theme"
             app:useSimpleSummaryProvider="true" />
 
@@ -11,7 +11,7 @@
 
     <PreferenceCategory app:title="@string/translation_screen_options">
         <SwitchPreference
-            app:key="isEnabledSwapLangButton"
+            app:key="@string/key_switch_lang_button"
             app:title="@string/show_switch_lang_button" />
     </PreferenceCategory>
 

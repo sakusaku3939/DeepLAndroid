@@ -37,7 +37,7 @@ class MyWebViewClient(
         val config = view.context.getSharedPreferences("config", Context.MODE_PRIVATE)
         val isEnabledSwapLanguageButton =
             config.getBoolean(
-                "isEnabledSwapLangButton",
+                view.context.getString(R.string.key_switch_lang_button),
                 true
             )
         if (isEnabledSwapLanguageButton) {
@@ -63,7 +63,7 @@ class MyWebViewClient(
             }
         }
 
-        Regex("""#(.+?)/(.+?)/""").find(view.url ?: "")?.let { param = it.value }
+        Regex("#(.+?)/(.+?)/").find(view.url ?: "")?.let { param = it.value }
     }
 
     override fun onReceivedError(
