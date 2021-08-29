@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.net.Uri
-import android.util.Base64
 import android.util.Log
 import android.view.View
 import android.view.animation.AlphaAnimation
@@ -19,7 +18,6 @@ import androidx.webkit.WebViewFeature
 
 class MyWebViewClient(
     private val activity: MainActivity,
-    private val webView: WebView
 ) : WebViewClient() {
     private var isSplashFadeDone: Boolean = false
     private var param: String = "#en/en/"
@@ -33,84 +31,29 @@ class MyWebViewClient(
     }
 
     override fun onPageFinished(view: WebView, url: String) {
-        view.loadUrl(
-            "javascript:" +
-                    """
-                        $('button').css('-webkit-tap-highlight-color','rgba(0, 0, 0, 0)');
-                        $('#dl_translator').siblings().hide();
-                        $('.dl_header_menu_v2__buttons__menu').hide();
-                        $('.dl_header_menu_v2__buttons__item').hide();
-                        $('.dl_header_menu_v2__links').children().not('#dl_menu_translator_simplified').hide();
-                        $('.dl_header_menu_v2__separator').hide();
-                        $('.lmt__bottom_text--mobile').hide();
-                        $('#dl_cookieBanner').hide();
-                        $('.lmt__language_container_sec').hide();
-                        $('.docTrans_translator_upload_button__inner_button').hide();
-                        $('.lmt__target_toolbar__save').hide();
-                        $('footer').hide();
-                        $('a').css('pointer-events','none');
-                        $('.lmt__sides_container').css('margin-bottom','32px');
-                        $('.lmt__translations_as_text__copy_button, .lmt__target_toolbar__copy').on('click',function() {
-                            const text = $('.lmt__translations_as_text__text_btn').eq(0).text();
-                            Android.copyClipboard(text);
-                        });
-                        
-                        if (!$('#lang_switch').length) {
-                            $('html > head').append($('<style>#lang_switch.switched svg {transform:scaleY(-1)}</style>'));
-                            $('\
-                                <div id="lang_switch" style="display: block;z-index: 11;padding: 9px;border-radius: 3px;border: 1px solid #e3e3e3;background-color: #fff;margin-top: -10px;margin-left: -20px;margin-right: 10px;height: 44px;width: 44px;" data-testid="deepl-ui-tooltip-target">\
-                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="transition: .24s transform ease-out;height: 24px;width: 24px;">\
-                                        <path d="m 6.10135,5.43305 1.5345,1.57731 h -3.0689 z m 0,0 v 9.5" stroke="#0F2B46" stroke-width="2"></path>\
-                                        <path d="m 13.39857,14.93305 1.53448,-1.5773 h -3.06897 z m 0,0 v -9.5" stroke="#0F2B46" stroke-width="2"></path>\
-                                    </svg>\
-                                </div>\
-                            ').click(function(){
-                                this.classList.contains("switched") ? this.classList.remove("switched") : this.classList.add("switched");
-                                window.location = window.location.href.split('#')[0] +
-                                    '#' + document.getElementsByClassName('lmt__language_select lmt__language_select--target')[0].getAttribute('dl-selected-lang').split('-')[0] +
-                                    '/' + document.getElementsByClassName('lmt__language_select lmt__language_select--source')[0].getAttribute('dl-selected-lang').split('-')[0] + 
-                                    '/' + encodeURI(document.getElementsByClassName('lmt__textarea lmt__target_textarea lmt__textarea_base_style')[0].value);
-                            }).prependTo($('.lmt__language_container')[1]);
-                        }
-                    """
-        )
-
+        view.loadJavaScript("init.js")
+        view.loadJavaScript("patch-clipboard.js")
+        view.loadJavaScript("patch-swapLanguage.js")
         if (!isSplashFadeDone) {
             isSplashFadeDone = true
             val animation = AlphaAnimation(0.0F, 1.0F)
             animation.duration = 100
-            webView.startAnimation(animation)
+            view.startAnimation(animation)
         }
-        webView.alpha = 1.0F
+        view.alpha = 1.0F
 
         val nightMode =
-            (webView.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
+            (view.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
         if (nightMode) {
             if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
-                WebSettingsCompat.setForceDark(webView.settings, WebSettingsCompat.FORCE_DARK_ON)
-                webView.loadUrl(
-                    "javascript:" +
-                            """
-                            $('.dl_header_menu_v2__logo__img').attr('src','data:image/svg+xml;base64,${
-                                getAssetsString(
-                                    webView.context,
-                                    "DeepL_Logo_lightBlue_v2.svg"
-                                ).toBase64String()
-                            }');
-                            $('.dl_logo_text').attr('src','data:image/svg+xml;base64,${
-                                getAssetsString(
-                                    webView.context,
-                                    "DeepL_Text_light.svg"
-                                ).toBase64String()
-                            }');
-                    """
-                )
+                WebSettingsCompat.setForceDark(view.settings, WebSettingsCompat.FORCE_DARK_ON)
+                view.loadJavaScript("patch-darkThemeFix.js")
             } else {
                 Toast.makeText(activity, "Dark mode cannot be used because FORCE_DARK is not supported", Toast.LENGTH_LONG).show()
             }
         }
 
-        Regex("""#(.+?)/(.+?)/""").find(webView.url ?: "")?.let { param = it.value }
+        Regex("""#(.+?)/(.+?)/""").find(view.url ?: "")?.let { param = it.value }
     }
 
     override fun onReceivedError(
@@ -140,11 +83,11 @@ class MyWebViewClient(
         }
     }
 
-    private fun String.toBase64String(): String {
-        return Base64.encodeToString(this.toByteArray(), Base64.DEFAULT)
+    private fun getAssetsText(context: Context, fileName: String): String {
+        return context.assets.open(fileName).reader(Charsets.UTF_8).use { it.readText() }
     }
 
-    private fun getAssetsString(context: Context, fileName: String): String {
-        return context.assets.open(fileName).reader(charset = Charsets.UTF_8).use { it.readText() }
+    private fun WebView.loadJavaScript(fileName: String) {
+        this.loadUrl("javascript:${getAssetsText(this.context, fileName)}")
     }
 }
