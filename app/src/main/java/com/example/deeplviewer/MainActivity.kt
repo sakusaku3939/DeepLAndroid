@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
         val receivedText = savedText ?: (floatingText ?: (shareText ?: ""))
 
         val webView: WebView = findViewById(R.id.webview)
-        webViewClient = MyWebViewClient(this, webView)
+        webViewClient = MyWebViewClient(this)
 
         webView.settings.javaScriptEnabled = true
         webView.settings.domStorageEnabled = true
