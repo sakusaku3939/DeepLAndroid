@@ -69,6 +69,6 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val darkModeKey = "darkMode"
+        private const val darkModeKey = "defaultDarkMode"
     }
 }

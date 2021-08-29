@@ -3,7 +3,7 @@
         <DropDownPreference
             app:entries="@array/darkTheme"
             app:entryValues="@array/darkThemeValue"
-            app:key="darkMode"
+            app:key="defaultDarkMode"
             app:title="@string/theme"
             app:useSimpleSummaryProvider="true" />
 

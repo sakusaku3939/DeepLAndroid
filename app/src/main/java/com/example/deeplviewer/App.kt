@@ -15,7 +15,10 @@ class App : Application() {
     private fun switchTheme() {
         val config = getSharedPreferences("config", Context.MODE_PRIVATE)
         var darkThemeMode =
-            config.getString("darkMode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM.toString())!!
+            config.getString(
+                "defaultDarkMode",
+                AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM.toString()
+            )!!
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q && darkThemeMode == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM.toString()) {
             darkThemeMode = AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY.toString()
