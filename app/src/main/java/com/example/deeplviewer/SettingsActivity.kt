@@ -43,8 +43,8 @@ class SettingsActivity : AppCompatActivity() {
                 darkModeKey,
                 AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM.toString()
             )
-            val swapLangSettingButton = findPreference<SwitchPreference>(switchLangButtonKey)
-            swapLangSettingButton?.isChecked =
+            val switchLangSettingButton = findPreference<SwitchPreference>(switchLangButtonKey)
+            switchLangSettingButton?.isChecked =
                 preferences.getBoolean(switchLangButtonKey, true)
         }
 

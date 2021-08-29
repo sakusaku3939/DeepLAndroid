@@ -41,7 +41,7 @@ class MyWebViewClient(
                 true
             )
         if (isEnabledSwapLanguageButton) {
-            view.loadJavaScript("patch-swapLanguage.js")
+            view.loadJavaScript("patch-switchLanguage.js")
         }
 
         if (!isSplashFadeDone) {
