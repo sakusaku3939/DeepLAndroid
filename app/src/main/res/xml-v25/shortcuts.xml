@@ -7,6 +7,6 @@
         <intent
             android:action="android.intent.action.VIEW"
             android:targetClass="com.example.deeplviewer.SettingsActivity"
-            android:targetPackage="com.example.deeplviewer"></intent>
+            android:targetPackage="com.example.deeplviewer" />
     </shortcut>
 </shortcuts>
