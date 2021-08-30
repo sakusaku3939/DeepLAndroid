@@ -33,7 +33,17 @@ class MyWebViewClient(
     override fun onPageFinished(view: WebView, url: String) {
         view.loadJavaScript("init.js")
         view.loadJavaScript("patch-clipboard.js")
-        view.loadJavaScript("patch-swapLanguage.js")
+
+        val config = view.context.getSharedPreferences("config", Context.MODE_PRIVATE)
+        val isEnabledSwapLanguageButton =
+            config.getBoolean(
+                view.context.getString(R.string.key_switch_lang_button),
+                true
+            )
+        if (isEnabledSwapLanguageButton) {
+            view.loadJavaScript("patch-switchLanguage.js")
+        }
+
         if (!isSplashFadeDone) {
             isSplashFadeDone = true
             val animation = AlphaAnimation(0.0F, 1.0F)
@@ -53,7 +63,7 @@ class MyWebViewClient(
             }
         }
 
-        Regex("""#(.+?)/(.+?)/""").find(view.url ?: "")?.let { param = it.value }
+        Regex("#(.+?)/(.+?)/").find(view.url ?: "")?.let { param = it.value }
     }
 
     override fun onReceivedError(

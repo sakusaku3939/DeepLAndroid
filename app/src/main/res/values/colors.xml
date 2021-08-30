@@ -7,4 +7,6 @@
     <color name="colorAccent">#204060</color>
     <color name="background">@color/background_material_light</color>
     <color name="splashBackground">@color/background</color>
+
+    <color name="preferenceScreenAccent">@color/colorAccent</color>
 </resources>

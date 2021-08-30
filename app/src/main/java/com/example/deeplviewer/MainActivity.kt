@@ -3,19 +3,13 @@ package com.example.deeplviewer
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.content.pm.ShortcutInfo
-import android.content.pm.ShortcutManager
-import android.graphics.drawable.Icon
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.webkit.ValueCallback
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 
 class MainActivity : AppCompatActivity() {
     private lateinit var webViewClient: MyWebViewClient
@@ -37,10 +31,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         createWebView(intent, savedInstanceState)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-            switchTheme()
-            setThemeSwitchShortcut()
-        }
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -105,45 +95,6 @@ class MainActivity : AppCompatActivity() {
                 Uri.decode(url.substring(startUrl.length))
                     .replace("\\/", "/")
             outState.putString("SavedText", inputText)
-        }
-    }
-
-    @RequiresApi(Build.VERSION_CODES.N_MR1)
-    private fun setThemeSwitchShortcut() {
-        val darkMode =
-            getSharedPreferences("config", Context.MODE_PRIVATE).getBoolean("darkMode", false)
-        val label = if (darkMode) R.string.light_mode_label else R.string.dark_mode_label
-
-        val intent = Intent(Intent.ACTION_VIEW, null, this, MainActivity::class.java)
-        intent.putExtra("switchTheme", if (darkMode) "light" else "dark")
-
-        val shortcutManager = getSystemService(ShortcutManager::class.java)
-        val shortcutInfo = ShortcutInfo.Builder(applicationContext, "theme")
-            .setShortLabel(resources.getString(label))
-            .setIcon(
-                Icon.createWithResource(
-                    applicationContext,
-                    R.drawable.ic_baseline_brightness_4_24
-                )
-            )
-            .setIntent(intent)
-            .build()
-        if (shortcutManager.dynamicShortcuts.size > 0) {
-            shortcutManager.updateShortcuts(listOf(shortcutInfo))
-        } else {
-            shortcutManager.dynamicShortcuts = listOf(shortcutInfo)
-        }
-    }
-
-    private fun switchTheme() {
-        val config = getSharedPreferences("config", Context.MODE_PRIVATE)
-        when (intent?.getStringExtra("switchTheme")) {
-            "light" -> config.edit().putBoolean("darkMode", false).apply()
-            "dark" -> config.edit().putBoolean("darkMode", true).apply()
-            else -> {}
-        }
-        if (config.getBoolean("darkMode", false)) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         }
     }
 
