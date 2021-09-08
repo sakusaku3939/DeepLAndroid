@@ -9,10 +9,16 @@ class FloatingTextSelection : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            val floatingText = intent.getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT)?.toString()
+            val androidTranslateFloatingText = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+                intent.getCharSequenceExtra(Intent.EXTRA_TEXT)
+            } else {
+                null
+            }
+
+            val floatingText = androidTranslateFloatingText ?: intent.getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT)
 
             val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("FLOATING_TEXT", floatingText)
+            intent.putExtra("FLOATING_TEXT", floatingText?.toString())
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT)
             startActivity(intent)
             overridePendingTransition(0, 0)
