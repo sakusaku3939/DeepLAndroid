@@ -16,7 +16,8 @@
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:theme="@style/AppTheme.PreferenceScreen">
+            android:theme="@style/AppTheme.PreferenceScreen"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.APPLICATION_PREFERENCES" />
 
@@ -25,7 +26,8 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:configChanges="orientation|screenSize">
+            android:configChanges="orientation|screenSize"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -45,7 +47,8 @@
         </activity>
         <activity
             android:name=".FloatingTextSelection"
-            android:theme="@style/WhiteTheme">
+            android:theme="@style/WhiteTheme"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.TRANSLATE" />
 
