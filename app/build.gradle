@@ -9,8 +9,8 @@ android {
         applicationId "com.example.deeplviewer"
         minSdkVersion 21
         targetSdkVersion 31
-        versionCode 19
-        versionName "6.1"
+        versionCode 20
+        versionName "6.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
