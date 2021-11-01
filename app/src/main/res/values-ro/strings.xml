@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">DeepL</string>
+    <string name="image">Imagine</string>
+    <string name="copy_clipboard">Textul a fost copiat</string>
+    <string name="network_err">Hopa, nu s-a putut conecta la serverul DeepL</string>
+    <string name="title_activity_settings">Setări</string>
+    <string name="themeSettings">Setări temă</string>
+    <string name="theme">Temă</string>
+    <string name="theme_light">Luminoasă</string>
+    <string name="theme_dark">Întunecată</string>
+    <string name="theme_battery">Setat de economisirea bateriei</string>
+    <string name="theme_default">Implicit sistem</string>
+    <string name="translation_screen_options">Opțiunile ecranului de traducere</string>
+    <string name="show_switch_lang_button">Afișați butonul de schimbare a limbii</string>
+</resources>
