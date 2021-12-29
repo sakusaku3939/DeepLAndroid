@@ -3,5 +3,5 @@ Esta es una aplicación no oficial de Android para el traductor DeepL. Utiliza u
 <b>Características:</b>
 
 * Muestra sólo la pantalla de traducción mediante WebView
-* Copia o comparte los resultados de la traducción
+* Cambiar al modo oscuro
 * Lanza DeepL desde la acción de selección de texto flotante
