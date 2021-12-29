@@ -33,6 +33,7 @@ class SettingsActivity : AppCompatActivity() {
     class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeListener {
         private val darkModeKey get() = getString(R.string.key_dark_mode)
         private val switchLangButtonKey get() = getString(R.string.key_switch_lang_button)
+        private val versionKey get() = getString(R.string.key_version)
 
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
@@ -46,6 +47,8 @@ class SettingsActivity : AppCompatActivity() {
             val switchLangSettingButton = findPreference<SwitchPreference>(switchLangButtonKey)
             switchLangSettingButton?.isChecked =
                 preferences.getBoolean(switchLangButtonKey, true)
+            val versionButton = findPreference<Preference>(versionKey)
+            versionButton?.summary = "v${BuildConfig.VERSION_NAME}"
         }
 
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {

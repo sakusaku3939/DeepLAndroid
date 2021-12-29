@@ -15,4 +15,11 @@
             app:title="@string/show_switch_lang_button" />
     </PreferenceCategory>
 
+    <PreferenceCategory app:title="@string/about_this_app">
+        <Preference
+            app:key="@string/key_version"
+            app:summary=""
+            app:title="@string/version" />
+    </PreferenceCategory>
+
 </PreferenceScreen>
