@@ -13,9 +13,9 @@ JavaScript is used to hide all but the most necessary elements.
 ![image](https://user-images.githubusercontent.com/53967490/89320092-fe2fdf00-d6bb-11ea-97d6-84fd66f73395.png)
 
 ## Features
-- Display only the translation screen by WebView
-- Copy or share translation results
-- Launch DeepL from floating text selection action
+- Display only the translation screen by WebView.
+- Switching to dark mode.
+- Launch DeepL from floating text selection action.
 
 ## Notes
 This project has been translated using DeepL. If there are any mistranslations, please feel free to send a pull request!
