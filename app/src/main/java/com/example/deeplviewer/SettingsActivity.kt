@@ -13,6 +13,10 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreference
 
+import android.content.Intent
+import androidx.core.net.toUri
+
+
 class SettingsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,10 +34,11 @@ class SettingsActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeListener {
+    class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
         private val darkModeKey get() = getString(R.string.key_dark_mode)
         private val switchLangButtonKey get() = getString(R.string.key_switch_lang_button)
         private val versionKey get() = getString(R.string.key_version)
+        private val githubReleaseUrl get() = getString(R.string.link_github_release)
 
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
@@ -55,6 +60,9 @@ class SettingsActivity : AppCompatActivity() {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
             val darkModePreference = findPreference<DropDownPreference>(darkModeKey)
             darkModePreference?.onPreferenceChangeListener = this
+
+            val versionButton = findPreference<Preference>(versionKey)
+            versionButton?.onPreferenceClickListener = this
         }
 
 
@@ -74,6 +82,14 @@ class SettingsActivity : AppCompatActivity() {
                     }
                     AppCompatDelegate.setDefaultNightMode(darkThemeMode.toInt())
                 }, 100)
+            }
+            return true
+        }
+
+        override fun onPreferenceClick(preference: Preference?): Boolean {
+            if (preference?.key == versionKey) {
+                val i = Intent(Intent.ACTION_VIEW, githubReleaseUrl.toUri())
+                startActivity(i)
             }
             return true
         }

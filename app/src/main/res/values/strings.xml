@@ -18,4 +18,5 @@
     <string name="key_dark_mode" translatable="false">defaultDarkMode</string>
     <string name="key_switch_lang_button" translatable="false">isEnabledSwapLangButton</string>
     <string name="key_version" translatable="false">appVersion</string>
+    <string name="link_github_release" translatable="false">https://github.com/sakusaku3939/DeepLAndroid/releases</string>
 </resources>
