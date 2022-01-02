@@ -3,23 +3,27 @@
         <DropDownPreference
             app:entries="@array/darkTheme"
             app:entryValues="@array/darkThemeValue"
+            app:defaultValue="@string/theme_AppCompatDelegate_MODE_NIGHT_FOLLOW_SYSTEM"
             app:key="@string/key_dark_mode"
             app:title="@string/theme"
-            app:useSimpleSummaryProvider="true" />
+            app:summary="%s" />
 
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/translation_screen_options">
         <SwitchPreference
+            app:defaultValue="true"
             app:key="@string/key_switch_lang_button"
             app:title="@string/show_switch_lang_button" />
+        <SwitchPreference
+            app:defaultValue="true"
+            app:key="@string/key_switch_popup_mode"
+            app:title="@string/use_popup_mode" />
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/about_this_app">
         <Preference
             app:key="@string/key_version"
-            app:summary=""
             app:title="@string/version" />
     </PreferenceCategory>
-
 </PreferenceScreen>

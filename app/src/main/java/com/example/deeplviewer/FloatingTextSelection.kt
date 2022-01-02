@@ -1,10 +1,29 @@
 package com.example.deeplviewer
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.webkit.WebView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class FloatingTextSelection : AppCompatActivity() {
+
+    private val startUrl by lazy {
+        val urlParam = getSharedPreferences("config", Context.MODE_PRIVATE).getString(
+            "urlParam",
+            defParamValue
+        ) ?: defParamValue
+        return@lazy "https://www.deepl.com/translator$urlParam"
+    }
+
+    companion object {
+        private const val defParamValue = "#en/en/"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -15,19 +34,53 @@ class FloatingTextSelection : AppCompatActivity() {
                 null
             }
 
-            val floatingText = androidTranslateFloatingText ?: intent.getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT)
+            val floatingText = (androidTranslateFloatingText ?: intent.getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT)) as String
+            val config = getSharedPreferences("config", Context.MODE_PRIVATE)
+            val usePopup = config.getBoolean(getString(R.string.key_switch_popup_mode), true)
 
-            val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("FLOATING_TEXT", floatingText?.toString())
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT)
-            startActivity(intent)
-            overridePendingTransition(0, 0)
-            finish()
+            if (usePopup) {
+                launchPopup(floatingText)
+            } else {
+                launchFullscreen(floatingText)
+            }
         }
     }
 
     override fun finish() {
         super.finish()
         overridePendingTransition(0, 0)
+    }
+
+    private fun launchFullscreen(initialText: String) {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra("FLOATING_TEXT", initialText)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT)
+        startActivity(intent)
+        overridePendingTransition(0, 0)
+        finish()
+    }
+
+    @SuppressLint("SetJavaScriptEnabled")
+    private fun launchPopup(initialText: String) {
+        val layout = layoutInflater.inflate(R.layout.popup_layout, null)
+        val webView = layout.findViewById<WebView>(R.id.webview)
+
+        webView.settings.javaScriptEnabled = true
+        webView.settings.domStorageEnabled = true
+        webView.webViewClient = MyWebViewClient(this)
+        webView.addJavascriptInterface(WebAppInterface(this), "Android")
+        webView.loadUrl(
+            startUrl + Uri.encode(
+                initialText.replace(
+                    "/",
+                    "\\/"
+                )
+            )
+        )
+
+        val dialog = BottomSheetDialog(this)
+        dialog.setContentView(layout)
+        dialog.setOnDismissListener { finish() }
+        dialog.show()
     }
 }

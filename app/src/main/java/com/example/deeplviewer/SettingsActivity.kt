@@ -1,20 +1,16 @@
 package com.example.deeplviewer
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
+import androidx.core.net.toUri
 import androidx.preference.DropDownPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.SwitchPreference
-
-import android.content.Intent
-import androidx.core.net.toUri
 
 
 class SettingsActivity : AppCompatActivity() {
@@ -34,64 +30,29 @@ class SettingsActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
-        private val darkModeKey get() = getString(R.string.key_dark_mode)
-        private val switchLangButtonKey get() = getString(R.string.key_switch_lang_button)
-        private val versionKey get() = getString(R.string.key_version)
-        private val githubReleaseUrl get() = getString(R.string.link_github_release)
-
-        override fun onCreate(savedInstanceState: Bundle?) {
-            super.onCreate(savedInstanceState)
-            preferenceManager.sharedPreferencesName = "config"
-            val preferences = preferenceManager.sharedPreferences
-            val darkMode = findPreference<DropDownPreference>(darkModeKey)
-            darkMode?.value = preferences.getString(
-                darkModeKey,
-                AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM.toString()
-            )
-            val switchLangSettingButton = findPreference<SwitchPreference>(switchLangButtonKey)
-            switchLangSettingButton?.isChecked =
-                preferences.getBoolean(switchLangButtonKey, true)
-            val versionButton = findPreference<Preference>(versionKey)
-            versionButton?.summary = "v${BuildConfig.VERSION_NAME}"
-        }
+    class SettingsFragment : PreferenceFragmentCompat() {
 
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+            preferenceManager.sharedPreferencesName = "config"
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
-            val darkModePreference = findPreference<DropDownPreference>(darkModeKey)
-            darkModePreference?.onPreferenceChangeListener = this
 
-            val versionButton = findPreference<Preference>(versionKey)
-            versionButton?.onPreferenceClickListener = this
-        }
+            val darkMode = findPreference<DropDownPreference>(getString(R.string.key_dark_mode))
+            darkMode?.setOnPreferenceChangeListener { _, newValue ->
 
-
-        override fun onPreferenceChange(preference: Preference, newValue: Any?): Boolean {
-            if (preference.key == darkModeKey) {
-                Handler(Looper.getMainLooper()).postDelayed({
-                    val data = requireActivity().application.getSharedPreferences(
-                        "config",
-                        MODE_PRIVATE
-                    )
-                    var darkThemeMode = data.getString(
-                        darkModeKey,
-                        AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM.toString()
-                    )!!
-                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q && darkThemeMode == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM.toString()) {
-                        darkThemeMode = AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY.toString()
-                    }
-                    AppCompatDelegate.setDefaultNightMode(darkThemeMode.toInt())
-                }, 100)
+                var darkThemeMode = newValue as String
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q && darkThemeMode == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM.toString()) {
+                    darkThemeMode = AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY.toString()
+                }
+                AppCompatDelegate.setDefaultNightMode(darkThemeMode.toInt())
+                return@setOnPreferenceChangeListener true
             }
-            return true
-        }
 
-        override fun onPreferenceClick(preference: Preference?): Boolean {
-            if (preference?.key == versionKey) {
-                val i = Intent(Intent.ACTION_VIEW, githubReleaseUrl.toUri())
-                startActivity(i)
+            val versionButton = findPreference<Preference>(getString(R.string.key_version))
+            versionButton?.summary = "v${BuildConfig.VERSION_NAME}"
+            versionButton?.setOnPreferenceClickListener {
+                startActivity(Intent(Intent.ACTION_VIEW, getString(R.string.link_github_release).toUri()))
+                return@setOnPreferenceClickListener true
             }
-            return true
         }
     }
 }

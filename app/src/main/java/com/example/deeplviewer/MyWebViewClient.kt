@@ -1,5 +1,6 @@
 package com.example.deeplviewer
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
@@ -17,7 +18,7 @@ import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebViewFeature
 
 class MyWebViewClient(
-    private val activity: MainActivity,
+    private val activity: Activity,
 ) : WebViewClient() {
     private var isSplashFadeDone: Boolean = false
     private var param: String = "#en/en/"
