@@ -12,6 +12,7 @@
     <string name="theme_default">システムのデフォルト</string>
     <string name="translation_screen_options">翻訳画面のオプション</string>
     <string name="show_switch_lang_button">言語入れ替えボタンを表示する</string>
+    <string name="use_popup_mode">ポップアップモードを使用</string>
     <string name="about_this_app">このアプリについて</string>
     <string name="version">バージョン</string>
 </resources>
