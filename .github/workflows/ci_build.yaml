@@ -1,0 +1,25 @@
+name: APK Build
+on: 
+  push:
+    branches:
+      - master
+
+  pull_request:
+  workflow_dispatch:
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2
+      - name: Build the app
+        run: |
+          chmod +x gradlew
+          ./gradlew build --stacktrace
+      - name: Upload APK
+        uses: actions/upload-artifact@v2
+        with:
+          name: debug-apk
+          path: app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
