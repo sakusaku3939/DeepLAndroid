@@ -5,10 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.View
 import android.webkit.WebView
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class FloatingTextSelection : AppCompatActivity() {
@@ -83,8 +81,5 @@ class FloatingTextSelection : AppCompatActivity() {
         dialog.setContentView(layout)
         dialog.setOnDismissListener { finish() }
         dialog.show()
-
-        val behavior: BottomSheetBehavior<View> = BottomSheetBehavior.from(layout.parent as View)
-        behavior.isHideable = false
     }
 }
