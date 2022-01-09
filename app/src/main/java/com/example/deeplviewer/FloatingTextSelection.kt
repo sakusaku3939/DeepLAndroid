@@ -5,9 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.webkit.WebView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
+
 
 class FloatingTextSelection : AppCompatActivity() {
 
@@ -45,6 +45,11 @@ class FloatingTextSelection : AppCompatActivity() {
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        finish()
+    }
+
     override fun finish() {
         super.finish()
         overridePendingTransition(0, 0)
@@ -62,7 +67,7 @@ class FloatingTextSelection : AppCompatActivity() {
     @SuppressLint("SetJavaScriptEnabled")
     private fun launchPopup(initialText: String) {
         val layout = layoutInflater.inflate(R.layout.popup_layout, null)
-        val webView = layout.findViewById<WebView>(R.id.webview)
+        val webView = layout.findViewById<NestedScrollWebView>(R.id.webview)
 
         webView.settings.javaScriptEnabled = true
         webView.settings.domStorageEnabled = true
