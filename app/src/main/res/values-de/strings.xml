@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">DeepL</string>
+    <string name="image">Bild</string>
+    <string name="copy_clipboard">Text wurde kopiert</string>
+    <string name="network_err">Hoppla, Verbindung zum DeepL-Server konnte nicht hergestellt werden</string>
+    <string name="title_activity_settings">Einstellungen</string>
+    <string name="themeSettings">Design-Einstellungen</string>
+    <string name="theme">Design</string>
+    <string name="theme_light">Hell</string>
+    <string name="theme_dark">Dunkel</string>
+    <string name="theme_battery">Durch Batteriesparmodus eingestellt</string>
+    <string name="theme_default">Systemstandard</string>
+    <string name="translation_screen_options">Optionen für den Übersetzungsbildschirm</string>
+    <string name="show_switch_lang_button">Schaltfläche zum Wechseln der Sprache anzeigen</string>
+    <string name="use_popup_mode">Popup-Modus verwenden</string>
+    <string name="about_this_app">Über diese App</string>
+    <string name="version">Version</string>
+</resources>
