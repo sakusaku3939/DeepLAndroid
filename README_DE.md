@@ -19,7 +19,7 @@ JavaScript wird verwendet, um alle bis auf die notwendigsten Elemente auszublend
 - Starten Sie DeepL über die schwebende Textauswahlaktion.
 
 ## Anmerkung
-Dieses Projekt wurde mit DeepL übersetzt. Wenn es irgendwelche Übersetzungsfehler gibt, senden Sie bitte eine Anfrage!
+Dieses Projekt wurde mit DeepL übersetzt. Sollte es irgendwelche Übersetzungsfehler geben, erstellen Sie gerne einen Pull Request!
 
 ## Lizenz
 [MIT](https://github.com/sakusaku3939/DeepLAndroid/blob/master/LICENSE)
