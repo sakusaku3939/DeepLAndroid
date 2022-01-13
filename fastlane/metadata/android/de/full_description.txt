@@ -1,0 +1,7 @@
+Dies ist eine inoffizielle Android-App für den DeepL-Übersetzer. Es verwendet eine Technologie namens WebView, eine Android-GUI-Komponente, um es wie eine native App aussehen zu lassen. JavaScript wird verwendet, um alle bis auf die notwendigsten Elemente auszublenden.
+
+<b>Funktionen:</b>
+
+* Den Übersetzungsbildschirm im WebView anzeigen lassen
+* In den Dunkelmodus wechseln
+* Starten Sie DeepL über die schwebende Textauswahlaktion
