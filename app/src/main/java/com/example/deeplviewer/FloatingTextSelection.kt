@@ -71,8 +71,19 @@ class FloatingTextSelection : AppCompatActivity() {
 
         webView.settings.javaScriptEnabled = true
         webView.settings.domStorageEnabled = true
-        webView.webViewClient = MyWebViewClient(this)
+
+        val webViewClient = MyWebViewClient(this)
+        webView.webViewClient = webViewClient
         webView.addJavascriptInterface(WebAppInterface(this), "Android")
+
+        val dialog = BottomSheetDialog(this)
+        dialog.setContentView(layout)
+        dialog.setOnDismissListener { finish() }
+
+        webViewClient.loadFinishedListener = {
+            dialog.show()
+        }
+
         webView.loadUrl(
             startUrl + Uri.encode(
                 initialText.replace(
@@ -81,10 +92,5 @@ class FloatingTextSelection : AppCompatActivity() {
                 )
             )
         )
-
-        val dialog = BottomSheetDialog(this)
-        dialog.setContentView(layout)
-        dialog.setOnDismissListener { finish() }
-        dialog.show()
     }
 }

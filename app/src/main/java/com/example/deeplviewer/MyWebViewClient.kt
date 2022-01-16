@@ -24,6 +24,7 @@ class MyWebViewClient(
     private var param: String = "#en/en/"
 
     val urlParam: String get() = param
+    var loadFinishedListener: (()->Unit)? = null
 
     override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
@@ -47,11 +48,8 @@ class MyWebViewClient(
 
         if (!isSplashFadeDone) {
             isSplashFadeDone = true
-            val animation = AlphaAnimation(0.0F, 1.0F)
-            animation.duration = 100
-            view.startAnimation(animation)
+            loadFinishedListener?.invoke()
         }
-        view.alpha = 1.0F
 
         val nightMode =
             (view.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES

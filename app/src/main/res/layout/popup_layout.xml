@@ -9,6 +9,5 @@
     <com.example.deeplviewer.NestedScrollWebView
         android:id="@+id/webview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:alpha="0.0" />
+        android:layout_height="wrap_content" />
 </androidx.cardview.widget.CardView>
