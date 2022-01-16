@@ -15,10 +15,4 @@
     <string name="use_popup_mode">Utiliser le mode pop-up</string>
     <string name="about_this_app">À propos de cette app</string>
     <string name="version">Version</string>
-
-    <string name="key_dark_mode" translatable="false">defaultDarkMode</string>
-    <string name="key_switch_lang_button" translatable="false">isEnabledSwapLangButton</string>
-    <string name="key_switch_popup_mode" translatable="false">isEnabledPopupMode</string>
-    <string name="key_version" translatable="false">appVersion</string>
-    <string name="link_github_release" translatable="false">https://github.com/sakusaku3939/DeepLAndroid/releases</string>
 </resources>
