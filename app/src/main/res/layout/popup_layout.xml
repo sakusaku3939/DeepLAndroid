@@ -6,14 +6,9 @@
     app:cardCornerRadius="24dp"
     app:cardElevation="0dp">
 
-    <androidx.core.widget.NestedScrollView
+    <com.example.deeplviewer.NestedScrollWebView
+        android:id="@+id/webview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <WebView
-            android:id="@+id/webview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:alpha="0.0" />
-    </androidx.core.widget.NestedScrollView>
+        android:layout_height="wrap_content"
+        android:alpha="0.0" />
 </androidx.cardview.widget.CardView>
