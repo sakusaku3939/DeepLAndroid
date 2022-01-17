@@ -23,7 +23,7 @@ JavaScript is used to hide all but the most necessary elements.
 ## Contributions
 
 * Add features, Suggest changes or fix bugs by making a **[pull request](https://help.github.com/articles/about-pull-requests/)**.
-* Submit an issue
+* Submit an **[issue](https://github.com/sakusaku3939/DeepLAndroid/issues)**
 * Help to **[translate](https://github.com/sakusaku3939/DeepLAndroid/blob/master/app/src/main/res/values/strings.xml)** DeeplAndroid to your language by sending a [pull request](https://help.github.com/articles/about-pull-requests/).
 
 ## Notes
