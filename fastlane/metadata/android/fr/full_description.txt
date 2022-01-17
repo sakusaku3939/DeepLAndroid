@@ -1,0 +1,7 @@
+Il s'agit d'une application Android non officielle pour le traducteur DeepL. Elle utilise une technologie appelée WebView, un composant d'interface graphique d'Android, afin de la faire ressembler à une application native. JavaScript est utilisé pour masquer tous les éléments à l'exception des plus nécessaires.
+
+<b>Fonctionnalités:</b>
+
+* Afficher uniquement l'écran de traduction via WebView
+* Passage en mode sombre
+* Lancer DeepL par une action du menu flottant de sélection de texte
