@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         webViewClient = MyWebViewClient(this)
         webViewClient.loadFinishedListener = {
             val animation = AlphaAnimation(0.0F, 1.0F)
-            animation.duration = 200
+            animation.duration = 250
             webView.startAnimation(animation)
             webView.alpha = 1.0F
         }
