@@ -1,4 +1,5 @@
 <resources>
+    <!-- Translatable strings used in our GUI. Non-translatable strings should be added to /values/strings_not_translatable.xml instead. -->
     <string name="app_name">DeepL</string>
     <string name="image">Image</string>
     <string name="copy_clipboard">Text has been Copied</string>
