@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.animation.AlphaAnimation
 import android.webkit.ValueCallback
 import android.webkit.WebChromeClient
 import android.webkit.WebView
@@ -47,6 +48,12 @@ class MainActivity : AppCompatActivity() {
 
         val webView: WebView = findViewById(R.id.webview)
         webViewClient = MyWebViewClient(this)
+        webViewClient.loadFinishedListener = {
+            val animation = AlphaAnimation(0.0F, 1.0F)
+            animation.duration = 250
+            webView.startAnimation(animation)
+            webView.alpha = 1.0F
+        }
 
         webView.settings.javaScriptEnabled = true
         webView.settings.domStorageEnabled = true
