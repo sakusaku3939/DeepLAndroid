@@ -2,7 +2,7 @@
 # DeepL Android
 ![platform](https://img.shields.io/badge/platform-android-green) ![release](https://img.shields.io/github/v/release/sakusaku3939/DeepLAndroid.svg) ![license](https://img.shields.io/github/license/sakusaku3939/DeepLAndroid)  
 
-Questa è una applicazione Android non ufficiale per traduzioni DeepL.
+Questa è un'applicazione Android non ufficiale per traduzioni DeepL.
 Usa una tecnologia chiamata WebView, una componente GUI di Android, per farla sembrare come un'app nativa.
 JavaScript è usato per nascondere tutto tranne gli elementi più necessari.
 
@@ -15,7 +15,7 @@ JavaScript è usato per nascondere tutto tranne gli elementi più necessari.
 ## Funzionalità
 - Mostra solo la schermata di traduzione tramite WebView.
 - Cambiare in modalità scura.
-- Lancia DeepL dall'azione di selezione fluttuante del testo.
+- Lancia DeepL dall'azione di selezione del testo.
 
 ## Note
 Questo progetto è stato tradotto usando DeepL. Se ci sono errori di traduzione, sentitevi liberi di inviare una pull request!
