@@ -4,12 +4,15 @@
     <string name="copy_clipboard">Текст скопирован в буфер обмена</string>
     <string name="network_err">Не удалось подключиться к серверам DeepL</string>
     <string name="title_activity_settings">Настройки</string>
-    <string name="themeSettings">настройки темы</string>
-    <string name="theme">тема</string>
+    <string name="themeSettings">Настройки темы</string>
+    <string name="theme">Тема</string>
     <string name="theme_light">Светлая</string>
     <string name="theme_dark">Тёмная</string>
-    <string name="theme_battery">Установленная режимом Энергосбережения</string>
+    <string name="theme_battery">Установленная режимом энергосбережения</string>
     <string name="theme_default">Как в системе</string>
     <string name="translation_screen_options">настройки экрана перевода</string>
     <string name="show_switch_lang_button">Показывать кнопку переключения языка</string>
+    <string name="use_popup_mode">Использовать режим всплывающего окна</string>
+    <string name="about_this_app">О программе</string>
+    <string name="version">Версия</string>
 </resources>
