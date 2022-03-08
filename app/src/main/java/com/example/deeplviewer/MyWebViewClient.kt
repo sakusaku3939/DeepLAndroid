@@ -7,7 +7,6 @@ import android.content.res.Configuration
 import android.net.Uri
 import android.util.Log
 import android.view.View
-import android.view.animation.AlphaAnimation
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
@@ -23,7 +22,7 @@ class MyWebViewClient(
     private var isSplashFadeDone: Boolean = false
     private var param: String = "#en/en/"
 
-    var loadFinishedListener: (()->Unit)? = null
+    var loadFinishedListener: (() -> Unit)? = null
 
     override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
@@ -57,7 +56,11 @@ class MyWebViewClient(
                 WebSettingsCompat.setForceDark(view.settings, WebSettingsCompat.FORCE_DARK_ON)
                 view.loadJavaScript("patch-darkThemeFix.js")
             } else {
-                Toast.makeText(activity, "Dark mode cannot be used because FORCE_DARK is not supported", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    activity,
+                    "Dark mode cannot be used because FORCE_DARK is not supported",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
 
