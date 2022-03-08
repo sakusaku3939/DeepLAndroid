@@ -71,14 +71,6 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    override fun onPause() {
-        super.onPause()
-        getSharedPreferences("config", Context.MODE_PRIVATE)
-            .edit()
-            .putString("urlParam", webViewClient.urlParam)
-            .apply()
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {

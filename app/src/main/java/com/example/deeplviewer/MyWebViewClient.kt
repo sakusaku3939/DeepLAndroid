@@ -23,7 +23,6 @@ class MyWebViewClient(
     private var isSplashFadeDone: Boolean = false
     private var param: String = "#en/en/"
 
-    val urlParam: String get() = param
     var loadFinishedListener: (()->Unit)? = null
 
     override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
@@ -62,7 +61,13 @@ class MyWebViewClient(
             }
         }
 
-        Regex("#(.+?)/(.+?)/").find(view.url ?: "")?.let { param = it.value }
+        Regex("#(.+?)/(.+?)/").find(view.url ?: "")?.let {
+            param = it.value
+            activity.getSharedPreferences("config", Context.MODE_PRIVATE)
+                .edit()
+                .putString("urlParam", param)
+                .apply()
+        }
     }
 
     override fun onReceivedError(
