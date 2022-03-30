@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
-import android.net.Uri
 import android.util.Log
 import android.view.View
 import android.webkit.WebResourceError
@@ -24,11 +23,7 @@ class MyWebViewClient(
 
     var loadFinishedListener: (() -> Unit)? = null
 
-    override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-        activity.startActivity(intent)
-        return true
-    }
+    override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean = false
 
     override fun onPageFinished(view: WebView, url: String) {
         view.loadJavaScript("init.js")
