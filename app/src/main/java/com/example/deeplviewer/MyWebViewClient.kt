@@ -26,6 +26,7 @@ class MyWebViewClient(
     override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean = false
 
     override fun onPageFinished(view: WebView, url: String) {
+        view.loadJavaScript("jquery-3.6.0.min.js")
         view.loadJavaScript("init.js")
         view.loadJavaScript("patch-clipboard.js")
 
