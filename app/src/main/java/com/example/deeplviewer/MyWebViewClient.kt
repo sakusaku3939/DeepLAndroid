@@ -26,24 +26,25 @@ class MyWebViewClient(
     override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean = false
 
     override fun onPageFinished(view: WebView, url: String) {
-        view.loadJavaScript("jquery-3.6.0.min.js")
-        view.loadJavaScript("init.js")
-        view.loadJavaScript("patch-clipboard.js")
-
-        val config = view.context.getSharedPreferences("config", Context.MODE_PRIVATE)
-        val isEnabledSwapLanguageButton =
-            config.getBoolean(
-                view.context.getString(R.string.key_switch_lang_button),
-                true
-            )
-        if (isEnabledSwapLanguageButton) {
-            view.loadJavaScript("patch-switchLanguage.js")
-        }
-
         if (!isSplashFadeDone) {
+            view.loadJavaScript("jquery-3.6.0.min.js")
+            view.loadJavaScript("init.js")
+
+            val config = view.context.getSharedPreferences("config", Context.MODE_PRIVATE)
+            val isEnabledSwapLanguageButton =
+                config.getBoolean(
+                    view.context.getString(R.string.key_switch_lang_button),
+                    true
+                )
+            if (isEnabledSwapLanguageButton) {
+                view.loadJavaScript("patch-switchLanguage.js")
+            }
+
             isSplashFadeDone = true
             loadFinishedListener?.invoke()
         }
+
+        view.loadJavaScript("patch-clipboard.js")
 
         val nightMode =
             (view.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
