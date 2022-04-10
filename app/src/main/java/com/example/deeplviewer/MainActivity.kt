@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.animation.AlphaAnimation
+import android.webkit.CookieManager
 import android.webkit.ValueCallback
 import android.webkit.WebChromeClient
 import android.webkit.WebView
@@ -55,6 +56,11 @@ class MainActivity : AppCompatActivity() {
             webView.alpha = 1.0F
         }
 
+        val cookieManager = CookieManager.getInstance()
+        cookieManager.acceptCookie()
+        cookieManager.setAcceptThirdPartyCookies(webView, true)
+        cookieManager.flush()
+
         webView.settings.javaScriptEnabled = true
         webView.settings.domStorageEnabled = true
         webView.webViewClient = webViewClient
@@ -67,7 +73,6 @@ class MainActivity : AppCompatActivity() {
                     "\\/"
                 )
             )
-
         )
     }
 
