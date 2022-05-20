@@ -1,6 +1,8 @@
 package com.example.deeplviewer
 
+import android.content.ComponentName
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
@@ -11,6 +13,7 @@ import androidx.core.net.toUri
 import androidx.preference.DropDownPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.SwitchPreference
 
 
 class SettingsActivity : AppCompatActivity() {
@@ -47,10 +50,49 @@ class SettingsActivity : AppCompatActivity() {
                 return@setOnPreferenceChangeListener true
             }
 
+            val translateButton =
+                findPreference<SwitchPreference>(getString(R.string.key_switch_translate_button))
+            translateButton?.setOnPreferenceChangeListener { _, newValue ->
+                val packageName = requireContext().packageName
+                val packageManager = requireContext().packageManager
+
+                val showComponentName =
+                    ComponentName(packageName, "$packageName.FloatingTextSelection_show")
+                val hideComponentName =
+                    ComponentName(packageName, "$packageName.FloatingTextSelection_hide")
+
+                if (newValue == true) {
+                    packageManager.setComponentEnabledSetting(
+                        showComponentName,
+                        PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                        PackageManager.DONT_KILL_APP
+                    )
+                    packageManager.setComponentEnabledSetting(
+                        hideComponentName,
+                        PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                        PackageManager.DONT_KILL_APP
+                    )
+                } else {
+                    packageManager.setComponentEnabledSetting(
+                        hideComponentName,
+                        PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                        PackageManager.DONT_KILL_APP
+                    )
+                    packageManager.setComponentEnabledSetting(
+                        showComponentName,
+                        PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                        PackageManager.DONT_KILL_APP
+                    )
+                }
+                return@setOnPreferenceChangeListener true
+            }
+
             val versionButton = findPreference<Preference>(getString(R.string.key_version))
             versionButton?.summary = "v${BuildConfig.VERSION_NAME}"
             versionButton?.setOnPreferenceClickListener {
-                startActivity(Intent(Intent.ACTION_VIEW, getString(R.string.link_github_release).toUri()))
+                startActivity(
+                    Intent(Intent.ACTION_VIEW, getString(R.string.link_github_release).toUri())
+                )
                 return@setOnPreferenceClickListener true
             }
         }

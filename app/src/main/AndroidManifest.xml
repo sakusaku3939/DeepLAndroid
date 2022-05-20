@@ -15,9 +15,9 @@
         android:theme="@style/AppTheme.SplashTheme">
         <activity
             android:name=".SettingsActivity"
+            android:exported="false"
             android:label="@string/title_activity_settings"
-            android:theme="@style/AppTheme.PreferenceScreen"
-            android:exported="false">
+            android:theme="@style/AppTheme.PreferenceScreen">
             <intent-filter>
                 <action android:name="android.intent.action.APPLICATION_PREFERENCES" />
 
@@ -47,15 +47,22 @@
         </activity>
         <activity
             android:name=".FloatingTextSelection"
-            android:theme="@style/TransparentBackgroundTheme"
-            android:launchMode="singleInstance"
             android:excludeFromRecents="true"
-            android:exported="true">
+            android:exported="true"
+            android:launchMode="singleInstance"
+            android:theme="@style/TransparentBackgroundTheme">
             <intent-filter>
                 <action android:name="android.intent.action.TRANSLATE" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+        </activity>
+
+        <activity-alias
+            android:name=".FloatingTextSelection_show"
+            android:enabled="true"
+            android:exported="true"
+            android:targetActivity=".FloatingTextSelection">
             <intent-filter>
                 <action android:name="android.intent.action.PROCESS_TEXT" />
 
@@ -63,7 +70,13 @@
 
                 <data android:mimeType="text/plain" />
             </intent-filter>
-        </activity>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".FloatingTextSelection_hide"
+            android:enabled="false"
+            android:exported="true"
+            android:targetActivity=".FloatingTextSelection" />
     </application>
 
 </manifest>
