@@ -1,0 +1,21 @@
+<resources>
+    <!-- Translatable strings used in our GUI. Non-translatable strings should be added to /values/strings_not_translatable.xml instead. -->
+    <string name="app_name">DeepL</string>
+    <string name="image">Resim</string>
+    <string name="copy_clipboard">Metin kopyalandı</string>
+    <string name="network_err">Eyvah! DeepL sunucusuna bağlanılamadı</string>
+    <string name="title_activity_settings">Ayarlar</string>
+    <string name="themeSettings">Tema ayarları</string>
+    <string name="theme">Tema</string>
+    <string name="theme_light">Açık</string>
+    <string name="theme_dark">Koyu</string>
+    <string name="theme_battery">Pil tasarrufuna göre ayarla</string>
+    <string name="theme_default">Sistem varsayılanı</string>
+    <string name="translation_screen_options">Çeviri ekranı seçenekleri</string>
+    <string name="show_switch_lang_button">Dili değiştirme tuşunu göster</string>
+    <string name="use_popup_mode">Açılır pencere modunu kullan</string>
+    <string name="app_launch_options">Uygulama başlatma seçeneği</string>
+    <string name="show_translate_button">Metin seçim menüsünde DeepL tuşunu göster</string>
+    <string name="about_this_app">Bu uygulama hakkında</string>
+    <string name="version">Sürüm</string>
+</resources>
