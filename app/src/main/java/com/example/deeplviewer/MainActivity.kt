@@ -59,7 +59,6 @@ class MainActivity : AppCompatActivity() {
         val cookieManager = CookieManager.getInstance()
         cookieManager.acceptCookie()
         cookieManager.setAcceptThirdPartyCookies(webView, true)
-        cookieManager.flush()
 
         webView.settings.javaScriptEnabled = true
         webView.settings.domStorageEnabled = true
@@ -99,6 +98,10 @@ class MainActivity : AppCompatActivity() {
             val inputText = Uri.decode(urlParam).replace("\\/", "/")
             outState.putString("SavedText", inputText)
         }
+
+        val cookieManager = CookieManager.getInstance()
+        cookieManager.setCookie(originUrl, cookieManager.getCookie(originUrl))
+        cookieManager.flush()
     }
 
     inner class MyWebChromeClient : WebChromeClient() {
