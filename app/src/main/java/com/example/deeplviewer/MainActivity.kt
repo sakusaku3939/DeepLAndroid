@@ -17,15 +17,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var webViewClient: MyWebViewClient
     private var uploadMessage: ValueCallback<Array<Uri>>? = null
     private val startUrl by lazy {
-        val urlParam = getSharedPreferences("config", Context.MODE_PRIVATE).getString(
+        return@lazy originUrl + getSharedPreferences("config", Context.MODE_PRIVATE).getString(
             "urlParam",
             defParamValue
-        ) ?: defParamValue
-        return@lazy "https://www.deepl.com/translator$urlParam"
+        )
     }
 
     companion object {
         private const val REQUEST_SELECT_FILE = 100
+        private const val originUrl = "https://www.deepl.com/translator"
         private const val defParamValue = "#en/en/"
     }
 
@@ -95,9 +95,8 @@ class MainActivity : AppCompatActivity() {
         val webView: WebView = findViewById(R.id.webview)
         val url = webView.url ?: ""
         if (url.length > startUrl.length) {
-            val inputText =
-                Uri.decode(url.substring(startUrl.length))
-                    .replace("\\/", "/")
+            val urlParam = url.substring(startUrl.length)
+            val inputText = Uri.decode(urlParam).replace("\\/", "/")
             outState.putString("SavedText", inputText)
         }
     }
