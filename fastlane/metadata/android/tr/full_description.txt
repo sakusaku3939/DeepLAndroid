@@ -1,7 +1,8 @@
-Bu, DeepL çevirisi için resmi olmayan bir Android uygulamasıdır. Yerel bir uygulama gibi görünmesini sağlamak için bir Android Arayüz bileşeni olan WebView adlı bir teknoloji kullanır. JavaScript, en gerekli öğeler hariç hepsini gizlemek için kullanılır.
+DeepL çeviri için resmi olmayan bir Android uygulamasıdır. Yerel bir uygulama gibi görünmesini sağlamak için bir Android Arayüz bileşeni olan WebView adlı bir teknoloji kullanır. JavaScript gereksiz öğeleri gizlemek için kullanılır.
+
 
 <b>Özellikler:</b>
 
 * WebView ile yalnızca çeviri ekranını görüntüleme
 * Koyu moda geçme
-* DeepL adresini kayan metin seçimi eyleminden başlatma
+* DeepL'i kayan metin seçimi eyleminden başlatma
