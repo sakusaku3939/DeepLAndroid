@@ -40,6 +40,10 @@ class MyWebViewClient(
                 view.loadJavaScript("patch-switchLanguage.js")
             }
 
+            if (activity.localClassName == "FloatingTextSelection_show") {
+                view.loadJavaScript("patch-ads.js")
+            }
+
             isSplashFadeDone = true
             loadFinishedListener?.invoke()
         }
