@@ -77,7 +77,7 @@ class FloatingTextSelection : AppCompatActivity() {
         webView.settings.javaScriptEnabled = true
         webView.settings.domStorageEnabled = true
 
-        val webViewClient = MyWebViewClient(this)
+        val webViewClient = MyWebViewClient(this, true)
         webView.webViewClient = webViewClient
         webView.addJavascriptInterface(WebAppInterface(this), "Android")
 

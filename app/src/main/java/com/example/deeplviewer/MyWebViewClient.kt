@@ -17,6 +17,7 @@ import androidx.webkit.WebViewFeature
 
 class MyWebViewClient(
     private val activity: Activity,
+    private val isFloating: Boolean = false,
 ) : WebViewClient() {
     private var isSplashFadeDone: Boolean = false
     private var param: String = "#en/en/"
@@ -40,7 +41,7 @@ class MyWebViewClient(
                 view.loadJavaScript("patch-switchLanguage.js")
             }
 
-            if (activity.localClassName == "FloatingTextSelection_show") {
+            if (isFloating) {
                 view.loadJavaScript("patch-ads.js")
             }
 
