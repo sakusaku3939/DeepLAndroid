@@ -13,10 +13,6 @@
     <PreferenceCategory app:title="@string/translation_screen_options">
         <SwitchPreference
             app:defaultValue="true"
-            app:key="@string/key_switch_lang_button"
-            app:title="@string/show_switch_lang_button" />
-        <SwitchPreference
-            app:defaultValue="true"
             app:key="@string/key_switch_popup_mode"
             app:title="@string/use_popup_mode" />
     </PreferenceCategory>

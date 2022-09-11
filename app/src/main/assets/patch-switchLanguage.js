@@ -1,3 +1,4 @@
+/* Deactivated as it is displayed by default due to an update to the DeepL server */
 if (!$('#lang_switch').length) {
     $('html > head').append($('<style>#lang_switch.switched svg {transform:scaleY(-1)}</style>'));
     $(Android.getAssetsText('switchLanguage.html')).click(function () {

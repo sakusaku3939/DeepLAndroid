@@ -2,7 +2,6 @@
 <resources>
     <!-- Only not translatable strings should be added here -->
     <string name="key_dark_mode" translatable="false">defaultDarkMode</string>
-    <string name="key_switch_lang_button" translatable="false">isEnabledSwapLangButton</string>
     <string name="key_switch_popup_mode" translatable="false">isEnabledPopupMode</string>
     <string name="key_switch_translate_button" translatable="false">isEnabledTranslateButton</string>
     <string name="key_version" translatable="false">appVersion</string>

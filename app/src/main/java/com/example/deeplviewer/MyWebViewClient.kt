@@ -31,15 +31,8 @@ class MyWebViewClient(
             view.loadJavaScript("jquery-3.6.0.min.js")
             view.loadJavaScript("init.js")
 
-            val config = view.context.getSharedPreferences("config", Context.MODE_PRIVATE)
-            val isEnabledSwapLanguageButton =
-                config.getBoolean(
-                    view.context.getString(R.string.key_switch_lang_button),
-                    true
-                )
-            if (isEnabledSwapLanguageButton) {
-                view.loadJavaScript("patch-switchLanguage.js")
-            }
+            // Test method to display the clicked class and id
+            // view.loadJavaScript("test.js")
 
             if (isFloating) {
                 view.loadJavaScript("patch-ads.js")
