@@ -100,10 +100,6 @@ class MyWebViewClient(
     @RequiresApi(Build.VERSION_CODES.Q)
     private fun setAlgorithmicDark(view: WebView) {
         if (WebViewFeature.isFeatureSupported(WebViewFeature.ALGORITHMIC_DARKENING)) {
-            /*
-            @TODO Only the DeepL site does not allow dark mode, so consider a workaround.
-                  (it works for https://www.google.com/)
-            */
             WebSettingsCompat.setAlgorithmicDarkeningAllowed(view.settings, true)
             view.loadJavaScript("patch-darkThemeFix.js")
         } else {
