@@ -23,5 +23,5 @@ JavaScript est utilisé pour masquer tous les éléments à l'exception des plus
 Ce projet a été traduit à l'aide de DeepL.
 S'il y a des erreurs de traduction, n'hésitez pas à envoyer une demande de modification!
 
-## Licence
+## License
 [MIT](https://github.com/sakusaku3939/DeepLAndroid/blob/master/LICENSE)

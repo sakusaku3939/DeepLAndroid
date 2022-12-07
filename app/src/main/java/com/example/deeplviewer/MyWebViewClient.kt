@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
+import android.os.Build
 import android.util.Log
 import android.view.View
 import android.webkit.WebResourceError
@@ -12,6 +13,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.ImageButton
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebViewFeature
 
@@ -43,21 +45,7 @@ class MyWebViewClient(
         }
 
         view.loadJavaScript("patch-clipboard.js")
-
-        val nightMode =
-            (view.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
-        if (nightMode) {
-            if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
-                WebSettingsCompat.setForceDark(view.settings, WebSettingsCompat.FORCE_DARK_ON)
-                view.loadJavaScript("patch-darkThemeFix.js")
-            } else {
-                Toast.makeText(
-                    activity,
-                    "Dark mode cannot be used because FORCE_DARK is not supported",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-        }
+        switchTheme(view)
 
         Regex("#(.+?)/(.+?)/").find(view.url ?: "")?.let {
             param = it.value
@@ -80,7 +68,7 @@ class MyWebViewClient(
             button.setOnClickListener(listener)
 
             val errorDescription =
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) error?.description.toString() else ""
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) error?.description.toString() else ""
             Toast.makeText(activity, errorDescription, Toast.LENGTH_LONG).show()
             Log.e("onReceivedError", errorDescription)
         }
@@ -101,5 +89,44 @@ class MyWebViewClient(
 
     private fun WebView.loadJavaScript(fileName: String) {
         this.loadUrl("javascript:${getAssetsText(this.context, fileName)}")
+    }
+
+    private fun switchTheme(view: WebView) {
+        val uiMode = view.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        if (uiMode != Configuration.UI_MODE_NIGHT_YES) return
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            setAlgorithmicDark(view)
+        } else {
+            setForceDark(view)
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.Q)
+    private fun setAlgorithmicDark(view: WebView) {
+        if (WebViewFeature.isFeatureSupported(WebViewFeature.ALGORITHMIC_DARKENING)) {
+            WebSettingsCompat.setAlgorithmicDarkeningAllowed(view.settings, true)
+            view.loadJavaScript("patch-darkThemeFix.js")
+        } else {
+            Toast.makeText(
+                activity,
+                "Dark mode cannot be used because ALGORITHMIC_DARKENING is not supported",
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
+
+    @Suppress("DEPRECATION")
+    private fun setForceDark(view: WebView) {
+        if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
+            WebSettingsCompat.setForceDark(view.settings, WebSettingsCompat.FORCE_DARK_ON)
+            view.loadJavaScript("patch-darkThemeFix.js")
+        } else {
+            Toast.makeText(
+                activity,
+                "Dark mode cannot be used because FORCE_DARK is not supported",
+                Toast.LENGTH_LONG
+            ).show()
+        }
     }
 }

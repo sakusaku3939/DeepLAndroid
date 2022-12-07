@@ -17,8 +17,6 @@
         <item name="android:backgroundDimEnabled">false</item>
 
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>
-
-
     </style>
 
     <style name="AppTheme.SplashTheme">
@@ -45,5 +43,4 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">24dp</item>
     </style>
-
 </resources>

@@ -20,5 +20,5 @@ JavaScript is used to hide all but the most necessary elements.
 ## Notes
 This project has been translated using DeepL. If there are any mistranslations, please feel free to send a pull request!
 
-## Licence
+## License
 [MIT](https://github.com/sakusaku3939/DeepLAndroid/blob/master/LICENSE)
