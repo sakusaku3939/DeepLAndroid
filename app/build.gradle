@@ -31,6 +31,10 @@ android {
         defaultConfig {
             vectorDrawables.useSupportLibrary = true
         }
+
+        buildFeatures {
+            buildConfig true
+        }
     }
 
 

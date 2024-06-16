@@ -14,7 +14,6 @@ import androidx.preference.DropDownPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreference
-import com.facebook.shimmer.BuildConfig
 
 
 class SettingsActivity : AppCompatActivity() {
