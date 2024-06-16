@@ -10,7 +10,8 @@ $('head').append(`<style>
     div[data-testid="translator"] span:nth-child(3),
     footer,
     div[data-testid="chrome-extension-toast"],
-    div[data-testid="firefox-extension-toast"] {
+    div[data-testid="firefox-extension-toast"],
+    aside {
         display: none !important;
         visibility: hidden;
         height: 0;
