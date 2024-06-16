@@ -60,6 +60,13 @@ class MainActivity : AppCompatActivity() {
         cookieManager.acceptCookie()
         cookieManager.setAcceptThirdPartyCookies(webView, true)
 
+        // Load cookies from SharedPreferences
+        val sharedPreferences = getSharedPreferences("MyAppCookies", Context.MODE_PRIVATE)
+        val savedCookie = sharedPreferences.getString("cookie", null)
+        if (savedCookie != null) {
+            cookieManager.setCookie(startUrl, savedCookie)
+        }
+
         webView.settings.javaScriptEnabled = true
         webView.settings.domStorageEnabled = true
         webView.webViewClient = webViewClient
@@ -99,8 +106,15 @@ class MainActivity : AppCompatActivity() {
             outState.putString("SavedText", inputText)
         }
 
+        // Save cookies
         val cookieManager = CookieManager.getInstance()
-        cookieManager.setCookie(originUrl, cookieManager.getCookie(originUrl))
+        val cookies = cookieManager.getCookie(originUrl)
+        if (cookies != null) {
+            val sharedPreferences = getSharedPreferences("MyAppCookies", Context.MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            editor.putString("cookie", cookies)
+            editor.apply()
+        }
         cookieManager.flush()
     }
 
