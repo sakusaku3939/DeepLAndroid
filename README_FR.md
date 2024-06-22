@@ -17,7 +17,8 @@ JavaScript est utilisé pour masquer tous les éléments à l'exception des plus
 
 - Afficher uniquement l'écran de traduction via WebView
 - Passage en mode sombre
-- Lancer DeepL par une action du menu flottant de sélection de texte 
+- Lancer DeepL par une action du menu flottant de sélection de texte
+- Accédez à l'écran des paramètres en appuyant sur l'icône de l'application et en la maintenant enfoncée
 
 ## Notes
 Ce projet a été traduit à l'aide de DeepL.

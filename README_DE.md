@@ -17,6 +17,7 @@ JavaScript wird verwendet, um alle bis auf die notwendigsten Elemente auszublend
 - Den Übersetzungsbildschirm im WebView anzeigen lassen.
 - In den Dunkelmodus wechseln.
 - Starten Sie DeepL über die schwebende Textauswahlaktion.
+- Rufen Sie den Einstellungsbildschirm auf, indem Sie das Anwendungssymbol drücken und gedrückt halten.
 
 ## Anmerkung
 Dieses Projekt wurde mit DeepL übersetzt. Sollte es irgendwelche Übersetzungsfehler geben, erstellen Sie gerne einen Pull Request!
