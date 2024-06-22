@@ -23,6 +23,12 @@ class MainActivity : AppCompatActivity() {
             defParamValue
         )
     }
+    private val cookiesDisabled by lazy {
+        return@lazy getSharedPreferences(
+            "config",
+            Context.MODE_PRIVATE
+        ).getBoolean(getString(R.string.key_auto_delete_cookies), false)
+    }
 
     companion object {
         private const val REQUEST_SELECT_FILE = 100
@@ -57,21 +63,23 @@ class MainActivity : AppCompatActivity() {
             webView.alpha = 1.0F
         }
 
-        val cookieManager = CookieManager.getInstance()
-        cookieManager.acceptCookie()
-        cookieManager.setAcceptThirdPartyCookies(webView, true)
+        if (!cookiesDisabled) {
+            val cookieManager = CookieManager.getInstance()
+            cookieManager.acceptCookie()
+            cookieManager.setAcceptThirdPartyCookies(webView, true)
 
-        // Load cookies from SharedPreferences
-        val sharedPreferences = getSharedPreferences("DeepLCookies", Context.MODE_PRIVATE)
-        val savedCookie = sharedPreferences.getString("cookie", null)
-        if (savedCookie != null) {
-            cookieManager.setCookie(startUrl, savedCookie)
-        } else {
-            // Set cookie to hide banner
-            cookieManager.setCookie(
-                "https://www.deepl.com",
-                "privacySettings=%7B%22v%22%3A%221%22%2C%22t%22%3A1713052800%2C%22m%22%3A%22LAX%22%2C%22consent%22%3A%5B%22NECESSARY%22%2C%22PERFORMANCE%22%2C%22COMFORT%22%2C%22MARKETING%22%5D%7D"
-            );
+            // Load cookies from SharedPreferences
+            val sharedPreferences = getSharedPreferences("DeepLCookies", Context.MODE_PRIVATE)
+            val savedCookie = sharedPreferences.getString("cookie", null)
+            if (savedCookie != null) {
+                cookieManager.setCookie(startUrl, savedCookie)
+            } else {
+                // Set cookie to hide banner
+                cookieManager.setCookie(
+                    "https://www.deepl.com",
+                    "privacySettings=%7B%22v%22%3A%221%22%2C%22t%22%3A1713052800%2C%22m%22%3A%22LAX%22%2C%22consent%22%3A%5B%22NECESSARY%22%2C%22PERFORMANCE%22%2C%22COMFORT%22%2C%22MARKETING%22%5D%7D"
+                );
+            }
         }
 
         webView.settings.javaScriptEnabled = true
@@ -115,16 +123,20 @@ class MainActivity : AppCompatActivity() {
             outState.putString("SavedText", inputText)
         }
 
-        // Save cookies
         val cookieManager = CookieManager.getInstance()
-        val cookies = cookieManager.getCookie(originUrl)
-        if (cookies != null) {
-            val sharedPreferences = getSharedPreferences("DeepLCookies", Context.MODE_PRIVATE)
-            val editor = sharedPreferences.edit()
-            editor.putString("cookie", cookies)
-            editor.apply()
+        if (cookiesDisabled) {
+            cookieManager.removeAllCookies { }
+        } else {
+            // Save cookies
+            val cookies = cookieManager.getCookie(originUrl)
+            if (cookies != null) {
+                val sharedPreferences = getSharedPreferences("DeepLCookies", Context.MODE_PRIVATE)
+                val editor = sharedPreferences.edit()
+                editor.putString("cookie", cookies)
+                editor.apply()
+            }
+            cookieManager.flush()
         }
-        cookieManager.flush()
     }
 
     inner class MyWebChromeClient : WebChromeClient() {
