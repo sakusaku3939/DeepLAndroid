@@ -9,6 +9,7 @@ import android.view.animation.AlphaAnimation
 import android.webkit.CookieManager
 import android.webkit.ValueCallback
 import android.webkit.WebChromeClient
+import android.webkit.WebSettings
 import android.webkit.WebView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -51,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         webViewClient = MyWebViewClient(this)
         webViewClient.loadFinishedListener = {
             val animation = AlphaAnimation(0.0F, 1.0F)
-            animation.duration = 250
+            animation.duration = 100
             webView.startAnimation(animation)
             webView.alpha = 1.0F
         }
@@ -75,6 +76,8 @@ class MainActivity : AppCompatActivity() {
 
         webView.settings.javaScriptEnabled = true
         webView.settings.domStorageEnabled = true
+        webView.settings.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
+
         webView.webViewClient = webViewClient
         webView.webChromeClient = MyWebChromeClient()
         webView.addJavascriptInterface(WebAppInterface(this), "Android")
