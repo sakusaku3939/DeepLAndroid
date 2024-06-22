@@ -10,9 +10,11 @@
     <string name="theme_dark">Dunkel</string>
     <string name="theme_battery">Durch Batteriesparmodus eingestellt</string>
     <string name="theme_default">Systemstandard</string>
-    <string name="translation_screen_options">Optionen für den Übersetzungsbildschirm</string>
-    <string name="show_switch_lang_button">Schaltfläche zum Wechseln der Sprache anzeigen</string>
+    <string name="selection_menu_options">Optionen des Auswahlmenüs</string>
     <string name="use_popup_mode">Popup-Modus verwenden</string>
+    <string name="show_translate_button">DeepL-Schaltfläche im Textauswahlmenü anzeigen</string>
+    <string name="app_options">App-Optionen</string>
+    <string name="auto_delete_cookies">Cookies beim Beenden der App automatisch löschen</string>
     <string name="about_this_app">Über diese App</string>
     <string name="version">Version</string>
 </resources>
