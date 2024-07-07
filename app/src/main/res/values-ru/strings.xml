@@ -10,9 +10,11 @@
     <string name="theme_dark">Тёмная</string>
     <string name="theme_battery">Установленная режимом энергосбережения</string>
     <string name="theme_default">Как в системе</string>
-    <string name="translation_screen_options">настройки экрана перевода</string>
-    <string name="show_switch_lang_button">Показывать кнопку переключения языка</string>
+    <string name="selection_menu_options">Параметры меню выбора</string>
     <string name="use_popup_mode">Использовать режим всплывающего окна</string>
+    <string name="show_translate_button">Показывать кнопку DeepL в меню выбора текста</string>
+    <string name="app_options">Параметры приложения</string>
+    <string name="auto_delete_cookies">Автоматически удалять куки при выходе из приложения</string>
     <string name="about_this_app">О программе</string>
     <string name="version">Версия</string>
 </resources>

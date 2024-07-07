@@ -1,5 +1,4 @@
 <resources>
-        <!-- Translatable strings used in our GUI. Non-translatable strings should be added to /values/strings_not_translatable.xml instead. -->
     <string name="app_name">DeepL</string>
     <string name="image">Image</string>
     <string name="copy_clipboard">Le texte a été copié</string>
@@ -11,11 +10,11 @@
     <string name="theme_dark">Obscur</string>
     <string name="theme_battery">Défini par l\'économiseur de batterie</string>
     <string name="theme_default">Identique au système</string>
-    <string name="translation_screen_options">Options de l\'écran de traduction</string>
-    <string name="show_switch_lang_button">Afficher le bouton de changement de langue</string>
+    <string name="selection_menu_options">Options de menu de sélection</string>
     <string name="use_popup_mode">Utiliser le mode fenêtré</string>
-    <string name="app_launch_options">Option de lancement de l\'application</string>
     <string name="show_translate_button">Afficher le bouton DeepL dans le menu de sélection de texte</string>
+    <string name="app_options">Options de l\'application</string>
+    <string name="auto_delete_cookies">Supprimer automatiquement les cookies à la fermeture de l\'application</string>
     <string name="about_this_app">À propos de cette app</string>
     <string name="version">Version</string>
 </resources>

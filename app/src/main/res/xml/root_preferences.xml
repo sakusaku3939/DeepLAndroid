@@ -10,18 +10,23 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/translation_screen_options">
+    <PreferenceCategory app:title="@string/selection_menu_options">
         <SwitchPreference
             app:defaultValue="true"
             app:key="@string/key_switch_popup_mode"
             app:title="@string/use_popup_mode" />
-    </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/app_launch_options">
         <SwitchPreference
             app:defaultValue="true"
             app:key="@string/key_switch_translate_button"
             app:title="@string/show_translate_button" />
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/app_options">
+        <SwitchPreference
+            app:defaultValue="false"
+            app:key="@string/key_auto_delete_cookies"
+            app:title="@string/auto_delete_cookies" />
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/about_this_app">

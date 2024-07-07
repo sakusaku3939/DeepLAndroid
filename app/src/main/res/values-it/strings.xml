@@ -10,11 +10,11 @@
     <string name="theme_dark">Scuro</string>
     <string name="theme_battery">Impostato da Risparmio Batteria</string>
     <string name="theme_default">Predefinito di Sistema</string>
-    <string name="translation_screen_options">opzioni schermata di traduzione</string>
-    <string name="show_switch_lang_button">Mostra pulsante per invertire lingua</string>
+    <string name="selection_menu_options">Opzioni del menu di selezione</string>
     <string name="use_popup_mode">Usa modalità pop-up</string>
-    <string name="app_launch_options">opzione di lancio dell\'applicazione</string>
     <string name="show_translate_button">Mostra il pulsante DeepL nel menù di selezione del testo</string>
+    <string name="app_options">Opzioni dell\'app</string>
+    <string name="auto_delete_cookies">Elimina automaticamente i cookie alla chiusura dell\'app</string>
     <string name="about_this_app">Informazioni app</string>
     <string name="version">Versione</string>
 </resources>

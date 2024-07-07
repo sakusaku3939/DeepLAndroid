@@ -16,6 +16,7 @@ JavaScript è usato per nascondere tutto tranne gli elementi più necessari.
 - Mostra solo la schermata di traduzione tramite WebView.
 - Cambiare in modalità scura.
 - Lancia DeepL dall'azione di selezione del testo.
+- Accedere alla schermata delle impostazioni tenendo premuta l'icona dell'applicazione.
 
 ## Note
 Questo progetto è stato tradotto usando DeepL. Se ci sono errori di traduzione, sentitevi liberi di inviare una pull request!

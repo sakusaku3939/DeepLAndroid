@@ -5,3 +5,4 @@ Dies ist eine inoffizielle Android-App für den DeepL-Übersetzer. Es verwendet 
 * Den Übersetzungsbildschirm im WebView anzeigen lassen
 * In den Dunkelmodus wechseln
 * Starten Sie DeepL über die schwebende Textauswahlaktion
+* Rufen Sie den Einstellungsbildschirm auf, indem Sie das Anwendungssymbol drücken und gedrückt halten

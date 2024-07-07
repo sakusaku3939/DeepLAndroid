@@ -3,14 +3,13 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 33
-
     defaultConfig {
         applicationId "com.example.deeplviewer"
         minSdkVersion 21
         targetSdkVersion 33
-        versionCode 33
-        versionName "8.1"
+        compileSdk 33
+        versionCode 36
+        versionName "8.3"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -32,11 +31,12 @@ android {
         defaultConfig {
             vectorDrawables.useSupportLibrary = true
         }
+
+        buildFeatures {
+            buildConfig true
+        }
     }
 
-    lintOptions {
-        disable 'MissingTranslation'
-    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -45,6 +45,10 @@ android {
 
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+    namespace 'com.example.deeplviewer'
+    lint {
+        disable 'MissingTranslation'
     }
 }
 
@@ -56,9 +60,12 @@ dependencies {
     implementation "androidx.webkit:webkit:1.5.0"
     implementation "androidx.preference:preference-ktx:1.2.0"
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+    implementation 'com.google.errorprone:error_prone_annotations:2.10.0'
     implementation 'com.google.android.material:material:1.6.0'
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+    androidTestImplementation 'androidx.test:runner:1.4.0'
+    androidTestImplementation 'androidx.test:rules:1.4.0'
 }

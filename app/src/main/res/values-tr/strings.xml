@@ -1,5 +1,4 @@
 <resources>
-    <!-- Translatable strings used in our GUI. Non-translatable strings should be added to /values/strings_not_translatable.xml instead. -->
     <string name="app_name">DeepL</string>
     <string name="image">Resim</string>
     <string name="copy_clipboard">Metin kopyalandı</string>
@@ -11,11 +10,11 @@
     <string name="theme_dark">Koyu</string>
     <string name="theme_battery">Pil tasarrufuna göre ayarla</string>
     <string name="theme_default">Sistem varsayılanı</string>
-    <string name="translation_screen_options">Çeviri ekranı seçenekleri</string>
-    <string name="show_switch_lang_button">Dili değiştirme tuşunu göster</string>
+    <string name="selection_menu_options">Seçim menüsü seçenekleri</string>
     <string name="use_popup_mode">Açılır pencere modunu kullan</string>
-    <string name="app_launch_options">Uygulama başlatma seçeneği</string>
     <string name="show_translate_button">Metin seçim menüsünde DeepL tuşunu göster</string>
+    <string name="app_options">Uygulama seçenekleri</string>
+    <string name="auto_delete_cookies">Uygulamadan çıkarken çerezleri otomatik olarak sil</string>
     <string name="about_this_app">Bu uygulama hakkında</string>
     <string name="version">Sürüm</string>
 </resources>

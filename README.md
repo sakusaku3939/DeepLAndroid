@@ -16,6 +16,7 @@ JavaScript is used to hide all but the most necessary elements.
 - Display only the translation screen by WebView.
 - Switching to dark mode.
 - Launch DeepL from floating text selection action.
+- Long press on the application icon to access the settings screen.
 
 ## Notes
 This project has been translated using DeepL. If there are any mistranslations, please feel free to send a pull request!

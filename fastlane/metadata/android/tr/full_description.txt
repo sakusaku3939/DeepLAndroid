@@ -6,3 +6,4 @@ DeepL çeviri için resmi olmayan bir Android uygulamasıdır. Yerel bir uygulam
 * WebView ile yalnızca çeviri ekranını görüntüleme
 * Koyu moda geçme
 * DeepL'i kayan metin seçimi eyleminden başlatma
+* Uygulama simgesine basılı tutarak ayarlar ekranına erişin

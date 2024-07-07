@@ -16,6 +16,7 @@ JavaScript gereksiz öğeleri gizlemek için kullanılır.
 - WebView ile yalnızca çeviri ekranını görüntüleyin.
 - Karanlık moda geçme.
 - Kayan metin seçimi eyleminden DeepL'i başlatın.
+- Uygulama simgesine basılı tutarak ayarlar ekranına erişin.
 
 ## Notlar
 Bu proje DeepL kullanılarak çevrilmiştir. Herhangi bir yanlış çeviri varsa, lütfen bir çekme isteği göndermekten çekinmeyin!

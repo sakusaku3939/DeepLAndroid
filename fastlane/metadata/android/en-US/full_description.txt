@@ -5,3 +5,4 @@ This is an unofficial Android app for DeepL translation. It uses a technology ca
 * Display only the translation screen by WebView
 * Switching to dark mode
 * Launch DeepL from floating text selection action
+* Long press on the application icon to access the settings screen
