@@ -73,12 +73,6 @@ class MainActivity : AppCompatActivity() {
             val savedCookie = sharedPreferences.getString("cookie", null)
             if (savedCookie != null) {
                 cookieManager.setCookie(startUrl, savedCookie)
-            } else {
-                // Set cookie to hide banner
-                cookieManager.setCookie(
-                    "https://www.deepl.com",
-                    "privacySettings=%7B%22v%22%3A%221%22%2C%22t%22%3A1713052800%2C%22m%22%3A%22LAX%22%2C%22consent%22%3A%5B%22NECESSARY%22%2C%22PERFORMANCE%22%2C%22COMFORT%22%2C%22MARKETING%22%5D%7D"
-                );
             }
         }
 
