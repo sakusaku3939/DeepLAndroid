@@ -12,6 +12,7 @@ import android.view.animation.AlphaAnimation
 import androidx.appcompat.app.AppCompatActivity
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import java.net.URLDecoder
 
 
 class FloatingTextSelection : AppCompatActivity() {
@@ -38,7 +39,7 @@ class FloatingTextSelection : AppCompatActivity() {
                 null
             }
 
-            val floatingText = (androidTranslateFloatingText ?: intent.getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT))?.replace("/b".toRegex(), "\n") as String
+            val floatingText = (androidTranslateFloatingText ?: URLDecoder.decode(intent.getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT)?.toString(), "UTF-8")) as String
             val config = getSharedPreferences("config", Context.MODE_PRIVATE)
             val usePopup = config.getBoolean(getString(R.string.key_switch_popup_mode), true)
 
