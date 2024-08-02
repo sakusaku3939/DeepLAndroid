@@ -6,7 +6,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.animation.AlphaAnimation
-import android.webkit.CookieManager
 import android.webkit.ValueCallback
 import android.webkit.WebChromeClient
 import android.webkit.WebSettings
@@ -22,12 +21,6 @@ class MainActivity : AppCompatActivity() {
             "urlParam",
             defParamValue
         )
-    }
-    private val cookiesDisabled by lazy {
-        return@lazy getSharedPreferences(
-            "config",
-            Context.MODE_PRIVATE
-        ).getBoolean(getString(R.string.key_auto_delete_cookies), false)
     }
 
     companion object {
@@ -63,18 +56,7 @@ class MainActivity : AppCompatActivity() {
             webView.alpha = 1.0F
         }
 
-        if (!cookiesDisabled) {
-            val cookieManager = CookieManager.getInstance()
-            cookieManager.acceptCookie()
-            cookieManager.setAcceptThirdPartyCookies(webView, true)
-
-            // Load cookies from SharedPreferences
-            val sharedPreferences = getSharedPreferences("DeepLCookies", Context.MODE_PRIVATE)
-            val savedCookie = sharedPreferences.getString("cookie", null)
-            if (savedCookie != null) {
-                cookieManager.setCookie(startUrl, savedCookie)
-            }
-        }
+        CookieManagerHelper().migrateCookie(this)
 
         webView.settings.javaScriptEnabled = true
         webView.settings.domStorageEnabled = true
@@ -117,20 +99,7 @@ class MainActivity : AppCompatActivity() {
             outState.putString("SavedText", inputText)
         }
 
-        val cookieManager = CookieManager.getInstance()
-        if (cookiesDisabled) {
-            cookieManager.removeAllCookies { }
-        } else {
-            // Save cookies
-            val cookies = cookieManager.getCookie(originUrl)
-            if (cookies != null) {
-                val sharedPreferences = getSharedPreferences("DeepLCookies", Context.MODE_PRIVATE)
-                val editor = sharedPreferences.edit()
-                editor.putString("cookie", cookies)
-                editor.apply()
-            }
-            cookieManager.flush()
-        }
+        CookieManagerHelper().saveCookies(this, webView)
     }
 
     inner class MyWebChromeClient : WebChromeClient() {
