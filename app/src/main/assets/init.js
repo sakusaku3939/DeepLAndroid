@@ -10,6 +10,7 @@ $('head').append(`<style>
     footer,
     div[data-testid="chrome-extension-toast"],
     div[data-testid="firefox-extension-toast"],
+    div[id^="cookieBanner"],
     aside {
         display: none !important;
         visibility: hidden;
