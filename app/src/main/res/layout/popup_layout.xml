@@ -18,7 +18,7 @@
             android:background="@drawable/splash"
             android:minHeight="200dp">
 
-            <com.example.deeplviewer.NestedScrollWebView
+            <com.example.deeplviewer.webview.NestedScrollWebView
                 android:id="@+id/webview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
