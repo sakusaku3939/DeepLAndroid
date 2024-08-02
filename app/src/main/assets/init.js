@@ -5,7 +5,6 @@ $('head').append(`<style>
     [class*="LogoLink-module--translatorLink--"] ~ div,
     [class^="ProductNavigation-module--container--"] + div,
     [class^="SideMenuButton-module--menuButton--"],
-    [class^="BasePageHeader-module--exContainer--"] + div > div:first-child,
     h2#translation-modes-heading + div > div:first-child,
     div[data-testid="translator"] span:nth-child(3),
     footer,
