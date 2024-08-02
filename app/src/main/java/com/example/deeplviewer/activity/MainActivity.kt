@@ -1,4 +1,4 @@
-package com.example.deeplviewer
+package com.example.deeplviewer.activity
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -12,6 +12,10 @@ import android.webkit.WebSettings
 import android.webkit.WebView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.deeplviewer.helper.CookieManagerHelper
+import com.example.deeplviewer.webview.MyWebViewClient
+import com.example.deeplviewer.R
+import com.example.deeplviewer.webview.WebAppInterface
 
 class MainActivity : AppCompatActivity() {
     private lateinit var webViewClient: MyWebViewClient

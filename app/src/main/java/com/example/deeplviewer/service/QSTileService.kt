@@ -1,9 +1,10 @@
-package com.example.deeplviewer
+package com.example.deeplviewer.service
 
 import android.content.Intent
 import android.os.Build
 import android.service.quicksettings.TileService
 import androidx.annotation.RequiresApi
+import com.example.deeplviewer.activity.FloatingTextSelection
 
 @RequiresApi(Build.VERSION_CODES.N)
 class QSTileService : TileService() {

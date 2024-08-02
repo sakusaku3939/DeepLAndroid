@@ -6,7 +6,7 @@
         android:shortcutShortLabel="@string/title_activity_settings">
         <intent
             android:action="android.intent.action.VIEW"
-            android:targetClass="com.example.deeplviewer.SettingsActivity"
+            android:targetClass="com.example.deeplviewer.activity.SettingsActivity"
             android:targetPackage="com.example.deeplviewer" />
     </shortcut>
 </shortcuts>

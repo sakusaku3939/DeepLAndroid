@@ -1,4 +1,4 @@
-package com.example.deeplviewer
+package com.example.deeplviewer.webview
 
 import android.content.Context
 import android.util.AttributeSet

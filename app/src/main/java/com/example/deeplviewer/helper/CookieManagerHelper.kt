@@ -1,9 +1,10 @@
-package com.example.deeplviewer
+package com.example.deeplviewer.helper
 
 import android.content.Context
 import android.util.Log
 import android.webkit.CookieManager
 import android.webkit.WebView
+import com.example.deeplviewer.R
 
 class CookieManagerHelper {
     companion object {

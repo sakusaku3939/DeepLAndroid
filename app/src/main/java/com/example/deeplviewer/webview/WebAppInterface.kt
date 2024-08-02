@@ -1,4 +1,4 @@
-package com.example.deeplviewer
+package com.example.deeplviewer.webview
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -7,6 +7,7 @@ import android.util.Base64
 import android.webkit.JavascriptInterface
 import android.widget.Toast
 import androidx.annotation.Keep
+import com.example.deeplviewer.R
 
 @Keep
 class WebAppInterface(private val context: Context) {

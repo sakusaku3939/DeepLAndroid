@@ -12,7 +12,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/settings"
-        android:name="com.example.deeplviewer.SettingsActivity$SettingsFragment"
+        android:name="com.example.deeplviewer.activity.SettingsActivity$SettingsFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>

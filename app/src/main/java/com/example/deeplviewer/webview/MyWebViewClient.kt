@@ -1,4 +1,4 @@
-package com.example.deeplviewer
+package com.example.deeplviewer.webview
 
 import android.app.Activity
 import android.content.Context
@@ -16,6 +16,8 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebViewFeature
+import com.example.deeplviewer.R
+import com.example.deeplviewer.activity.MainActivity
 
 class MyWebViewClient(
     private val activity: Activity,

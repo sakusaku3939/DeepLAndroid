@@ -1,4 +1,4 @@
-package com.example.deeplviewer
+package com.example.deeplviewer.activity
 
 import android.content.ComponentName
 import android.content.Intent
@@ -14,6 +14,8 @@ import androidx.preference.DropDownPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreference
+import com.example.deeplviewer.BuildConfig
+import com.example.deeplviewer.R
 
 
 class SettingsActivity : AppCompatActivity() {

@@ -1,4 +1,4 @@
-package com.example.deeplviewer
+package com.example.deeplviewer.activity
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -10,6 +10,10 @@ import android.os.Looper
 import android.view.View
 import android.view.animation.AlphaAnimation
 import androidx.appcompat.app.AppCompatActivity
+import com.example.deeplviewer.R
+import com.example.deeplviewer.webview.MyWebViewClient
+import com.example.deeplviewer.webview.NestedScrollWebView
+import com.example.deeplviewer.webview.WebAppInterface
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
