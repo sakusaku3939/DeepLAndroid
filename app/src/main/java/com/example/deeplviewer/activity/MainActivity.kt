@@ -17,15 +17,15 @@ import com.example.deeplviewer.webview.WebAppInterface
 class MainActivity : AppCompatActivity() {
     private lateinit var webViewClient: MyWebViewClient
     private val startUrl by lazy {
-        return@lazy originUrl + getSharedPreferences("config", Context.MODE_PRIVATE).getString(
+        return@lazy ORIGIN_URL + getSharedPreferences("config", Context.MODE_PRIVATE).getString(
             "urlParam",
-            defParamValue
+            DEFAULT_PARAM
         )
     }
 
     companion object {
-        private const val originUrl = "https://www.deepl.com/translator"
-        private const val defParamValue = "#en/en/"
+        private const val ORIGIN_URL = "https://www.deepl.com/translator"
+        private const val DEFAULT_PARAM = "#en/en/"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

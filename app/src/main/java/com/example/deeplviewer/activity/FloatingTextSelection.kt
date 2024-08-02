@@ -23,13 +23,13 @@ class FloatingTextSelection : AppCompatActivity() {
     private val startUrl by lazy {
         val urlParam = getSharedPreferences("config", Context.MODE_PRIVATE).getString(
             "urlParam",
-            defParamValue
-        ) ?: defParamValue
+            DEFAULT_PARAM
+        ) ?: DEFAULT_PARAM
         return@lazy "https://www.deepl.com/translator$urlParam"
     }
 
     companion object {
-        private const val defParamValue = "#en/en/"
+        private const val DEFAULT_PARAM = "#en/en/"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
