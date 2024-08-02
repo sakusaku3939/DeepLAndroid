@@ -6,11 +6,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.animation.AlphaAnimation
-import android.webkit.ValueCallback
-import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.deeplviewer.helper.CookieManagerHelper
 import com.example.deeplviewer.webview.MyWebViewClient
@@ -19,7 +16,6 @@ import com.example.deeplviewer.webview.WebAppInterface
 
 class MainActivity : AppCompatActivity() {
     private lateinit var webViewClient: MyWebViewClient
-    private var uploadMessage: ValueCallback<Array<Uri>>? = null
     private val startUrl by lazy {
         return@lazy originUrl + getSharedPreferences("config", Context.MODE_PRIVATE).getString(
             "urlParam",
@@ -28,7 +24,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val REQUEST_SELECT_FILE = 100
         private const val originUrl = "https://www.deepl.com/translator"
         private const val defParamValue = "#en/en/"
     }
@@ -67,7 +62,6 @@ class MainActivity : AppCompatActivity() {
         webView.settings.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
 
         webView.webViewClient = webViewClient
-        webView.webChromeClient = MyWebChromeClient()
         webView.addJavascriptInterface(WebAppInterface(this), "Android")
         webView.loadUrl(
             startUrl + Uri.encode(
@@ -77,20 +71,6 @@ class MainActivity : AppCompatActivity() {
                 )
             )
         )
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
-            REQUEST_SELECT_FILE -> uploadMessage?.let { message ->
-                var result = WebChromeClient.FileChooserParams.parseResult(resultCode, data)
-                if (result == null) {
-                    result = if (intent.data != null) arrayOf(intent.data) else null
-                }
-                message.onReceiveValue(result)
-                uploadMessage = null
-            }
-        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -104,35 +84,5 @@ class MainActivity : AppCompatActivity() {
         }
 
         CookieManagerHelper().saveCookies(this, webView)
-    }
-
-    inner class MyWebChromeClient : WebChromeClient() {
-        override fun onShowFileChooser(
-            mWebView: WebView,
-            filePathCallback: ValueCallback<Array<Uri>>,
-            fileChooserParams: FileChooserParams
-        ): Boolean {
-            if (uploadMessage != null) {
-                uploadMessage?.onReceiveValue(null)
-                uploadMessage = null
-            }
-
-            uploadMessage = filePathCallback
-
-            val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
-                type = "*/*"
-            }
-
-            try {
-                startActivityForResult(intent, REQUEST_SELECT_FILE)
-            } catch (e: Exception) {
-                uploadMessage = null
-                Toast.makeText(this@MainActivity, "Cannot Open File Chooser", Toast.LENGTH_SHORT)
-                    .show()
-                return false
-            }
-
-            return true
-        }
     }
 }
