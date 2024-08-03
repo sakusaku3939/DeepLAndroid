@@ -27,7 +27,13 @@ class MyWebViewClient(
 
     var loadFinishedListener: (() -> Unit)? = null
 
-    override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean = false
+    override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+        val url = request?.url.toString()
+        val regex = Regex("^https://www\\.deepl\\.com/.*/translator.*$")
+        val isDeepLTranslatorUrl = regex.matches(url)
+
+        return !isDeepLTranslatorUrl
+    }
 
     override fun onPageFinished(view: WebView, url: String) {
         if (!isSplashFadeDone) {
