@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.animation.AlphaAnimation
 import android.webkit.WebSettings
 import android.webkit.WebView
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import com.example.deeplviewer.helper.CookieManagerHelper
 import com.example.deeplviewer.webview.MyWebViewClient
@@ -32,6 +33,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         createWebView(intent, savedInstanceState)
+
+        val settingButton: ImageButton = findViewById(R.id.settingButton)
+
+        settingButton.setOnClickListener {
+            val intent = Intent(this, SettingsActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onNewIntent(intent: Intent?) {
