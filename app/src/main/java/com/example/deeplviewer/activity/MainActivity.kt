@@ -85,9 +85,14 @@ class MainActivity : AppCompatActivity() {
         super.onSaveInstanceState(outState)
         val webView: WebView = findViewById(R.id.webview)
         val url = webView.url ?: ""
-        if (url.length > startUrl.length) {
-            val urlParam = url.substring(startUrl.length)
-            val inputText = Uri.decode(urlParam).replace("\\/", "/")
+
+        val urlParam = url.substringAfter("translator")
+        val originUrlParam = startUrl.substringAfter("translator")
+        val isTextChanged = urlParam != originUrlParam
+
+        if (isTextChanged) {
+            val urlText = urlParam.substring(originUrlParam.length)
+            val inputText = Uri.decode(urlText).replace("\\/", "/")
             outState.putString("SavedText", inputText)
         }
 
