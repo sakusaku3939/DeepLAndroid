@@ -2,4 +2,5 @@
 <resources>
     <color name="background">@color/background_material_dark</color>
     <color name="preferenceScreenAccent">#ffffff</color>
+    <color name="settingIcon">#ffffff</color>
 </resources>

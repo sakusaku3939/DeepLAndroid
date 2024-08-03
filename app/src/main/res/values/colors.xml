@@ -11,4 +11,5 @@
     <color name="toolbarBackground">@color/background</color>
 
     <color name="preferenceScreenAccent">@color/colorAccent</color>
+    <color name="settingIcon">#212121</color>
 </resources>
