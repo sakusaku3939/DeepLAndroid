@@ -1,0 +1,21 @@
+<resources>
+    <!-- Translatable strings used in our GUI. Non-translatable strings should be added to /values/strings_not_translatable.xml instead. -->
+    <string name="app_name">DeepL</string>
+    <string name="image">图片</string>
+    <string name="copy_clipboard">文本已复制</string>
+    <string name="network_err">哎呀，连接 DeepL 服务失败</string>
+    <string name="title_activity_settings">设置</string>
+    <string name="themeSettings">主题设置</string>
+    <string name="theme">主题</string>
+    <string name="theme_light">浅色</string>
+    <string name="theme_dark">深色</string>
+    <string name="theme_battery">由省电模式设置</string>
+    <string name="theme_default">系统默认</string>
+    <string name="selection_menu_options">菜单选择</string>
+    <string name="use_popup_mode">使用弹窗模式</string>
+    <string name="show_translate_button">在文本选择菜单中显示 DeepL 按钮</string>
+    <string name="app_options">应用选项</string>
+    <string name="auto_delete_cookies">退出应用时自动删除 cookie</string>
+    <string name="about_this_app">关于此应用</string>
+    <string name="version">版本</string>
+</resources>
