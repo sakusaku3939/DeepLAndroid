@@ -11,5 +11,6 @@
 /build
 /captures
 .externalNativeBuild
+/.kotlin
 .cxx
 .idea

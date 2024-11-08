@@ -10,6 +10,7 @@ $('head').append(`<style>
     div[data-testid="chrome-extension-toast"],
     div[data-testid="firefox-extension-toast"],
     div[id="cookieBanner"],
+    div[aria-labelledby="app-stores-banner-description"], /* Download app from Play Store banner */
     aside {
         display: none !important;
         visibility: hidden;

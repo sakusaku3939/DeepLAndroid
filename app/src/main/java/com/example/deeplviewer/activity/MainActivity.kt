@@ -34,9 +34,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         createWebView(intent, savedInstanceState)
 
-        val settingButton: ImageButton = findViewById(R.id.settingButton)
-
-        settingButton.setOnClickListener {
+        findViewById<ImageButton>(R.id.settingButton).setOnClickListener {
             val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
         }
@@ -64,6 +62,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         CookieManagerHelper().migrateCookie(this)
+        CookieManagerHelper().addPrivacyCookie()
 
         webView.settings.javaScriptEnabled = true
         webView.settings.domStorageEnabled = true
@@ -90,7 +89,7 @@ class MainActivity : AppCompatActivity() {
         val originUrlParam = startUrl.substringAfter("translator")
         val isTextChanged = urlParam != originUrlParam
 
-        if (isTextChanged) {
+        if (isTextChanged && urlParam.isNotEmpty()) {
             val urlText = urlParam.substring(originUrlParam.length)
             val inputText = Uri.decode(urlText).replace("\\/", "/")
             outState.putString("SavedText", inputText)

@@ -5,12 +5,22 @@ import android.util.Log
 import android.webkit.CookieManager
 import android.webkit.WebView
 import com.example.deeplviewer.R
+import java.net.URLEncoder
 
 class CookieManagerHelper {
     companion object {
         private fun getCookieManager(): CookieManager {
             return CookieManager.getInstance()
         }
+    }
+
+    fun addPrivacyCookie() {
+        val privacyValue = "{\"v\":2,\"t\":${System.currentTimeMillis().div(1000)},\"m\":\"STRICT\",\"consent\":[\"NECESSARY\"]}"
+
+        getCookieManager().setCookie(
+            ".deepl.com",
+            "privacySettings=${URLEncoder.encode(privacyValue, Charsets.UTF_8.name())}"
+        )
     }
 
     fun saveCookies(context: Context, webView: WebView) {
