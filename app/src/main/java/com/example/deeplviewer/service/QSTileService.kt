@@ -1,15 +1,13 @@
 package com.example.deeplviewer.service
 
-import android.annotation.SuppressLint
-import android.annotation.TargetApi
 import android.content.Intent
 import android.os.Build
 import android.service.quicksettings.TileService
 import androidx.annotation.RequiresApi
+import android.annotation.SuppressLint
 import com.example.deeplviewer.activity.FloatingTextSelection
 
 @RequiresApi(Build.VERSION_CODES.N)
-@TargetApi(Build.VERSION_CODES.N)
 class QSTileService : TileService() {
     override fun onClick() {
         val intent = Intent(applicationContext, FloatingTextSelection::class.java)
