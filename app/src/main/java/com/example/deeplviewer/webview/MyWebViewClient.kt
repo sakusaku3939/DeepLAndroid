@@ -29,7 +29,7 @@ class MyWebViewClient(
 
     override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
         val url = request?.url.toString()
-        val regex = Regex("^https://www\\.deepl\\.com/.*/translator.*$")
+        val regex = Regex("^https://www\\.deepl\\.com/.*/(translator|write).*$")
         val isDeepLTranslatorUrl = regex.matches(url)
 
         return !isDeepLTranslatorUrl
@@ -37,17 +37,14 @@ class MyWebViewClient(
 
     override fun onPageFinished(view: WebView, url: String) {
         if (!isSplashFadeDone) {
-            view.loadJavaScript("jquery-3.6.0.min.js")
-            view.loadJavaScript("init.js")
-
-            // Test method to display the clicked class and id
-            // view.loadJavaScript("test.js")
-
             isSplashFadeDone = true
             loadFinishedListener?.invoke()
         }
 
+        view.loadJavaScript("jquery-3.6.0.min.js")
+        view.loadJavaScript("init.js")
         view.loadJavaScript("patch-clipboard.js")
+
         switchTheme(view)
 
         Regex("#(.+?)/(.+?)/").find(view.url ?: "")?.let {

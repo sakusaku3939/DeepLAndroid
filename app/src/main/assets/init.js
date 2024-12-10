@@ -8,6 +8,7 @@ $('head').append(`<style>
     footer,
     div[data-testid="chrome-extension-toast"],
     div[data-testid="firefox-extension-toast"],
+    div[data-testid="write-banner"], /* Write with confidence banner */
     div[id="cookieBanner"],
     div[aria-labelledby="app-stores-banner-description"], /* Download app from Play Store banner */
     aside {
