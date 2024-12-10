@@ -1,4 +1,3 @@
-$('a').css('pointer-events', 'none');
 $('*').css('-webkit-tap-highlight-color', 'rgba(0,0,0,.1)');
 
 $('head').append(`<style>
