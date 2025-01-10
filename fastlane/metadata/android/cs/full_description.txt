@@ -1,8 +1,0 @@
-Toto je neoficiální Android aplikace pro DeepL pøeklady. Využívá technologii WebView, komponentu grafického uživatelského rozhraní systému Android, aby vypadala jako nativní aplikace. JavaScript se používá ke skrytí všech prvkù kromì tìch nejnutnìjších.
-
-<b>Funkce:</b>
-
-* Zobrazení pouze obrazovky pøekladu pomocí WebView
-* Pøepínání do tmavého režimu
-* Spuštìní DeepL z akce výbìru v plovoucím textu
-* Dlouhý stisk ikony aplikace umožòuje otevøít obrazovku s nastavením
