@@ -2,9 +2,9 @@
 # DeepL Android
 ![platform](https://img.shields.io/badge/platform-android-green) ![release](https://img.shields.io/github/v/release/sakusaku3939/DeepLAndroid.svg) ![license](https://img.shields.io/github/license/sakusaku3939/DeepLAndroid)  
 
-Toto je neoficiální Android aplikace pro DeepL pøeklady.  
-Vyuívá technologii WebView, komponentu grafického uivatelského rozhraní systému Android, aby vypadala jako nativní aplikace.  
-JavaScript se pouívá ke skrytí všech prvkù kromì tìch nejnutnìjších  
+Toto je neoficiÃ¡lnÃ­ Android aplikace pro DeepL pÅ™eklady.  
+VyuÅ¾Ã­vÃ¡ technologii WebView, komponentu grafickÃ©ho uÅ¾ivatelskÃ©ho rozhranÃ­ systÃ©mu Android, aby vypadala jako nativnÃ­ aplikace.  
+JavaScript se pouÅ¾Ã­vÃ¡ ke skrytÃ­ vÅ¡ech prvkÅ¯ kromÄ› tÄ›ch nejnutnÄ›jÅ¡Ã­ch  
 
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
     alt="Get it on F-Droid"
@@ -13,13 +13,13 @@ JavaScript se pouívá ke skrytí všech prvkù kromì tìch nejnutnìjších
 ![image](https://user-images.githubusercontent.com/53967490/89320092-fe2fdf00-d6bb-11ea-97d6-84fd66f73395.png)
 
 ## Funkce
-- Zobrazení pouze obrazovky pøekladu pomocí WebView.
-- Pøepínání do tmavého reimu.
-- Spuštìní DeepL z akce vıbìru v plovoucím textu.
-- Dlouhı stisk ikony aplikace umoòuje otevøít obrazovku s nastavením.
+- ZobrazenÃ­ pouze obrazovky pÅ™ekladu pomocÃ­ WebView.
+- PÅ™epÃ­nÃ¡nÃ­ do tmavÃ©ho reÅ¾imu.
+- SpuÅ¡tÄ›nÃ­ DeepL z akce vÃ½bÄ›ru v plovoucÃ­m textu.
+- DlouhÃ½ stisk ikony aplikace umoÅ¾Åˆuje otevÅ™Ã­t obrazovku s nastavenÃ­m.
 
-## Poznámky
-Tento projekt byl pøeloen pomocí DeepL. Pokud se v nìm vyskytnou nìjaké chyby v pøekladu, neváhejte poslat pull request!
+## PoznÃ¡mky
+Tento projekt byl pÅ™eloÅ¾en pomocÃ­ DeepL. Pokud se v nÄ›m vyskytnou nÄ›jakÃ© chyby v pÅ™ekladu, nevÃ¡hejte poslat pull request!
 
 ## Licence
 [MIT](https://github.com/sakusaku3939/DeepLAndroid/blob/master/LICENSE)
