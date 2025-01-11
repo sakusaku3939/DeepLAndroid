@@ -7,8 +7,8 @@ android {
         minSdkVersion 21
         targetSdkVersion 35
         compileSdk 35
-        versionCode 40
-        versionName "8.7"
+        versionCode 41
+        versionName "8.8"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
