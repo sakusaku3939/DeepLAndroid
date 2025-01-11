@@ -1,4 +1,4 @@
-####  [JA](https://github.com/sakusaku3939/DeepLAndroid/blob/master/README_JA.md) | [EN](https://github.com/sakusaku3939/DeepLAndroid#readme) | [RU](https://github.com/sakusaku3939/DeepLAndroid/blob/master/README_RU.md) | [DE](https://github.com/sakusaku3939/DeepLAndroid/blob/master/README_DE.md) | [FR](https://github.com/sakusaku3939/DeepLAndroid/blob/master/README_FR.md) | [IT](https://github.com/sakusaku3939/DeepLAndroid/blob/master/README_IT.md) | [TR](https://github.com/sakusaku3939/DeepLAndroid/blob/master/README_TR.md) | [ZH](README_ZH.md)
+#### [EN](https://github.com/sakusaku3939/DeepLAndroid#readme) | [JA](README_JA.md) | [RU](README_RU.md) | [DE](README_DE.md) | [FR](README_FR.md) | [IT](README_IT.md) | [TR](README_TR.md) | [ZH](README_ZH.md) | [CS](README_CS.md)
 # DeepL Android
 ![platform](https://img.shields.io/badge/platform-android-green) ![release](https://img.shields.io/github/v/release/sakusaku3939/DeepLAndroid.svg) ![license](https://img.shields.io/github/license/sakusaku3939/DeepLAndroid)  
 

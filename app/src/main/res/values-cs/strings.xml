@@ -1,0 +1,21 @@
+<resources>
+    <!-- Translatable strings used in our GUI. Non-translatable strings should be added to /values/strings_not_translatable.xml instead. -->
+    <string name="app_name">DeepL</string>
+    <string name="image">Obrázek</string>
+    <string name="copy_clipboard">Text byl zkopírován</string>
+    <string name="network_err">Ups, nepodařilo se připojit k serveru DeepL</string>
+    <string name="title_activity_settings">Nastavení</string>
+    <string name="themeSettings">nastavení motivu</string>
+    <string name="theme">motiv</string>
+    <string name="theme_light">Světlý</string>
+    <string name="theme_dark">Tmavý</string>
+    <string name="theme_battery">Nastavení podle spořiče baterie</string>
+    <string name="theme_default">Výchozí nastavení systému</string>
+    <string name="selection_menu_options">možnosti nabídky výběru</string>
+    <string name="use_popup_mode">Použití režimu vyskakovacího okna</string>
+    <string name="show_translate_button">Zobrazit tlačítko DeepL v nabídce výběru textu</string>
+    <string name="app_options">možnosti aplikace</string>
+    <string name="auto_delete_cookies">Automatické mazání souborů cookie při ukončení aplikace</string>
+    <string name="about_this_app">o této aplikaci</string>
+    <string name="version">Verze</string>
+</resources>

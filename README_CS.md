@@ -2,9 +2,9 @@
 # DeepL Android
 ![platform](https://img.shields.io/badge/platform-android-green) ![release](https://img.shields.io/github/v/release/sakusaku3939/DeepLAndroid.svg) ![license](https://img.shields.io/github/license/sakusaku3939/DeepLAndroid)  
 
-This is an unofficial Android app for DeepL translation.  
-It uses a technology called WebView, an Android GUI component, to make it look like a native app.  
-JavaScript is used to hide all but the most necessary elements.  
+Toto je neoficiální Android aplikace pro DeepL překlady.  
+Využívá technologii WebView, komponentu grafického uživatelského rozhraní systému Android, aby vypadala jako nativní aplikace.  
+JavaScript se používá ke skrytí všech prvků kromě těch nejnutnějších  
 
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
     alt="Get it on F-Droid"
@@ -12,14 +12,14 @@ JavaScript is used to hide all but the most necessary elements.
 
 ![image](https://user-images.githubusercontent.com/53967490/89320092-fe2fdf00-d6bb-11ea-97d6-84fd66f73395.png)
 
-## Features
-- Display only the translation screen by WebView.
-- Switching to dark mode.
-- Launch DeepL from floating text selection action.
-- Long press on the application icon to access the settings screen.
+## Funkce
+- Zobrazení pouze obrazovky překladu pomocí WebView.
+- Přepínání do tmavého režimu.
+- Spuštění DeepL z akce výběru v plovoucím textu.
+- Dlouhý stisk ikony aplikace umožňuje otevřít obrazovku s nastavením.
 
-## Notes
-This project has been translated using DeepL. If there are any mistranslations, please feel free to send a pull request!
+## Poznámky
+Tento projekt byl přeložen pomocí DeepL. Pokud se v něm vyskytnou nějaké chyby v překladu, neváhejte poslat pull request!
 
-## License
+## Licence
 [MIT](https://github.com/sakusaku3939/DeepLAndroid/blob/master/LICENSE)
