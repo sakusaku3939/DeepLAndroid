@@ -59,9 +59,9 @@ class SettingsActivity : AppCompatActivity() {
                 val packageManager = requireContext().packageManager
 
                 val showComponentName =
-                    ComponentName(packageName, "$packageName.FloatingTextSelection_show")
+                    ComponentName(packageName, "com.example.deeplviewer.FloatingTextSelection_show")
                 val hideComponentName =
-                    ComponentName(packageName, "$packageName.FloatingTextSelection_hide")
+                    ComponentName(packageName, "com.example.deeplviewer.FloatingTextSelection_hide")
 
                 if (newValue == true) {
                     packageManager.setComponentEnabledSetting(
