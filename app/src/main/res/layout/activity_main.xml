@@ -57,6 +57,6 @@
         android:id="@+id/webview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:alpha="0.4" />
+        android:alpha="0.0" />
 
 </LinearLayout>

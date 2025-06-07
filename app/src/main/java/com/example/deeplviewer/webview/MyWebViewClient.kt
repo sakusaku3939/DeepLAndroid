@@ -36,25 +36,27 @@ class MyWebViewClient(
         return !isDeepLTranslatorUrl
     }
 
+    override fun onPageStarted(view: WebView, url: String, favicon: android.graphics.Bitmap?) {
+        // initially hide elements with `visibility: hidden`
+        view.loadJavaScript("hide-elements.js")
+        view.postDelayed({
+            view.evaluateJavascript("hideElementsInitially();", null)
+        }, 100)
+    }
+
     override fun onPageFinished(view: WebView, url: String) {
         if (!isSplashFadeDone) {
             isSplashFadeDone = true
             loadFinishedListener?.invoke()
         }
 
+        // finally hide elements with `display: none`
+        view.evaluateJavascript("hideElementsFinal();", null)
+
         view.loadJavaScript("jquery-3.6.0.min.js")
-        view.loadJavaScript("init.js")
-        view.loadJavaScript("patch-clipboard.js")
 
         switchTheme(view)
-
-        Regex("#(.+?)/(.+?)/").find(view.url ?: "")?.let {
-            param = it.value
-            activity.getSharedPreferences("config", Context.MODE_PRIVATE)
-                .edit {
-                    putString("urlParam", param)
-                }
-        }
+        saveUrlParam(view.url)
     }
 
     override fun onReceivedError(
@@ -64,6 +66,7 @@ class MyWebViewClient(
     ) {
         if (request.isForMainFrame) {
             activity.setContentView(R.layout.network_err)
+
             val button: ImageButton = activity.findViewById(R.id.reload)
             val listener = ReloadButtonListener()
             button.setOnClickListener(listener)
@@ -75,23 +78,37 @@ class MyWebViewClient(
         }
     }
 
-    private inner class ReloadButtonListener : View.OnClickListener {
-        override fun onClick(view: View) {
-            val i = Intent(activity, MainActivity::class.java)
-            activity.finish()
-            activity.overridePendingTransition(0, 0)
-            activity.startActivity(i)
+    /**
+     * Saves the URL parameter from the DeepL translator URL
+     */
+    private fun saveUrlParam(url: String?) {
+        Regex("#(.+?)/(.+?)/").find(url ?: "")?.let {
+            param = it.value
+            activity.getSharedPreferences("config", Context.MODE_PRIVATE)
+                .edit {
+                    putString("urlParam", param)
+                }
         }
     }
 
+    /**
+     * loads a JavaScript file from the assets folder into the WebView
+     */
+    private fun WebView.loadJavaScript(fileName: String) {
+        val jsCode = getAssetsText(this.context, fileName)
+        this.evaluateJavascript(jsCode, null)
+    }
+
+    /**
+     * Reads a text file from the assets folder
+     */
     private fun getAssetsText(context: Context, fileName: String): String {
         return context.assets.open(fileName).reader(Charsets.UTF_8).use { it.readText() }
     }
 
-    private fun WebView.loadJavaScript(fileName: String) {
-        this.loadUrl("javascript:${getAssetsText(this.context, fileName)}")
-    }
-
+    /**
+     * Switches the WebView theme based on the system's dark mode setting
+     */
     private fun switchTheme(view: WebView) {
         val uiMode = view.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
         if (uiMode != Configuration.UI_MODE_NIGHT_YES) return
@@ -103,6 +120,9 @@ class MyWebViewClient(
         }
     }
 
+    /**
+     * Applies algorithmic darkening to the WebView if supported
+     */
     @RequiresApi(Build.VERSION_CODES.Q)
     private fun setAlgorithmicDark(view: WebView) {
         if (WebViewFeature.isFeatureSupported(WebViewFeature.ALGORITHMIC_DARKENING)) {
@@ -117,6 +137,9 @@ class MyWebViewClient(
         }
     }
 
+    /**
+     * Forces dark mode on the WebView
+     */
     @Suppress("DEPRECATION")
     private fun setForceDark(view: WebView) {
         if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
@@ -128,6 +151,15 @@ class MyWebViewClient(
                 "Dark mode cannot be used because FORCE_DARK is not supported",
                 Toast.LENGTH_LONG
             ).show()
+        }
+    }
+
+    private inner class ReloadButtonListener : View.OnClickListener {
+        override fun onClick(view: View) {
+            val i = Intent(activity, MainActivity::class.java)
+            activity.finish()
+            activity.overridePendingTransition(0, 0)
+            activity.startActivity(i)
         }
     }
 }

@@ -82,7 +82,6 @@ class MainActivity : AppCompatActivity() {
      */
     private fun initializeWebView() {
         webView = findViewById(R.id.webview)
-        webView.alpha = 0.0F
         WebViewConfig.applyBasicSettings(webView)
         WebViewConfig.applyOptimizedSettings(webView)
     }
