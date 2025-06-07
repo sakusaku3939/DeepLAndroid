@@ -18,6 +18,7 @@ import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebViewFeature
 import com.example.deeplviewer.R
 import com.example.deeplviewer.activity.MainActivity
+import androidx.core.content.edit
 
 class MyWebViewClient(
     private val activity: Activity,
@@ -50,9 +51,9 @@ class MyWebViewClient(
         Regex("#(.+?)/(.+?)/").find(view.url ?: "")?.let {
             param = it.value
             activity.getSharedPreferences("config", Context.MODE_PRIVATE)
-                .edit()
-                .putString("urlParam", param)
-                .apply()
+                .edit {
+                    putString("urlParam", param)
+                }
         }
     }
 

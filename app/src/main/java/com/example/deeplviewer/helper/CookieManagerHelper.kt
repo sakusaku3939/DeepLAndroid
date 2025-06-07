@@ -6,6 +6,7 @@ import android.webkit.CookieManager
 import android.webkit.WebView
 import com.example.deeplviewer.R
 import java.net.URLEncoder
+import androidx.core.content.edit
 
 class CookieManagerHelper {
     companion object {
@@ -45,7 +46,7 @@ class CookieManagerHelper {
 
         if (savedCookie != null) {
             clearCookies()
-            sharedPreferences.edit().clear().apply()
+            sharedPreferences.edit { clear() }
         }
     }
 
