@@ -9,8 +9,11 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.view.animation.AlphaAnimation
+import android.webkit.WebView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.deeplviewer.R
+import com.example.deeplviewer.config.WebViewConfig
+import com.example.deeplviewer.helper.WebViewUrlHelper
 import com.example.deeplviewer.webview.MyWebViewClient
 import com.example.deeplviewer.webview.NestedScrollWebView
 import com.example.deeplviewer.webview.WebAppInterface
@@ -19,6 +22,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 
 
 class FloatingTextSelection : AppCompatActivity() {
+    private lateinit var webView: WebView
+    private lateinit var webViewClient: MyWebViewClient
+    private lateinit var layout: View
 
     private val startUrl by lazy {
         val urlParam = getSharedPreferences("config", Context.MODE_PRIVATE).getString(
@@ -66,6 +72,9 @@ class FloatingTextSelection : AppCompatActivity() {
         overridePendingTransition(0, 0)
     }
 
+    /**
+     * Launches the DeepL WebView in fullscreen mode with the selected text
+     */
     private fun launchFullscreen(initialText: String) {
         val intent = Intent(this, MainActivity::class.java)
         intent.putExtra("FLOATING_TEXT", initialText)
@@ -75,58 +84,85 @@ class FloatingTextSelection : AppCompatActivity() {
         finish()
     }
 
-    @SuppressLint("SetJavaScriptEnabled", "RestrictedApi", "VisibleForTests")
+    /**
+     * Launches a popup with the DeepL WebView and the selected text
+     */
     private fun launchPopup(initialText: String) {
-        val layout = layoutInflater.inflate(R.layout.popup_layout, null)
-        val webView = layout.findViewById<NestedScrollWebView>(R.id.webview)
+        initializeWebView()
+        setupWebViewClient()
 
-        webView.settings.javaScriptEnabled = true
-        webView.settings.domStorageEnabled = true
-
-        val webViewClient = MyWebViewClient(this)
-        webView.webViewClient = webViewClient
+        // Add JavaScript interface for communication
         webView.addJavascriptInterface(WebAppInterface(this), "Android")
 
+        webViewClient.loadFinishedListener = {
+            setWebViewHeight()
+            showWebViewWithAnimation()
+        }
+
+        showBottomSheetDialog()
+
+        // Load the initial URL
+        val targetUrl = WebViewUrlHelper.buildUrl(startUrl, initialText)
+        webView.loadUrl(targetUrl)
+    }
+
+    /**
+     * Initializes the WebView
+     */
+    private fun initializeWebView() {
+        layout = layoutInflater.inflate(R.layout.popup_layout, null)
+        webView = layout.findViewById<NestedScrollWebView>(R.id.webview)
+
+        WebViewConfig.applyBasicSettings(webView)
+    }
+
+    /**
+     * Sets up the WebViewClient
+     */
+    private fun setupWebViewClient() {
+        webViewClient = MyWebViewClient(this)
+        webView.webViewClient = webViewClient
+    }
+
+    /**
+     * Shows the BottomSheetDialog with the WebView
+     */
+    @SuppressLint("RestrictedApi", "VisibleForTests")
+    private fun showBottomSheetDialog() {
         val dialog = BottomSheetDialog(this)
         dialog.setContentView(layout)
         dialog.setOnDismissListener { finish() }
         dialog.behavior.disableShapeAnimations()
         dialog.show()
+    }
 
-        webViewClient.loadFinishedListener = {
-            // wait a bit, cause the WebView will change it's height multiple times caused by some lazy-loaded elements
-            Handler(Looper.getMainLooper()).postDelayed({
-                // Get the screen height and set the WebView height to 70% of the screen height
-                val displayMetrics = resources.displayMetrics
-                val screenHeight = displayMetrics.heightPixels
-                val webViewHeight = (screenHeight * 0.7).toInt()
+    /**
+     * Sets the height of the WebView to 70% of the screen height
+     */
+    private fun setWebViewHeight() {
+        val displayMetrics = resources.displayMetrics
+        val screenHeight = displayMetrics.heightPixels
+        val webViewHeight = (screenHeight * 0.7).toInt()
 
-                val layoutParams = webView.layoutParams
-                layoutParams.height = webViewHeight
-                webView.layoutParams = layoutParams
+        val layoutParams = webView.layoutParams
+        layoutParams.height = webViewHeight
+        webView.layoutParams = layoutParams
 
-                webView.measure(
-                    View.MeasureSpec.makeMeasureSpec(webView.width, View.MeasureSpec.EXACTLY),
-                    View.MeasureSpec.makeMeasureSpec(webViewHeight, View.MeasureSpec.EXACTLY)
-                )
-                webView.layout(0, 0, webView.width, webViewHeight)
-
-                // Fade in the WebView and hide the shimmer effect
-                val animation = AlphaAnimation(0.0F, 1.0F)
-                animation.duration = 250
-                webView.visibility = View.VISIBLE
-                webView.startAnimation(animation)
-                layout.findViewById<ShimmerFrameLayout>(R.id.shimmer_view_container).hideShimmer()
-            }, 750)
-        }
-
-        webView.loadUrl(
-            startUrl + Uri.encode(
-                initialText.replace(
-                    "/",
-                    "\\/"
-                )
-            )
+        webView.measure(
+            View.MeasureSpec.makeMeasureSpec(webView.width, View.MeasureSpec.EXACTLY),
+            View.MeasureSpec.makeMeasureSpec(webViewHeight, View.MeasureSpec.EXACTLY)
         )
+        webView.layout(0, 0, webView.width, webViewHeight)
+    }
+
+    /**
+     * Shows the WebView with a fade-in animation
+     */
+    private fun showWebViewWithAnimation() {
+        val animation = AlphaAnimation(0.0F, 1.0F)
+        animation.duration = 250
+        webView.visibility = View.VISIBLE
+        webView.startAnimation(animation)
+        layout.findViewById<ShimmerFrameLayout>(R.id.shimmer_view_container).hideShimmer()
     }
 }
