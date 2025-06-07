@@ -39,9 +39,7 @@ class MyWebViewClient(
     override fun onPageStarted(view: WebView, url: String, favicon: android.graphics.Bitmap?) {
         // initially hide elements with `visibility: hidden`
         view.loadJavaScript("hide-elements.js")
-        view.postDelayed({
-            view.evaluateJavascript("hideElementsInitially();", null)
-        }, 100)
+        view.evaluateJavascript("hideElementsInitially();", null)
     }
 
     override fun onPageFinished(view: WebView, url: String) {

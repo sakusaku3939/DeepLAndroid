@@ -1,4 +1,4 @@
-(function() {
+(function () {
     const HIDE_SELECTORS = `
         header,
         nav[class^="md"],
@@ -19,13 +19,35 @@
         document.head.appendChild(style);
     }
 
+    /* wait for the Head element to be available */
+    function waitForHead(callback) {
+        if (document.head) {
+            callback();
+            return;
+        }
+
+        const observer = new MutationObserver(function (mutations) {
+            if (document.head) {
+                observer.disconnect();
+                callback();
+            }
+        });
+
+        observer.observe(document, {
+            childList: true,
+            subtree: true
+        });
+    }
+
     /* initially hide elements with `visibility: hidden` */
-    window.hideElementsInitially = function() {
-        injectCSS(HIDE_SELECTORS + ` { visibility: hidden !important; }`);
+    window.hideElementsInitially = function () {
+        waitForHead(function () {
+            injectCSS(HIDE_SELECTORS + ` { visibility: hidden !important; }`);
+        });
     };
 
     /* finally hide elements with `display: none` */
-    window.hideElementsFinal = function() {
+    window.hideElementsFinal = function () {
         injectCSS(`
             * { -webkit-tap-highlight-color: rgba(0, 0, 0,.1); }
             ${HIDE_SELECTORS} {
