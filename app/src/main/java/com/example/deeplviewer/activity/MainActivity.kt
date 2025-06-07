@@ -101,11 +101,6 @@ class MainActivity : AppCompatActivity() {
      */
     private fun setupWebViewClient() {
         webViewClient = MyWebViewClient(this)
-        webViewClient.loadFinishedListener = {
-            val animation = AlphaAnimation(0.0F, 1.0F).apply { duration = 100 }
-            webView.startAnimation(animation)
-            webView.alpha = 1.0F
-        }
         webView.webViewClient = webViewClient
     }
 
