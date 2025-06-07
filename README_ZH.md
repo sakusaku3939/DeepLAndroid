@@ -1,5 +1,7 @@
 #### [EN](https://github.com/sakusaku3939/DeepLAndroid#readme) | [JA](README_JA.md) | [RU](README_RU.md) | [DE](README_DE.md) | [FR](README_FR.md) | [IT](README_IT.md) | [TR](README_TR.md) | [ZH](README_ZH.md) | [CS](README_CS.md)
 # DeepL Android
+![platform](https://img.shields.io/badge/platform-android-green) ![release](https://img.shields.io/github/v/release/sakusaku3939/DeepLAndroid.svg) ![license](https://img.shields.io/github/license/sakusaku3939/DeepLAndroid) ![downloads](https://img.shields.io/github/downloads/sakusaku3939/DeepLAndroid/total.svg)
+
 这是一个非官方的 DeepL 翻译 Android 应用。
 它使用了 WebView 技术，这是 Android 图形用户界面的一个组件，使其看起来像一个原生应用。
 为了隐藏所有不必要的元素，只保留最必要的部分，使用了 JavaScript。
