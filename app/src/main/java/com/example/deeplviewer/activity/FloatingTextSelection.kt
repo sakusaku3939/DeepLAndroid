@@ -36,13 +36,15 @@ class FloatingTextSelection : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            val androidTranslateFloatingText = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
-                intent.getCharSequenceExtra(Intent.EXTRA_TEXT)
-            } else {
-                null
-            }
+            val androidTranslateFloatingText =
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+                    intent.getCharSequenceExtra(Intent.EXTRA_TEXT)
+                } else {
+                    null
+                }
 
-            val floatingText = (androidTranslateFloatingText ?: intent.getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT)) as String
+            val floatingText = (androidTranslateFloatingText
+                ?: intent.getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT)) as String
             val config = getSharedPreferences("config", Context.MODE_PRIVATE)
             val usePopup = config.getBoolean(getString(R.string.key_switch_popup_mode), true)
 
@@ -94,6 +96,22 @@ class FloatingTextSelection : AppCompatActivity() {
         webViewClient.loadFinishedListener = {
             // wait a bit, cause the WebView will change it's height multiple times caused by some lazy-loaded elements
             Handler(Looper.getMainLooper()).postDelayed({
+                // Get the screen height and set the WebView height to 70% of the screen height
+                val displayMetrics = resources.displayMetrics
+                val screenHeight = displayMetrics.heightPixels
+                val webViewHeight = (screenHeight * 0.7).toInt()
+
+                val layoutParams = webView.layoutParams
+                layoutParams.height = webViewHeight
+                webView.layoutParams = layoutParams
+
+                webView.measure(
+                    View.MeasureSpec.makeMeasureSpec(webView.width, View.MeasureSpec.EXACTLY),
+                    View.MeasureSpec.makeMeasureSpec(webViewHeight, View.MeasureSpec.EXACTLY)
+                )
+                webView.layout(0, 0, webView.width, webViewHeight)
+
+                // Fade in the WebView and hide the shimmer effect
                 val animation = AlphaAnimation(0.0F, 1.0F)
                 animation.duration = 250
                 webView.visibility = View.VISIBLE
