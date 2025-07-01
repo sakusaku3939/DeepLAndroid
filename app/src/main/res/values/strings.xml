@@ -5,17 +5,17 @@
     <string name="copy_clipboard">Text has been Copied</string>
     <string name="network_err">Oops, failed to connect to DeepL server</string>
     <string name="title_activity_settings">Settings</string>
-    <string name="themeSettings">theme settings</string>
-    <string name="theme">theme</string>
+    <string name="themeSettings">Theme settings</string>
+    <string name="theme">Theme</string>
     <string name="theme_light">Light</string>
     <string name="theme_dark">Dark</string>
     <string name="theme_battery">Set by Battery Saver</string>
     <string name="theme_default">System default</string>
-    <string name="selection_menu_options">selection menu options</string>
+    <string name="selection_menu_options">Selection menu options</string>
     <string name="use_popup_mode">Use pop-up mode</string>
     <string name="show_translate_button">Show DeepL button in the text selection menu</string>
-    <string name="app_options">app options</string>
+    <string name="app_options">App options</string>
     <string name="auto_delete_cookies">Automatically delete cookies when exiting the app</string>
-    <string name="about_this_app">about this app</string>
+    <string name="about_this_app">About this app</string>
     <string name="version">Version</string>
 </resources>
