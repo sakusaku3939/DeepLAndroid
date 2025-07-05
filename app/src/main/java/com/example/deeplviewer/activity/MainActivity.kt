@@ -5,7 +5,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.animation.AlphaAnimation
 import android.webkit.WebView
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
@@ -15,21 +14,24 @@ import com.example.deeplviewer.R
 import com.example.deeplviewer.config.WebViewConfig
 import com.example.deeplviewer.helper.WebViewUrlHelper
 import com.example.deeplviewer.webview.WebAppInterface
+import androidx.core.content.edit
 
 class MainActivity : AppCompatActivity() {
     private lateinit var webView: WebView
     private lateinit var webViewClient: MyWebViewClient
 
     private val startUrl by lazy {
-        ORIGIN_URL + getSharedPreferences("config", Context.MODE_PRIVATE).getString(
-            "urlParam",
-            DEFAULT_PARAM
-        )
+        val configPrefs = getSharedPreferences("config", Context.MODE_PRIVATE)
+        val urlParam = configPrefs.getString("urlParam", DEFAULT_PARAM) ?: DEFAULT_PARAM
+        val pageType = configPrefs.getString("pageType", DEFAULT_PAGE_TYPE) ?: DEFAULT_PAGE_TYPE
+
+        ORIGIN_URL + pageType + urlParam
     }
 
     companion object {
-        private const val ORIGIN_URL = "https://www.deepl.com/translator"
+        private const val ORIGIN_URL = "https://www.deepl.com/"
         private const val DEFAULT_PARAM = "#en/en/"
+        private const val DEFAULT_PAGE_TYPE = "translator"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -135,14 +137,26 @@ class MainActivity : AppCompatActivity() {
         val webView: WebView = findViewById(R.id.webview)
         val url = webView.url ?: ""
 
-        val urlParam = url.substringAfter("translator")
-        val originUrlParam = startUrl.substringAfter("translator")
-        val isTextChanged = urlParam != originUrlParam
+        // Extract the page type 'translator' or 'write' from the URL
+        val pageTypeRegex = Regex("^https://www\\.deepl\\.com/.*/(translator|write).*$")
+        val pageTypeMatch = pageTypeRegex.find(url)
+        val pageType = pageTypeMatch?.groupValues?.get(1)
 
-        if (isTextChanged && urlParam.isNotEmpty()) {
-            val urlText = urlParam.substring(originUrlParam.length)
-            val inputText = Uri.decode(urlText).replace("\\/", "/")
-            outState.putString("SavedText", inputText)
+        pageType?.let {
+            getSharedPreferences("config", Context.MODE_PRIVATE).edit {
+                putString("pageType", it)
+            }
+
+            // Save the URL parameter if it changed
+            val urlParam = url.substringAfter(it)
+            val originUrlParam = startUrl.substringAfter(it)
+            val isTextChanged = urlParam != originUrlParam
+
+            if (isTextChanged && urlParam.isNotEmpty()) {
+                val urlText = urlParam.substring(originUrlParam.length)
+                val inputText = Uri.decode(urlText).replace("\\/", "/")
+                outState.putString("SavedText", inputText)
+            }
         }
 
         try {
