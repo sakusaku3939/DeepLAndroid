@@ -28,6 +28,9 @@ class MainActivity : AppCompatActivity() {
         ORIGIN_URL + pageType + urlParam
     }
 
+    val testWebViewClient: MyWebViewClient?
+        get() = if (::webViewClient.isInitialized) webViewClient else null
+
     companion object {
         private const val ORIGIN_URL = "https://www.deepl.com/"
         private const val DEFAULT_PARAM = "#en/en/"
