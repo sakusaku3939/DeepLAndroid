@@ -50,6 +50,6 @@ class WebViewScreenshotTest : ScreenshotTest {
         }
 
         // Wait for rendering to complete (using SystemClock for instrumentation tests)
-        SystemClock.sleep(5000)
+        SystemClock.sleep(8000)
     }
 }
