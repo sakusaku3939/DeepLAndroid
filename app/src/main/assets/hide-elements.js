@@ -3,7 +3,7 @@
         header,
         nav[class^="md"],
         h2#translation-modes-heading + div > div:first-child,
-        div[data-testid="translator"] span:nth-child(3),
+        div[data-testid="translator"] > div:not(:first-child),
         footer,
         div[data-testid="chrome-extension-toast"],
         div[data-testid="firefox-extension-toast"],
