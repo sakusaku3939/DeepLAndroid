@@ -2,6 +2,17 @@ name: Compare WebView Screenshots
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * 0"
+  workflow_run:
+    workflows: [ "Generate WebView Screenshots" ]
+    types:
+      - completed
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
   compare-screenshots:
@@ -74,35 +85,66 @@ jobs:
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: false
           script: |
-            ./gradlew executeScreenshotTests
+            ./gradlew executeScreenshotTests || true
 
-      - name: Verify screenshots
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 35
-          arch: x86_64
-          target: google_apis
-          force-avd-creation: false
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          disable-animations: false
-          script: |
-            ./gradlew verifyScreenshots || echo "Screenshot verification completed"
-
-      - name: Find verification report
+      - name: Prepare report for GitHub Pages
         run: |
-          echo "Searching for verification/index.html files:"
-          find . -name "index.html" -path "*/verification/*" -type f | while read file; do
-            echo "Found verification report: $file"
-          done
+          mkdir -p public
+          if [ -d "app/build/reports/shot/debug/verification" ]; then
+            cp -r app/build/reports/shot/debug/verification/* public/
+          else
+            echo "<h1>No screenshot report found</h1>" > public/index.html
+          fi
+      - name: Upload artifact for Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public
 
-      - name: Upload comparison results
+      - name: Upload comparison results as artifact
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: screenshot-comparison-${{ github.run_id }}
           path: |
-            app/screenshots/
-            **/screenshots/
-            app/build/reports/shot/
-            **/build/reports/shot/
+            app/build/reports/shot/debug/verification/
+            public/
           retention-days: 30
+
+  deploy:
+    needs: compare-screenshots
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    permissions:
+      pages: write
+      id-token: write
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  check-result:
+    needs: [ compare-screenshots, deploy ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download comparison artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: screenshot-comparison-${{ github.run_id }}
+
+      - name: Fail job if diff found
+        run: |
+          REPORT=$(find . -type f -name "TEST-Shot.xml" | head -n 1)
+          if [ -z "$REPORT" ]; then
+            echo "❌ TEST-Shot.xml not found"
+            exit 1
+          fi
+          if grep -q "<failure" "$REPORT"; then
+            echo "❌ Screenshot diff detected"
+            exit 1
+          else
+            echo "✅ No screenshot diff detected"
+          fi
