@@ -4,6 +4,16 @@ pluginManagement {
         mavenCentral()
         gradlePluginPortal()
     }
+
+    resolutionStrategy{
+        eachPlugin{
+            when(requested.id.id){
+                "shot" -> {
+                    useModule("com.karumi:shot:${requested.version}")
+                }
+            }
+        }
+    }
 }
 
 dependencyResolutionManagement {
