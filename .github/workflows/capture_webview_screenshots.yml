@@ -1,26 +1,20 @@
-name: Compare WebView Screenshots
+name: Capture WebView Screenshots
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "0 0 * * *"
-  workflow_run:
-    workflows: [ "Generate WebView Screenshots" ]
-    types:
-      - completed
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 jobs:
-  compare-screenshots:
+  generate-screenshots:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          persist-credentials: true
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -75,7 +69,7 @@ jobs:
           disable-animations: false
           script: echo "Generated AVD snapshot for caching."
 
-      - name: Run screenshot tests
+      - name: Generate and record screenshots
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 35
@@ -85,66 +79,27 @@ jobs:
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: false
           script: |
-            ./gradlew executeScreenshotTests || true
+            ./gradlew executeScreenshotTests -Precord
 
-      - name: Prepare report for GitHub Pages
+      - name: Commit and push new screenshots
         run: |
-          mkdir -p public
-          if [ -d "app/build/reports/shot/debug/verification" ]; then
-            cp -r app/build/reports/shot/debug/verification/* public/
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add app/screenshots/
+          git add **/screenshots/
+          if git diff --staged --quiet; then
+            echo "No screenshot changes to commit"
           else
-            echo "<h1>No screenshot report found</h1>" > public/index.html
+            git commit -m "Update screenshots"
+            git push
           fi
-      - name: Upload artifact for Pages
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./public
 
-      - name: Upload comparison results as artifact
+      - name: Upload screenshots
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: screenshot-comparison-${{ github.run_id }}
+          name: screenshots-${{ github.run_id }}
           path: |
-            app/build/reports/shot/debug/verification/
-            public/
+            app/screenshots/
+            **/screenshots/
           retention-days: 30
-
-  deploy:
-    needs: compare-screenshots
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    permissions:
-      pages: write
-      id-token: write
-
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-
-  check-result:
-    needs: [ compare-screenshots, deploy ]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download comparison artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: screenshot-comparison-${{ github.run_id }}
-
-      - name: Fail job if diff found
-        run: |
-          REPORT=$(find . -type f -name "TEST-Shot.xml" | head -n 1)
-          if [ -z "$REPORT" ]; then
-            echo "❌ TEST-Shot.xml not found"
-            exit 1
-          fi
-          if grep -q "<failure" "$REPORT"; then
-            echo "❌ Screenshot diff detected"
-            exit 1
-          else
-            echo "✅ No screenshot diff detected"
-          fi
