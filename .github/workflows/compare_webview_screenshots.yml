@@ -3,7 +3,7 @@ name: Compare WebView Screenshots
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 0 * * 0"
+    - cron: "0 0 * * *"
   workflow_run:
     workflows: [ "Generate WebView Screenshots" ]
     types:
