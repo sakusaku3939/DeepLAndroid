@@ -8,38 +8,27 @@ import android.util.Log
 import android.webkit.WebView
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
-import com.example.deeplviewer.helper.CookieManagerHelper
-import com.example.deeplviewer.webview.MyWebViewClient
+import androidx.core.content.edit
 import com.example.deeplviewer.R
 import com.example.deeplviewer.config.WebViewConfig
-import com.example.deeplviewer.helper.WebViewUrlHelper
+import com.example.deeplviewer.helper.CookieManagerHelper
+import com.example.deeplviewer.helper.UrlHelper
+import com.example.deeplviewer.webview.MyWebViewClient
 import com.example.deeplviewer.webview.WebAppInterface
-import androidx.core.content.edit
 
 class MainActivity : AppCompatActivity() {
     private lateinit var webView: WebView
     private lateinit var webViewClient: MyWebViewClient
-
-    private val startUrl by lazy {
-        val configPrefs = getSharedPreferences("config", Context.MODE_PRIVATE)
-        val urlParam = configPrefs.getString("urlParam", DEFAULT_PARAM) ?: DEFAULT_PARAM
-        val pageType = configPrefs.getString("pageType", DEFAULT_PAGE_TYPE) ?: DEFAULT_PAGE_TYPE
-
-        ORIGIN_URL + pageType + urlParam
-    }
+    private lateinit var startUrl: String
 
     val testWebViewClient: MyWebViewClient?
         get() = if (::webViewClient.isInitialized) webViewClient else null
 
-    companion object {
-        private const val ORIGIN_URL = "https://www.deepl.com/"
-        private const val DEFAULT_PARAM = "#en/en/"
-        private const val DEFAULT_PAGE_TYPE = "translator"
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        startUrl = UrlHelper.buildStartUrl(this)
 
         initializeWebView()
         createWebView(intent, savedInstanceState)
@@ -78,7 +67,7 @@ class MainActivity : AppCompatActivity() {
         webView.addJavascriptInterface(WebAppInterface(this), "Android")
 
         // Load the initial URL
-        val targetUrl = WebViewUrlHelper.buildUrl(startUrl, receivedText)
+        val targetUrl = UrlHelper.buildWebViewUrl(startUrl, receivedText)
         webView.loadUrl(targetUrl)
     }
 

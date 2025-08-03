@@ -10,7 +10,7 @@ import android.webkit.WebView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.deeplviewer.R
 import com.example.deeplviewer.config.WebViewConfig
-import com.example.deeplviewer.helper.WebViewUrlHelper
+import com.example.deeplviewer.helper.UrlHelper
 import com.example.deeplviewer.webview.MyWebViewClient
 import com.example.deeplviewer.webview.NestedScrollWebView
 import com.example.deeplviewer.webview.WebAppInterface
@@ -22,26 +22,12 @@ class FloatingTextSelection : AppCompatActivity() {
     private lateinit var webView: WebView
     private lateinit var webViewClient: MyWebViewClient
     private lateinit var layout: View
-
-    private val startUrl by lazy {
-        val configPrefs = getSharedPreferences("config", Context.MODE_PRIVATE)
-        val urlParam = configPrefs.getString(
-            "urlParam",
-            DEFAULT_PARAM
-        ) ?: DEFAULT_PARAM
-        val pageType = configPrefs.getString("pageType", DEFAULT_PAGE_TYPE) ?: DEFAULT_PAGE_TYPE
-
-        ORIGIN_URL + pageType + urlParam
-    }
-
-    companion object {
-        private const val ORIGIN_URL = "https://www.deepl.com/"
-        private const val DEFAULT_PARAM = "#en/en/"
-        private const val DEFAULT_PAGE_TYPE = "translator"
-    }
+    private lateinit var startUrl: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        startUrl = UrlHelper.buildStartUrl(this)
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             val androidTranslateFloatingText =
@@ -104,7 +90,7 @@ class FloatingTextSelection : AppCompatActivity() {
         showBottomSheetDialog()
 
         // Load the initial URL
-        val targetUrl = WebViewUrlHelper.buildUrl(startUrl, initialText)
+        val targetUrl = UrlHelper.buildWebViewUrl(startUrl, initialText)
         webView.loadUrl(targetUrl)
     }
 
