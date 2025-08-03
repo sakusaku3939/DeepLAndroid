@@ -3,10 +3,7 @@ package com.example.deeplviewer.activity
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.webkit.WebView
@@ -27,15 +24,20 @@ class FloatingTextSelection : AppCompatActivity() {
     private lateinit var layout: View
 
     private val startUrl by lazy {
-        val urlParam = getSharedPreferences("config", Context.MODE_PRIVATE).getString(
+        val configPrefs = getSharedPreferences("config", Context.MODE_PRIVATE)
+        val urlParam = configPrefs.getString(
             "urlParam",
             DEFAULT_PARAM
         ) ?: DEFAULT_PARAM
-        return@lazy "https://www.deepl.com/translator$urlParam"
+        val pageType = configPrefs.getString("pageType", DEFAULT_PAGE_TYPE) ?: DEFAULT_PAGE_TYPE
+
+        ORIGIN_URL + pageType + urlParam
     }
 
     companion object {
+        private const val ORIGIN_URL = "https://www.deepl.com/"
         private const val DEFAULT_PARAM = "#en/en/"
+        private const val DEFAULT_PAGE_TYPE = "translator"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
