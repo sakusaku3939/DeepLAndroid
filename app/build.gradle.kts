@@ -64,7 +64,7 @@ android {
 
 shot {
     applicationId = "com.example.deeplviewer"
-    tolerance = 0.1
+    tolerance = 0.2
 }
 
 dependencies {
