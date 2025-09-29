@@ -6,14 +6,14 @@ plugins {
 
 android {
     namespace = "com.example.deeplviewer"
-    compileSdk = libs.versions.compileSdk.get().toInt()
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.deeplviewer"
-        minSdk = libs.versions.minSdk.get().toInt()
-        targetSdk = libs.versions.targetSdk.get().toInt()
-        versionCode = libs.versions.versionCode.get().toInt()
-        versionName = libs.versions.versionName.get()
+        minSdk = 21
+        targetSdk = 36
+        versionCode = 46
+        versionName = "9.2.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunner = "com.karumi.shot.ShotTestRunner"

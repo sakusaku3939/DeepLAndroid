@@ -1,11 +1,6 @@
 [versions]
 agp = "8.10.1"
 kotlin = "2.1.21"
-compileSdk = "36"
-targetSdk = "36"
-minSdk = "21"
-versionCode = "45"
-versionName = "9.2"
 
 androidx-core-ktx = "1.16.0"
 androidx-appcompat = "1.7.0"
