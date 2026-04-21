@@ -9,6 +9,8 @@ import android.webkit.WebView
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
+import androidx.webkit.WebViewCompat
+import androidx.webkit.WebViewFeature
 import com.example.deeplviewer.R
 import com.example.deeplviewer.config.WebViewConfig
 import com.example.deeplviewer.helper.CookieManagerHelper
@@ -78,6 +80,24 @@ class MainActivity : AppCompatActivity() {
         webView = findViewById(R.id.webview)
         WebViewConfig.applyBasicSettings(webView)
         WebViewConfig.applyOptimizedSettings(webView)
+        if (com.example.deeplviewer.BuildConfig.DEBUG) {
+            WebView.setWebContentsDebuggingEnabled(true)
+        }
+        // Inject window.chrome before any page scripts run so DeepL's browser
+        // detection recognises the WebView as Chrome (WebView lacks this object)
+        // DeepL's feature system requires window.chrome (absent in WebView) and
+        // window.speechSynthesis (absent in WebView) to initialize the translator.
+        // Inject both before any page scripts run to prevent feature init timeouts.
+        if (WebViewFeature.isFeatureSupported(WebViewFeature.DOCUMENT_START_SCRIPT)) {
+            WebViewCompat.addDocumentStartJavaScript(
+                webView,
+                """
+                if(!window.chrome){window.chrome={};}
+                if(!window.speechSynthesis){window.speechSynthesis={getVoices:function(){return[];},speak:function(){},cancel:function(){},pause:function(){},resume:function(){},addEventListener:function(){},removeEventListener:function(){}};}
+                """.trimIndent(),
+                setOf("https://www.deepl.com")
+            )
+        }
     }
 
     /**
