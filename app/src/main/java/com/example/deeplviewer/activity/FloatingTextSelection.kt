@@ -3,11 +3,14 @@ package com.example.deeplviewer.activity
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.webkit.WebView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.webkit.WebViewCompat
+import androidx.webkit.WebViewFeature
 import com.example.deeplviewer.R
 import com.example.deeplviewer.config.WebViewConfig
 import com.example.deeplviewer.helper.UrlHelper
@@ -102,6 +105,18 @@ class FloatingTextSelection : AppCompatActivity() {
         webView = layout.findViewById<NestedScrollWebView>(R.id.webview)
 
         WebViewConfig.applyBasicSettings(webView)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q &&
+            WebViewFeature.isFeatureSupported(WebViewFeature.DOCUMENT_START_SCRIPT)) {
+            val polyfillJs = assets.open("hide-elements.js").reader().use { it.readText() }
+            WebViewCompat.addDocumentStartJavaScript(
+                webView,
+                """
+                if(!window.chrome){window.chrome={};}
+                if(!window.speechSynthesis){window.speechSynthesis={getVoices:function(){return[];},speak:function(){},cancel:function(){},pause:function(){},resume:function(){},addEventListener:function(){},removeEventListener:function(){}};}
+                """.trimIndent() + "\n" + polyfillJs,
+                setOf("https://www.deepl.com")
+            )
+        }
     }
 
     /**

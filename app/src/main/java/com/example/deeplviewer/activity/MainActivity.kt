@@ -3,6 +3,7 @@ package com.example.deeplviewer.activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.webkit.WebView
@@ -83,12 +84,11 @@ class MainActivity : AppCompatActivity() {
         if (com.example.deeplviewer.BuildConfig.DEBUG) {
             WebView.setWebContentsDebuggingEnabled(true)
         }
-        // Inject window.chrome before any page scripts run so DeepL's browser
-        // detection recognises the WebView as Chrome (WebView lacks this object)
-        // DeepL's feature system requires window.chrome (absent in WebView) and
-        // window.speechSynthesis (absent in WebView) to initialize the translator.
-        // Inject both before any page scripts run to prevent feature init timeouts.
-        if (WebViewFeature.isFeatureSupported(WebViewFeature.DOCUMENT_START_SCRIPT)) {
+        // addDocumentStartJavaScript internally requires WebViewRenderProcessClient (API 29+).
+        // isFeatureSupported() incorrectly returns true on API 28, so we must also guard
+        // with the API level check to avoid a NoClassDefFoundError at runtime.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q &&
+            WebViewFeature.isFeatureSupported(WebViewFeature.DOCUMENT_START_SCRIPT)) {
             val polyfillJs = assets.open("hide-elements.js").reader().use { it.readText() }
             WebViewCompat.addDocumentStartJavaScript(
                 webView,

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
+import android.graphics.Bitmap
 import android.os.Build
 import android.util.Log
 import android.view.View
@@ -36,14 +37,28 @@ class MyWebViewClient(
         return !isDeepLTranslatorUrl
     }
 
+    override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
+        super.onPageStarted(view, url, favicon)
+        // Inject polyfills early when DOCUMENT_START_SCRIPT is unavailable.
+        // Also guard by API 29+ because isFeatureSupported() returns true on API 28
+        // but the actual call crashes with NoClassDefFoundError (WebViewRenderProcessClient
+        // is API 29+). onPageStarted fires before HTML parsing, so this runs before
+        // DeepL's scripts in practice.
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q ||
+            !WebViewFeature.isFeatureSupported(WebViewFeature.DOCUMENT_START_SCRIPT)) {
+            view.evaluateJavascript(POLYFILL_JS, null)
+        }
+    }
+
     override fun onPageFinished(view: WebView, url: String) {
         if (!isSplashFadeDone) {
             isSplashFadeDone = true
             loadFinishedListener?.invoke()
         }
 
-        // Fallback for devices that don't support DOCUMENT_START_SCRIPT (API < 29)
-        if (!WebViewFeature.isFeatureSupported(WebViewFeature.DOCUMENT_START_SCRIPT)) {
+        // Fallback for API < 29 where addDocumentStartJavaScript is unavailable
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q ||
+            !WebViewFeature.isFeatureSupported(WebViewFeature.DOCUMENT_START_SCRIPT)) {
             view.loadJavaScript("hide-elements.js")
         }
 
@@ -144,6 +159,13 @@ class MyWebViewClient(
                 Toast.LENGTH_LONG
             ).show()
         }
+    }
+
+    companion object {
+        private val POLYFILL_JS = """
+            if(!window.chrome){window.chrome={};}
+            if(!window.speechSynthesis){window.speechSynthesis={getVoices:function(){return[];},speak:function(){},cancel:function(){},pause:function(){},resume:function(){},addEventListener:function(){},removeEventListener:function(){}};}
+        """.trimIndent()
     }
 
     private inner class ReloadButtonListener : View.OnClickListener {
