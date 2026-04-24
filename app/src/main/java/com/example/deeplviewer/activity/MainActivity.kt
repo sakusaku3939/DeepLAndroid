@@ -89,12 +89,13 @@ class MainActivity : AppCompatActivity() {
         // window.speechSynthesis (absent in WebView) to initialize the translator.
         // Inject both before any page scripts run to prevent feature init timeouts.
         if (WebViewFeature.isFeatureSupported(WebViewFeature.DOCUMENT_START_SCRIPT)) {
+            val polyfillJs = assets.open("hide-elements.js").reader().use { it.readText() }
             WebViewCompat.addDocumentStartJavaScript(
                 webView,
                 """
                 if(!window.chrome){window.chrome={};}
                 if(!window.speechSynthesis){window.speechSynthesis={getVoices:function(){return[];},speak:function(){},cancel:function(){},pause:function(){},resume:function(){},addEventListener:function(){},removeEventListener:function(){}};}
-                """.trimIndent(),
+                """.trimIndent() + "\n" + polyfillJs,
                 setOf("https://www.deepl.com")
             )
         }

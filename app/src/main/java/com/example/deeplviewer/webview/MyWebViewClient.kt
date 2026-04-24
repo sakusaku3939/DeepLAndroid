@@ -36,22 +36,16 @@ class MyWebViewClient(
         return !isDeepLTranslatorUrl
     }
 
-    override fun onPageStarted(view: WebView, url: String, favicon: android.graphics.Bitmap?) {
-        // initially hide elements with `visibility: hidden`
-        view.loadJavaScript("hide-elements.js")
-        view.evaluateJavascript("hideElementsInitially();", null)
-    }
-
     override fun onPageFinished(view: WebView, url: String) {
         if (!isSplashFadeDone) {
             isSplashFadeDone = true
             loadFinishedListener?.invoke()
         }
 
-        // finally hide elements with `display: none`
-        view.evaluateJavascript("hideElementsFinal();", null)
-
-        view.loadJavaScript("jquery-3.6.0.min.js")
+        // Fallback for devices that don't support DOCUMENT_START_SCRIPT (API < 29)
+        if (!WebViewFeature.isFeatureSupported(WebViewFeature.DOCUMENT_START_SCRIPT)) {
+            view.loadJavaScript("hide-elements.js")
+        }
 
         switchTheme(view)
         saveUrlParam(view.url)
