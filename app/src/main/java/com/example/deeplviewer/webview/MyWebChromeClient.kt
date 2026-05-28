@@ -1,6 +1,8 @@
 package com.example.deeplviewer.webview
 
+import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Message
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
@@ -23,7 +25,11 @@ class MyWebChromeClient(
             private fun handleUrl(url: String) {
                 if (handled || url.isEmpty() || url == "about:blank") return
                 handled = true
-                mainWebView.loadUrl(url)
+                if (isDeepLInternalUrl(url)) {
+                    mainWebView.loadUrl(url)
+                } else {
+                    openExternalUrl(url)
+                }
                 mainWebView.post { tempWebView.destroy() }
             }
 
@@ -46,6 +52,19 @@ class MyWebChromeClient(
     }
 
     companion object {
-        val DEEPL_INTERNAL_REGEX = Regex("^https://www\\.deepl\\.com/.*/(translator|write).*$")
+        val DEEPL_INTERNAL_REGEX =
+            Regex("^https://www\\.deepl\\.com/(?:[^/#?]+/)?(translator|write).*$")
+
+        fun isDeepLInternalUrl(url: String): Boolean {
+            return DEEPL_INTERNAL_REGEX.matches(url)
+        }
+    }
+
+    private fun openExternalUrl(url: String) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        runCatching {
+            mainWebView.context.startActivity(intent)
+        }
     }
 }
