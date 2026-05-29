@@ -2,6 +2,7 @@
     const HIDE_SELECTORS = [
         'header',
         'nav[class^="md"]',
+        '#primary-heading-container',
         'h2#translation-modes-heading + div > div:first-child',
         'div[data-testid="translator"] > div:not(:first-child)',
         'footer',
