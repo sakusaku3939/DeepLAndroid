@@ -17,7 +17,6 @@ import com.example.deeplviewer.config.WebViewConfig
 import com.example.deeplviewer.helper.CookieManagerHelper
 import com.example.deeplviewer.helper.UrlHelper
 import com.example.deeplviewer.webview.MyWebChromeClient
-import com.example.deeplviewer.webview.MyWebChromeClient.Companion.DEEPL_INTERNAL_REGEX
 import com.example.deeplviewer.webview.MyWebViewClient
 import com.example.deeplviewer.webview.WebAppInterface
 
@@ -142,10 +141,10 @@ class MainActivity : AppCompatActivity() {
         updateWriteButtonIcon(button)
         button.setOnClickListener {
             val urlParam = getSharedPreferences("config", Context.MODE_PRIVATE)
-                .getString("urlParam", "#en/en/") ?: "#en/en/"
+                .getString("urlParam", null)
             val isCurrentlyWrite = startUrl.contains("/write")
             val newPageType = if (isCurrentlyWrite) "translator" else "write"
-            val newUrl = "https://www.deepl.com/$newPageType$urlParam"
+            val newUrl = UrlHelper.buildPageUrl(newPageType, urlParam ?: "")
             startUrl = newUrl
             webView.loadUrl(newUrl)
             updateWriteButtonIcon(button)
@@ -176,22 +175,18 @@ class MainActivity : AppCompatActivity() {
         val webView: WebView = findViewById(R.id.webview)
         val url = webView.url ?: ""
 
-        val pageTypeMatch = DEEPL_INTERNAL_REGEX.find(url)
-        val pageType = pageTypeMatch?.groupValues?.get(1)
+        val pageType = UrlHelper.extractPageType(url)
 
         pageType?.let {
             getSharedPreferences("config", Context.MODE_PRIVATE).edit {
                 putString("pageType", it)
+                UrlHelper.extractUrlParam(url)?.let { urlParam ->
+                    putString("urlParam", urlParam)
+                }
             }
 
-            // Save the URL parameter if it changed
-            val urlParam = url.substringAfter(it)
-            val originUrlParam = startUrl.substringAfter(it)
-            val isTextChanged = urlParam != originUrlParam
-
-            if (isTextChanged && urlParam.isNotEmpty()) {
-                val urlText = urlParam.substring(originUrlParam.length)
-                val inputText = Uri.decode(urlText).replace("\\/", "/")
+            Regex("#[^/]+/[^/]+/(.+)$").find(url)?.let { match ->
+                val inputText = Uri.decode(match.groupValues[1]).replace("\\/", "/")
                 outState.putString("SavedText", inputText)
             }
         }

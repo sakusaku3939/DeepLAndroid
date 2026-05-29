@@ -20,13 +20,13 @@ import androidx.webkit.WebViewFeature
 import com.example.deeplviewer.R
 import com.example.deeplviewer.activity.MainActivity
 import androidx.core.content.edit
+import com.example.deeplviewer.helper.UrlHelper
 import com.example.deeplviewer.webview.MyWebChromeClient.Companion.DEEPL_INTERNAL_REGEX
 
 class MyWebViewClient(
     private val activity: Activity,
 ) : WebViewClient() {
     private var isSplashFadeDone: Boolean = false
-    private var param: String = "#en/en/"
 
     var loadFinishedListener: (() -> Unit)? = null
 
@@ -54,6 +54,8 @@ class MyWebViewClient(
             loadFinishedListener?.invoke()
         }
 
+        view.loadJavaScript("persist-language-state.js")
+
         // Fallback for API < 29 where addDocumentStartJavaScript is unavailable
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q ||
             !WebViewFeature.isFeatureSupported(WebViewFeature.DOCUMENT_START_SCRIPT)) {
@@ -61,7 +63,12 @@ class MyWebViewClient(
         }
 
         switchTheme(view)
-        saveUrlParam(view.url)
+        saveDeepLState(view.url)
+    }
+
+    override fun doUpdateVisitedHistory(view: WebView, url: String?, isReload: Boolean) {
+        super.doUpdateVisitedHistory(view, url, isReload)
+        saveDeepLState(url)
     }
 
     override fun onReceivedError(
@@ -84,15 +91,21 @@ class MyWebViewClient(
     }
 
     /**
-     * Saves the URL parameter from the DeepL translator URL
+     * Saves the current DeepL page state from the URL.
      */
-    private fun saveUrlParam(url: String?) {
-        Regex("#(.+?)/(.+?)/").find(url ?: "")?.let {
-            param = it.value
-            activity.getSharedPreferences("config", Context.MODE_PRIVATE)
-                .edit {
+    private fun saveDeepLState(url: String?) {
+        val pageType = UrlHelper.extractPageType(url)
+        val urlParam = UrlHelper.extractUrlParam(url)
+
+        if (pageType != null || urlParam != null) {
+            activity.getSharedPreferences("config", Context.MODE_PRIVATE).edit {
+                pageType?.let {
+                    putString("pageType", it)
+                }
+                urlParam?.let { param ->
                     putString("urlParam", param)
                 }
+            }
         }
     }
 
