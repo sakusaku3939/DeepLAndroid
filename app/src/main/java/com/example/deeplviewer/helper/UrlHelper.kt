@@ -1,7 +1,7 @@
 package com.example.deeplviewer.helper
 
 import android.content.Context
-import android.net.Uri
+import java.net.URLEncoder
 import java.util.Locale
 
 object UrlHelper {
@@ -9,6 +9,8 @@ object UrlHelper {
     private const val DEFAULT_PAGE_TYPE = "translator"
     private const val TRANSLATOR_PAGE_TYPE = "translator"
     private const val WRITE_PAGE_TYPE = "write"
+    private const val DEFAULT_SOURCE_LANGUAGE = "en"
+    private const val DEFAULT_FALLBACK_TARGET_LANGUAGE = "de"
 
     private val currentLanguagePathRegex =
         Regex("^https://www\\.deepl\\.com/(?:[^/#?]+/)?translator/l/([^/#?]+)/([^/#?]+).*$")
@@ -16,6 +18,8 @@ object UrlHelper {
         Regex("#([^/?#]+?)/([^/?#]+?)/")
     private val pageTypeRegex =
         Regex("^https://www\\.deepl\\.com/(?:[^/#?]+/)?(translator|write).*$")
+    private val localizedPagePathRegex =
+        Regex("^https://www\\.deepl\\.com/([^/#?]+)/(?:translator|write).*$")
 
     /**
      * Builds the start URL for the DeepL translator based on the provided parameters
@@ -47,6 +51,11 @@ object UrlHelper {
             else -> TRANSLATOR_PAGE_TYPE
         }
         val normalizedUrlParam = normalizeUrlParam(urlParam)
+            ?: if (normalizedPageType == TRANSLATOR_PAGE_TYPE) {
+                buildDefaultLanguagePath(uiLanguage)
+            } else {
+                null
+            }
         val translatorParam = if (normalizedPageType == TRANSLATOR_PAGE_TYPE) {
             normalizedUrlParam ?: ""
         } else {
@@ -63,14 +72,22 @@ object UrlHelper {
         if (text.isEmpty()) return startUrl
 
         val processedText = text.replace("/", "\\/")
-        val encodedText = Uri.encode(processedText)
-        val languagePair = extractLanguagePair(startUrl)
+        val encodedText = encodeUrlText(processedText)
 
-        return if (languagePair != null && startUrl.contains("/translator")) {
-            val translatorUrl = startUrl.substringBefore("/l/")
-            "$translatorUrl#${languagePair.source}/${languagePair.target}/$encodedText"
-        } else {
-            "$startUrl$encodedText"
+        return when (extractPageType(startUrl)) {
+            TRANSLATOR_PAGE_TYPE -> {
+                val languagePair = extractLanguagePair(startUrl)
+                    ?: defaultLanguagePair(startUrl)
+                val translatorUrl = startUrl.substringBefore("#").substringBefore("/l/")
+                "$translatorUrl#${languagePair.source}/${languagePair.target}/$encodedText"
+            }
+
+            WRITE_PAGE_TYPE -> {
+                val writeUrl = startUrl.substringBefore("#")
+                "$writeUrl#$encodedText"
+            }
+
+            else -> "$startUrl#$encodedText"
         }
     }
 
@@ -141,6 +158,33 @@ object UrlHelper {
             .lowercase(Locale.US)
             .takeIf { Regex("[a-z]{2}").matches(it) }
             ?: "en"
+    }
+
+    private fun defaultLanguagePair(url: String): LanguagePair {
+        val target = localizedPagePathRegex.find(url)
+            ?.groupValues
+            ?.get(1)
+            ?.lowercase(Locale.US)
+            ?.takeIf { Regex("[a-z]{2}(?:-[a-z0-9]{2,8})?").matches(it) }
+            ?: getUiLanguage()
+        val normalizedTarget = target.takeUnless { it == DEFAULT_SOURCE_LANGUAGE }
+            ?: DEFAULT_FALLBACK_TARGET_LANGUAGE
+
+        return LanguagePair(DEFAULT_SOURCE_LANGUAGE, normalizedTarget)
+    }
+
+    private fun buildDefaultLanguagePath(uiLanguage: String): String {
+        val target = uiLanguage.lowercase(Locale.US)
+            .takeIf { Regex("[a-z]{2}(?:-[a-z0-9]{2,8})?").matches(it) }
+            ?.takeUnless { it == DEFAULT_SOURCE_LANGUAGE }
+            ?: DEFAULT_FALLBACK_TARGET_LANGUAGE
+
+        return "/l/$DEFAULT_SOURCE_LANGUAGE/$target"
+    }
+
+    private fun encodeUrlText(text: String): String {
+        return URLEncoder.encode(text, Charsets.UTF_8.name())
+            .replace("+", "%20")
     }
 
     private data class LanguagePair(val source: String, val target: String)
