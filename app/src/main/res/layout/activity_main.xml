@@ -29,7 +29,8 @@
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/app_name"
-                android:paddingHorizontal="24dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="24dp"
                 android:paddingVertical="12dp"
                 app:srcCompat="@drawable/deepl_logo" />
 

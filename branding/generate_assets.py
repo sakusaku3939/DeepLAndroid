@@ -88,7 +88,7 @@ def main():
     resources = {
         "ic_launcher_foreground": vector(safe_paths, (108, 108), (108, 108), "@color/ic_launcher_foreground"),
         "ic_launcher_monochrome": vector(safe_paths, (108, 108), (108, 108), "@android:color/white"),
-        "deepl_logo": vector(header_paths, (296, 72), (164, 40), "@color/app_logo_foreground"),
+        "deepl_logo": vector(header_paths, (308, 72), (171, 40), "@color/app_logo_foreground"),
         "deepl_mini_logo": vector(symbol_paths, (108, 108), (64, 64), "@color/app_logo_foreground"),
         "ic_deepl_mini_logo": vector(symbol_paths, (108, 108), (64, 64), "@color/app_logo_foreground"),
         "app_logo": vector(icon_paths, (108, 108), (108, 108), "@color/ic_launcher_foreground"),

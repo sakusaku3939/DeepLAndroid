@@ -1,7 +1,7 @@
 # App branding
 
 - `app-icon.svg`: approved concept 01A, with the final vertical spacing.
-- `header-logo.svg`: approved concept 01C, with the original horizontal spacing.
+- `header-logo.svg`: approved concept 01C, with a wider symbol-to-name gap for the app header.
 
 Both SVGs contain outlined text and need no font at runtime. Android uses generated
 VectorDrawables; the header and splash logo share a theme-aware foreground color.
