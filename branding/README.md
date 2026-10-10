@@ -16,4 +16,4 @@ python branding/generate_assets.py
 ```
 
 The generator updates the vector resources, all launcher densities, the Play Store
-icon, and the Fastlane icon. It does not modify the design proposal HTML.
+icon, the Fastlane icon, and the light SVGs used by the WebView dark-theme patch. It does not modify the design proposal HTML.

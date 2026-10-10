@@ -56,13 +56,13 @@ def vector(paths, viewport, size, color):
     return '<?xml version="1.0" encoding="utf-8"?>\n' + ET.tostring(root, encoding="unicode") + "\n"
 
 
-def svg(paths, viewport, background=None, round_background=False):
+def svg(paths, viewport, background=None, round_background=False, color=FOREGROUND):
     body = ""
     if background:
         body = (f'<circle cx="54" cy="54" r="36" fill="{background}"/>' if round_background
                 else f'<rect width="108" height="108" fill="{background}"/>')
     for data, rule in paths:
-        body += f'<path fill="{FOREGROUND}" fill-rule="{rule}" d="{data}"/>'
+        body += f'<path fill="{color}" fill-rule="{rule}" d="{data}"/>'
     return f'<svg xmlns="{SVG}" viewBox="{viewport}">{body}</svg>'
 
 
@@ -84,6 +84,14 @@ def main():
     # The first group contains the speech symbol; subsequent paths are the name.
     symbol = icon.find(f"{{{SVG}}}g/{{{SVG}}}g/{{{SVG}}}path")
     symbol_paths = list(transformed_paths(symbol))
+
+    assets = ROOT / "app/src/main/assets"
+    wordmark_paths = [path for child in list(header.find(f"{{{SVG}}}g"))[1:]
+                      for path in transformed_paths(child)]
+    (assets / "brand-symbol-light.svg").write_text(
+        svg(symbol_paths, "26 22 56 64", color="#FBFBFB"), encoding="utf-8")
+    (assets / "brand-wordmark-light.svg").write_text(
+        svg(wordmark_paths, "112 40 212 34", color="#FBFBFB"), encoding="utf-8")
 
     resources = {
         "ic_launcher_foreground": vector(safe_paths, (108, 108), (108, 108), "@color/ic_launcher_foreground"),
