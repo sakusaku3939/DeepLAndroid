@@ -2,6 +2,7 @@ package com.example.deeplviewer.activity
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -81,6 +82,7 @@ class MainActivity : AppCompatActivity() {
      */
     private fun initializeWebView() {
         webView = findViewById(R.id.webview)
+        webView.setBackgroundColor(Color.TRANSPARENT)
         WebViewConfig.applyBasicSettings(webView)
         WebViewConfig.applyOptimizedSettings(webView)
         if (com.example.deeplviewer.BuildConfig.DEBUG) {
