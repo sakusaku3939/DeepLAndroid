@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
@@ -31,19 +32,17 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        startUrl = UrlHelper.buildStartUrl(this)
-
-        initializeWebView()
+        initializeMainScreen()
         createWebView(intent, savedInstanceState)
-        setupWriteButton()
-        setupSettingsButton()
     }
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         setIntent(intent)
+        if (findViewById<WebView>(R.id.webview) !== webView) {
+            destroyWebView()
+            initializeMainScreen()
+        }
         createWebView(intent)
     }
 
@@ -53,12 +52,26 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
+        destroyWebView()
+        super.onDestroy()
+    }
+
+    private fun destroyWebView() {
         if (::webView.isInitialized) {
-            // Remove the WebView from its parent view and destroy it
             (webView.parent as? android.view.ViewGroup)?.removeView(webView)
+            webView.stopLoading()
+            webView.webViewClient = WebViewClient()
+            webView.webChromeClient = null
             webView.destroy()
         }
-        super.onDestroy()
+    }
+
+    private fun initializeMainScreen() {
+        setContentView(R.layout.activity_main)
+        startUrl = UrlHelper.buildStartUrl(this)
+        initializeWebView()
+        setupWriteButton()
+        setupSettingsButton()
     }
 
     /**

@@ -2,6 +2,7 @@ package com.example.deeplviewer
 
 import android.content.Intent
 import android.net.Uri
+import android.os.SystemClock
 import android.text.SpannableString
 import android.view.View
 import android.webkit.WebResourceRequest
@@ -9,15 +10,59 @@ import android.webkit.WebView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
+import com.example.deeplviewer.helper.UrlHelper
 import com.example.deeplviewer.activity.FloatingTextSelection
 import com.example.deeplviewer.activity.MainActivity
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertNotSame
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class ActivityRegressionTest {
+    @Test
+    fun newIntentAfterNetworkErrorRestoresMainScreen() {
+        ActivityScenario.launch(MainActivity::class.java).use { scenario ->
+            lateinit var oldWebView: WebView
+            val text = "こんにちは / retry"
+            scenario.onActivity { activity ->
+                oldWebView = activity.findViewById(R.id.webview)
+                oldWebView.stopLoading()
+                activity.testWebViewClient!!.onReceivedError(oldWebView, mainFrameRequest, null)
+                assertNotNull(activity.findViewById<View>(R.id.reload))
+                activity.startActivity(
+                    Intent(activity.intent)
+                        .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                        .putExtra(Intent.EXTRA_TEXT, text)
+                )
+            }
+            var restored = false
+            val deadline = SystemClock.uptimeMillis() + 10000
+            while (!restored && SystemClock.uptimeMillis() < deadline) {
+                InstrumentationRegistry.getInstrumentation().waitForIdleSync()
+                scenario.onActivity { activity ->
+                    val webView = activity.findViewById<WebView>(R.id.webview)
+                    restored = webView != null && UrlHelper.extractText(webView.originalUrl) == text
+                }
+                if (!restored) SystemClock.sleep(100)
+            }
+            assertTrue("New intent must restore the screen and load its text", restored)
+            scenario.onActivity { activity ->
+                val webView = activity.findViewById<WebView>(R.id.webview)
+                assertNotSame(oldWebView, webView)
+                assertNotNull(webView.parent)
+                assertTrue(activity.findViewById<View>(R.id.settingButton).hasOnClickListeners())
+                assertTrue(activity.findViewById<View>(R.id.writeButton).hasOnClickListeners())
+                webView.stopLoading()
+                activity.testWebViewClient!!.onPageFinished(webView, webView.originalUrl!!)
+                assertEquals(View.VISIBLE, activity.findViewById<View>(R.id.toolbar).visibility)
+            }
+        }
+    }
+
     @Test
     fun networkErrorCanSaveStateAndRecreate() {
         ActivityScenario.launch(MainActivity::class.java).use { scenario ->
