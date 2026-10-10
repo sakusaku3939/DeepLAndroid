@@ -125,7 +125,7 @@ class MainActivity : AppCompatActivity() {
     private fun extractReceivedText(intent: Intent?, savedInstanceState: Bundle?): String {
         return savedInstanceState?.getString("SavedText")
             ?: intent?.getStringExtra("FLOATING_TEXT")
-            ?: intent?.getStringExtra(Intent.EXTRA_TEXT)
+            ?: intent?.getCharSequenceExtra(Intent.EXTRA_TEXT)?.toString()
             ?: ""
     }
 
