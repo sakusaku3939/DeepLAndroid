@@ -24,9 +24,8 @@ jobs:
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
-
-      - name: Accept Android SDK licenses
-        run: yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
+        with:
+          packages: platform-tools
 
       - name: Cache Gradle dependencies
         uses: actions/cache@v3
