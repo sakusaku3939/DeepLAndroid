@@ -10,7 +10,14 @@ JavaScript è usato per nascondere tutto tranne gli elementi più necessari.
     alt="Get it on F-Droid"
     height="80">](https://f-droid.org/packages/com.example.deeplviewer)
 
-![image](https://user-images.githubusercontent.com/53967490/89320092-fe2fdf00-d6bb-11ea-97d6-84fd66f73395.png)
+<table>
+  <tr>
+    <td width="25%"><a href="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png"><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" alt="Logo all’avvio" width="100%"></a></td>
+    <td width="25%"><a href="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png"><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" alt="Traduzione dal giapponese all’inglese" width="100%"></a></td>
+    <td width="25%"><a href="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png"><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" alt="Traduzione dall’inglese al giapponese" width="100%"></a></td>
+    <td width="25%"><a href="fastlane/metadata/android/en-US/images/phoneScreenshots/4.png"><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/4.png" alt="Impostazioni" width="100%"></a></td>
+  </tr>
+</table>
 
 ## Funzionalità
 - Mostra solo la schermata di traduzione tramite WebView.

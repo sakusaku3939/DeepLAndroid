@@ -10,7 +10,14 @@
     alt="在 F-Droid 获取"
     height="80">](https://f-droid.org/packages/com.example.deeplviewer)
 
-![image](https://user-images.githubusercontent.com/53967490/89320092-fe2fdf00-d6bb-11ea-97d6-84fd66f73395.png)
+<table>
+  <tr>
+    <td width="25%"><a href="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png"><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" alt="启动标志" width="100%"></a></td>
+    <td width="25%"><a href="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png"><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" alt="日语翻译成英语" width="100%"></a></td>
+    <td width="25%"><a href="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png"><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" alt="英语翻译成日语" width="100%"></a></td>
+    <td width="25%"><a href="fastlane/metadata/android/en-US/images/phoneScreenshots/4.png"><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/4.png" alt="设置" width="100%"></a></td>
+  </tr>
+</table>
 
 ## 功能
 - 通过 WebView 仅显示翻译屏幕。
