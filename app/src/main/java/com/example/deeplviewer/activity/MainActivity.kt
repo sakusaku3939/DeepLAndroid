@@ -3,7 +3,6 @@ package com.example.deeplviewer.activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -44,6 +43,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
+        setIntent(intent)
         createWebView(intent)
     }
 
@@ -177,7 +177,6 @@ class MainActivity : AppCompatActivity() {
      * Saves the current state of the WebView to the outState bundle
      */
     private fun saveWebViewState(outState: Bundle) {
-        val webView: WebView = findViewById(R.id.webview)
         val url = webView.url ?: ""
 
         val pageType = UrlHelper.extractPageType(url)
@@ -185,15 +184,9 @@ class MainActivity : AppCompatActivity() {
         pageType?.let {
             getSharedPreferences("config", Context.MODE_PRIVATE).edit {
                 putString("pageType", it)
-                UrlHelper.extractUrlParam(url)?.let { urlParam ->
-                    putString("urlParam", urlParam)
-                }
             }
 
-            Regex("#[^/]+/[^/]+/(.+)$").find(url)?.let { match ->
-                val inputText = Uri.decode(match.groupValues[1]).replace("\\/", "/")
-                outState.putString("SavedText", inputText)
-            }
+            outState.putString("SavedText", UrlHelper.extractText(url) ?: "")
         }
 
         try {

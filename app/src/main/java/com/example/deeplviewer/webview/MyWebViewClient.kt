@@ -26,7 +26,8 @@ import com.example.deeplviewer.webview.MyWebChromeClient.Companion.DEEPL_INTERNA
 class MyWebViewClient(
     private val activity: Activity,
 ) : WebViewClient() {
-    private var isSplashFadeDone: Boolean = false
+    var hasFinishedInitialLoad: Boolean = false
+        private set
 
     var loadFinishedListener: (() -> Unit)? = null
 
@@ -49,8 +50,8 @@ class MyWebViewClient(
     }
 
     override fun onPageFinished(view: WebView, url: String) {
-        if (!isSplashFadeDone) {
-            isSplashFadeDone = true
+        if (!hasFinishedInitialLoad) {
+            hasFinishedInitialLoad = true
             loadFinishedListener?.invoke()
         }
 

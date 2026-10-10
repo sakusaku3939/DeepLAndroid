@@ -2,6 +2,7 @@ package com.example.deeplviewer.helper
 
 import android.content.Context
 import java.net.URLEncoder
+import java.net.URLDecoder
 import java.util.Locale
 
 object UrlHelper {
@@ -93,6 +94,20 @@ object UrlHelper {
 
     fun extractPageType(url: String?): String? {
         return pageTypeRegex.find(url ?: "")?.groupValues?.get(1)
+    }
+
+    fun extractText(url: String?): String? {
+        if (url == null) return null
+        val encodedText = when (extractPageType(url)) {
+            TRANSLATOR_PAGE_TYPE -> Regex("#[^/]+/[^/]+/(.*)$")
+                .find(url)?.groupValues?.get(1) ?: return null
+            WRITE_PAGE_TYPE -> if (url.contains('#')) url.substringAfter('#') else return null
+            else -> return null
+        }
+        return runCatching {
+            URLDecoder.decode(encodedText.replace("+", "%2B"), Charsets.UTF_8.name())
+                .replace("\\/", "/")
+        }.getOrNull()
     }
 
     fun extractUrlParam(url: String?): String? {
