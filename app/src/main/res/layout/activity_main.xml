@@ -14,6 +14,7 @@
         android:background="@color/toolbarBackground"
         android:padding="0dp"
         android:theme="?attr/actionBarTheme"
+        android:visibility="gone"
         app:contentInsetEnd="0dp"
         app:contentInsetLeft="0dp"
         app:contentInsetRight="0dp"

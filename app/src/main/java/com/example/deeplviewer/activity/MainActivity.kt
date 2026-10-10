@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.webkit.WebView
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
@@ -119,7 +120,9 @@ class MainActivity : AppCompatActivity() {
      * Sets up the WebViewClient to handle page loading and animations
      */
     private fun setupWebViewClient() {
+        val toolbar = findViewById<View>(R.id.toolbar)
         webViewClient = MyWebViewClient(this)
+        webViewClient.loadFinishedListener = { toolbar.visibility = View.VISIBLE }
         webView.webViewClient = webViewClient
         webView.webChromeClient = MyWebChromeClient(webView)
     }
