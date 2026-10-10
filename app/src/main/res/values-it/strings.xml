@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">DeepL</string>
     <string name="image">Immagine</string>
     <string name="copy_clipboard">Il Testo è stato Copiato</string>
     <string name="network_err">Oops, errore di connessione con il server DeepL</string>
