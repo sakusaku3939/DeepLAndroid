@@ -67,8 +67,8 @@ class WebAppInterface(private val context: Context) {
     private companion object {
         val LANGUAGE_CODE_REGEX = Regex("^[a-z]{2,3}(?:-[a-z0-9]{2,8})*$")
         val ALLOWED_ASSET_FILES = setOf(
-            "DeepL_Logo_lightBlue_v2.svg",
-            "DeepL_Text_light.svg"
+            "brand-symbol-light.svg",
+            "brand-wordmark-light.svg"
         )
     }
 }

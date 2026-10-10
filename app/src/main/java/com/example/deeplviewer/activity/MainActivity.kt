@@ -2,11 +2,13 @@ package com.example.deeplviewer.activity
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
@@ -30,18 +32,17 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        startUrl = UrlHelper.buildStartUrl(this)
-
-        initializeWebView()
+        initializeMainScreen()
         createWebView(intent, savedInstanceState)
-        setupWriteButton()
-        setupSettingsButton()
     }
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
+        setIntent(intent)
+        if (findViewById<WebView>(R.id.webview) !== webView) {
+            destroyWebView()
+            initializeMainScreen()
+        }
         createWebView(intent)
     }
 
@@ -51,12 +52,26 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
+        destroyWebView()
+        super.onDestroy()
+    }
+
+    private fun destroyWebView() {
         if (::webView.isInitialized) {
-            // Remove the WebView from its parent view and destroy it
             (webView.parent as? android.view.ViewGroup)?.removeView(webView)
+            webView.stopLoading()
+            webView.webViewClient = WebViewClient()
+            webView.webChromeClient = null
             webView.destroy()
         }
-        super.onDestroy()
+    }
+
+    private fun initializeMainScreen() {
+        setContentView(R.layout.activity_main)
+        startUrl = UrlHelper.buildStartUrl(this)
+        initializeWebView()
+        setupWriteButton()
+        setupSettingsButton()
     }
 
     /**
@@ -81,6 +96,7 @@ class MainActivity : AppCompatActivity() {
      */
     private fun initializeWebView() {
         webView = findViewById(R.id.webview)
+        webView.setBackgroundColor(Color.TRANSPARENT)
         WebViewConfig.applyBasicSettings(webView)
         WebViewConfig.applyOptimizedSettings(webView)
         if (com.example.deeplviewer.BuildConfig.DEBUG) {
@@ -117,7 +133,9 @@ class MainActivity : AppCompatActivity() {
      * Sets up the WebViewClient to handle page loading and animations
      */
     private fun setupWebViewClient() {
+        val toolbar = findViewById<View>(R.id.toolbar)
         webViewClient = MyWebViewClient(this)
+        webViewClient.loadFinishedListener = { toolbar.visibility = View.VISIBLE }
         webView.webViewClient = webViewClient
         webView.webChromeClient = MyWebChromeClient(webView)
     }
@@ -172,7 +190,6 @@ class MainActivity : AppCompatActivity() {
      * Saves the current state of the WebView to the outState bundle
      */
     private fun saveWebViewState(outState: Bundle) {
-        val webView: WebView = findViewById(R.id.webview)
         val url = webView.url ?: ""
 
         val pageType = UrlHelper.extractPageType(url)
@@ -180,15 +197,9 @@ class MainActivity : AppCompatActivity() {
         pageType?.let {
             getSharedPreferences("config", Context.MODE_PRIVATE).edit {
                 putString("pageType", it)
-                UrlHelper.extractUrlParam(url)?.let { urlParam ->
-                    putString("urlParam", urlParam)
-                }
             }
 
-            Regex("#[^/]+/[^/]+/(.+)$").find(url)?.let { match ->
-                val inputText = Uri.decode(match.groupValues[1]).replace("\\/", "/")
-                outState.putString("SavedText", inputText)
-            }
+            outState.putString("SavedText", UrlHelper.extractText(url) ?: "")
         }
 
         try {

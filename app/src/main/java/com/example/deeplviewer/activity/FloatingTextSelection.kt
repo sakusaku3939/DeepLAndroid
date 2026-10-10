@@ -33,15 +33,8 @@ class FloatingTextSelection : AppCompatActivity() {
         startUrl = UrlHelper.buildStartUrl(this)
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            val androidTranslateFloatingText =
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
-                    intent.getCharSequenceExtra(Intent.EXTRA_TEXT)
-                } else {
-                    null
-                }
-
-            val floatingText = (androidTranslateFloatingText
-                ?: intent.getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT)) as String
+            val floatingText = (intent.getCharSequenceExtra(Intent.EXTRA_TEXT)
+                ?: intent.getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT))?.toString().orEmpty()
             val config = getSharedPreferences("config", Context.MODE_PRIVATE)
             val usePopup = config.getBoolean(getString(R.string.key_switch_popup_mode), true)
 
@@ -56,6 +49,14 @@ class FloatingTextSelection : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         finish()
+    }
+
+    override fun onDestroy() {
+        if (::webView.isInitialized) {
+            (webView.parent as? android.view.ViewGroup)?.removeView(webView)
+            webView.destroy()
+        }
+        super.onDestroy()
     }
 
     override fun finish() {

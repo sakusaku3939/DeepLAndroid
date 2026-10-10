@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/splash"
     android:fitsSystemWindows="true">
 
     <androidx.appcompat.widget.Toolbar
@@ -13,6 +14,7 @@
         android:background="@color/toolbarBackground"
         android:padding="0dp"
         android:theme="?attr/actionBarTheme"
+        android:visibility="gone"
         app:contentInsetEnd="0dp"
         app:contentInsetLeft="0dp"
         app:contentInsetRight="0dp"
@@ -29,7 +31,8 @@
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/app_name"
-                android:paddingHorizontal="24dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="24dp"
                 android:paddingVertical="12dp"
                 app:srcCompat="@drawable/deepl_logo" />
 

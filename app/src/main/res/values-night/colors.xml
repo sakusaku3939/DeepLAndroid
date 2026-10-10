@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="app_logo_foreground">#EAF3FA</color>
     <color name="background">@color/background_material_dark</color>
     <color name="preferenceScreenAccent">#ffffff</color>
     <color name="settingIcon">#ffffff</color>

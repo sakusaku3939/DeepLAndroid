@@ -35,8 +35,16 @@ class WebViewScreenshotTest : ScreenshotTest {
 
         activityRule.scenario.onActivity { activity ->
             webViewClient = activity.testWebViewClient
-            webViewClient?.loadFinishedListener = {
-                latch.countDown()
+            webViewClient?.let { client ->
+                if (client.hasFinishedInitialLoad) {
+                    latch.countDown()
+                } else {
+                    val originalListener = client.loadFinishedListener
+                    client.loadFinishedListener = {
+                        originalListener?.invoke()
+                        latch.countDown()
+                    }
+                }
             }
         }
 
