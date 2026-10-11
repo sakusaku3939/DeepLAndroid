@@ -21,6 +21,7 @@ import com.example.deeplviewer.R
 import com.example.deeplviewer.activity.MainActivity
 import androidx.core.content.edit
 import com.example.deeplviewer.helper.UrlHelper
+import com.example.deeplviewer.helper.CookieManagerHelper
 import com.example.deeplviewer.webview.MyWebChromeClient.Companion.DEEPL_INTERNAL_REGEX
 
 class MyWebViewClient(
@@ -50,6 +51,7 @@ class MyWebViewClient(
     }
 
     override fun onPageFinished(view: WebView, url: String) {
+        CookieManagerHelper().persistCookies(activity)
         if (!hasFinishedInitialLoad) {
             hasFinishedInitialLoad = true
             loadFinishedListener?.invoke()

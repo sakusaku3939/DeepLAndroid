@@ -56,6 +56,15 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
     }
 
+    override fun onPause() {
+        super.onPause()
+        try {
+            CookieManagerHelper().saveCookies(this)
+        } catch (e: Exception) {
+            Log.w("MainActivity", "Cookie save failed", e)
+        }
+    }
+
     private fun destroyWebView() {
         if (::webView.isInitialized) {
             (webView.parent as? android.view.ViewGroup)?.removeView(webView)
@@ -202,10 +211,5 @@ class MainActivity : AppCompatActivity() {
             outState.putString("SavedText", UrlHelper.extractText(url) ?: "")
         }
 
-        try {
-            CookieManagerHelper().saveCookies(this, webView)
-        } catch (e: Exception) {
-            Log.w("MainActivity", "Cookie save failed", e)
-        }
     }
 }
