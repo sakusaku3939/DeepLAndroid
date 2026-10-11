@@ -14,7 +14,8 @@ object UrlHelper {
     private const val DEFAULT_FALLBACK_TARGET_LANGUAGE = "de"
 
     private val currentLanguagePathRegex =
-        Regex("^https://www\\.deepl\\.com/(?:[^/#?]+/)?translator/l/([^/#?]+)/([^/#?]+).*$")
+        Regex("^https://www\\.deepl\\.com/(?:[^/#?]+/)?translator/l/([^/#?]+)/([^/#?]+)/?(?:[?#].*)?$")
+    private val languageCodeRegex = Regex("[a-z]{2,3}(?:-[a-z0-9]{2,8})*")
     private val legacyLanguageHashRegex =
         Regex("#([^/?#]+?)/([^/?#]+?)/")
     private val pageTypeRegex =
@@ -111,6 +112,7 @@ object UrlHelper {
     }
 
     fun extractUrlParam(url: String?): String? {
+        if (extractPageType(url) != TRANSLATOR_PAGE_TYPE) return null
         val currentMatch = currentLanguagePathRegex.find(url ?: "")
         if (currentMatch != null) {
             return buildLanguagePath(
@@ -162,8 +164,10 @@ object UrlHelper {
         val normalizedSource = source.lowercase(Locale.US)
         val normalizedTarget = target.lowercase(Locale.US)
 
-        if (normalizedSource.isBlank() || normalizedTarget.isBlank()) return null
-        if (normalizedSource == "auto" || normalizedSource == normalizedTarget) return null
+        if (!languageCodeRegex.matches(normalizedSource) ||
+            !languageCodeRegex.matches(normalizedTarget)) return null
+        if (normalizedSource == "auto" ||
+            normalizedSource.substringBefore('-') == normalizedTarget.substringBefore('-')) return null
 
         return "/l/$normalizedSource/$normalizedTarget"
     }
