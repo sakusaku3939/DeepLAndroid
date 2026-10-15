@@ -2,6 +2,7 @@ package com.example.deeplviewer.helper
 
 import android.content.Context
 import java.net.URLEncoder
+import java.net.URLDecoder
 import java.util.Locale
 
 object UrlHelper {
@@ -13,7 +14,8 @@ object UrlHelper {
     private const val DEFAULT_FALLBACK_TARGET_LANGUAGE = "de"
 
     private val currentLanguagePathRegex =
-        Regex("^https://www\\.deepl\\.com/(?:[^/#?]+/)?translator/l/([^/#?]+)/([^/#?]+).*$")
+        Regex("^https://www\\.deepl\\.com/(?:[^/#?]+/)?translator/l/([^/#?]+)/([^/#?]+)/?(?:[?#].*)?$")
+    private val languageCodeRegex = Regex("[a-z]{2,3}(?:-[a-z0-9]{2,8})*")
     private val legacyLanguageHashRegex =
         Regex("#([^/?#]+?)/([^/?#]+?)/")
     private val pageTypeRegex =
@@ -95,7 +97,22 @@ object UrlHelper {
         return pageTypeRegex.find(url ?: "")?.groupValues?.get(1)
     }
 
+    fun extractText(url: String?): String? {
+        if (url == null) return null
+        val encodedText = when (extractPageType(url)) {
+            TRANSLATOR_PAGE_TYPE -> Regex("#[^/]+/[^/]+/(.*)$")
+                .find(url)?.groupValues?.get(1) ?: return null
+            WRITE_PAGE_TYPE -> if (url.contains('#')) url.substringAfter('#') else return null
+            else -> return null
+        }
+        return runCatching {
+            URLDecoder.decode(encodedText.replace("+", "%2B"), Charsets.UTF_8.name())
+                .replace("\\/", "/")
+        }.getOrNull()
+    }
+
     fun extractUrlParam(url: String?): String? {
+        if (extractPageType(url) != TRANSLATOR_PAGE_TYPE) return null
         val currentMatch = currentLanguagePathRegex.find(url ?: "")
         if (currentMatch != null) {
             return buildLanguagePath(
@@ -147,8 +164,10 @@ object UrlHelper {
         val normalizedSource = source.lowercase(Locale.US)
         val normalizedTarget = target.lowercase(Locale.US)
 
-        if (normalizedSource.isBlank() || normalizedTarget.isBlank()) return null
-        if (normalizedSource == "auto" || normalizedSource == normalizedTarget) return null
+        if (!languageCodeRegex.matches(normalizedSource) ||
+            !languageCodeRegex.matches(normalizedTarget)) return null
+        if (normalizedSource == "auto" ||
+            normalizedSource.substringBefore('-') == normalizedTarget.substringBefore('-')) return null
 
         return "/l/$normalizedSource/$normalizedTarget"
     }

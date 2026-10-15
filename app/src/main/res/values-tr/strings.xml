@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">DeepL</string>
     <string name="image">Resim</string>
     <string name="copy_clipboard">Metin kopyalandı</string>
     <string name="network_err">Eyvah! DeepL sunucusuna bağlanılamadı</string>

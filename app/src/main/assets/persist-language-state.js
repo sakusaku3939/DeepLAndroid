@@ -1,6 +1,6 @@
 (function () {
-    if (window.__deeplViewerLanguageStateSaverInstalled === 2) return;
-    window.__deeplViewerLanguageStateSaverInstalled = 2;
+    if (window.__deeplViewerLanguageStateSaverInstalled === 3) return;
+    window.__deeplViewerLanguageStateSaverInstalled = 3;
 
     let lastSavedUrl = '';
     let lastSavedLanguagePair = '';
@@ -18,10 +18,6 @@
         } catch (e) {
             // Android bridge may not be ready during very early document execution.
         }
-    }
-
-    function hasLanguagePath() {
-        return /\/translator\/l\/[^/]+\/[^/?#]+/.test(window.location.pathname);
     }
 
     function getLanguagePairFromPath() {
@@ -111,18 +107,6 @@
     window.addEventListener('hashchange', saveAfterNavigation);
     document.addEventListener('visibilitychange', saveCurrentState);
     document.addEventListener('click', function (event) {
-        const languageOption = event.target.closest('[data-testid^="translator-lang-option-"]');
-        if (languageOption) {
-            const language = languageOption
-                .getAttribute('data-testid')
-                .replace('translator-lang-option-', '');
-            try {
-                Android.saveDeepLLanguage('', language);
-            } catch (e) {
-                // Android bridge may not be available in all execution contexts.
-            }
-        }
-
         if (event.target.closest('[data-testid="translator-source-lang-btn"], [data-testid="translator-target-lang-btn"], [data-testid*="translator-source-lang"], [data-testid*="translator-target-lang"], [data-testid^="translator-lang-option-"]')) {
             lastLanguageInteractionAt = Date.now();
             window.setTimeout(saveSelectedLanguagesFromDom, 500);

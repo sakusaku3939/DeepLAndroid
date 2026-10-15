@@ -16,7 +16,10 @@ permissions:
 
 jobs:
   compare-screenshots:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
+    outputs:
+      test-outcome: ${{ steps.screenshot-tests.outcome }}
 
     steps:
       - name: Checkout code
@@ -30,12 +33,11 @@ jobs:
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
-
-      - name: Accept Android SDK licenses
-        run: yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
+        with:
+          packages: platform-tools
 
       - name: Cache Gradle dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             ~/.gradle/caches
@@ -46,7 +48,10 @@ jobs:
 
       - name: Install Android SDK components
         run: |
-          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0"
+          sdkmanager "platforms;android-36" "build-tools;35.0.0"
+
+      - name: Build test APKs
+        run: ./gradlew :app:assembleDebug :app:assembleDebugAndroidTest --max-workers=2
 
       - name: Enable KVM group perms
         run: |
@@ -54,47 +59,31 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
 
-      - name: AVD cache
-        uses: actions/cache@v3
-        id: avd-cache
-        with:
-          path: |
-            ~/.android/avd/*
-            ~/.android/adb*
-          key: avd-35-x86_64
-
-      - name: Create AVD and generate snapshot for caching
-        if: steps.avd-cache.outputs.cache-hit != 'true'
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 35
-          arch: x86_64
-          target: google_apis
-          force-avd-creation: false
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          disable-animations: false
-          script: echo "Generated AVD snapshot for caching."
-
       - name: Run screenshot tests
+        id: screenshot-tests
+        continue-on-error: true
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 35
           arch: x86_64
           target: google_apis
-          force-avd-creation: false
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          emulator-options: -no-window -gpu swiftshader_indirect -feature -Vulkan -no-snapshot -noaudio -no-boot-anim -camera-back none
           disable-animations: false
-          script: |
-            ./gradlew executeScreenshotTests || true
+          script: bash .github/scripts/run_screenshot_tests.sh
 
       - name: Prepare report for GitHub Pages
         run: |
+          REPORT_DIR=app/build/reports/shot/debug/verification
+          test -s "$REPORT_DIR/index.html"
+          test -s "$REPORT_DIR/TEST-Shot.xml"
+          python3 - <<'PY'
+          import xml.etree.ElementTree as ET
+          report = ET.parse("app/build/reports/shot/debug/verification/TEST-Shot.xml")
+          if not report.findall(".//testcase"):
+              raise SystemExit("Screenshot report contains no tests; refusing to publish")
+          PY
           mkdir -p public
-          if [ -d "app/build/reports/shot/debug/verification" ]; then
-            cp -r app/build/reports/shot/debug/verification/* public/
-          else
-            echo "<h1>No screenshot report found</h1>" > public/index.html
-          fi
+          cp -r "$REPORT_DIR"/. public/
       - name: Upload artifact for Pages
         uses: actions/upload-pages-artifact@v3
         with:
@@ -107,6 +96,9 @@ jobs:
           name: screenshot-comparison-${{ github.run_id }}
           path: |
             app/build/reports/shot/debug/verification/
+            app/build/reports/androidTests/
+            app/build/outputs/androidTest-results/
+            app/build/reports/screenshot-diagnostics/
             public/
           retention-days: 30
 
@@ -136,13 +128,15 @@ jobs:
           name: screenshot-comparison-${{ github.run_id }}
 
       - name: Fail job if diff found
+        env:
+          TEST_OUTCOME: ${{ needs.compare-screenshots.outputs.test-outcome }}
         run: |
           REPORT=$(find . -type f -name "TEST-Shot.xml" | head -n 1)
           if [ -z "$REPORT" ]; then
             echo "❌ TEST-Shot.xml not found"
             exit 1
           fi
-          if grep -q "<failure" "$REPORT"; then
+          if [ "$TEST_OUTCOME" != "success" ] || grep -Eq "<(failure|error)" "$REPORT"; then
             echo "❌ Screenshot diff detected"
             exit 1
           else

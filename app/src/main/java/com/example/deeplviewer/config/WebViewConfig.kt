@@ -1,12 +1,17 @@
 package com.example.deeplviewer.config
 
 import android.annotation.SuppressLint
+import android.webkit.CookieManager
 import android.webkit.WebSettings
 import android.webkit.WebView
 
 object WebViewConfig {
     @SuppressLint("SetJavaScriptEnabled")
     fun applyBasicSettings(webView: WebView) {
+        CookieManager.getInstance().apply {
+            setAcceptCookie(true)
+            setAcceptThirdPartyCookies(webView, true)
+        }
         webView.settings.apply {
             javaScriptEnabled = true
             domStorageEnabled = true
@@ -15,13 +20,11 @@ object WebViewConfig {
             // cache settings
             cacheMode = WebSettings.LOAD_DEFAULT
 
-            // Spoof a modern Chrome UA so DeepL doesn't reject the WebView as unsupported.
-            // The default WebView UA has "Version/4.0" and "; wv" markers, and uses an old
-            // Chrome version — all of which cause DeepL's browser detection to fail.
+            // Keep DeepL's browser compatibility workaround while retaining the actual
+            // Chromium version, so the UA agrees with the installed WebView engine.
             userAgentString = userAgentString
                 .replace("; wv", "")
                 .replace(Regex("Version/[\\d.]+ "), "")
-                .replace(Regex("Chrome/[\\d.]+"), "Chrome/131.0.0.0")
         }
     }
 

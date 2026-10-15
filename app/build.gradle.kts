@@ -12,8 +12,8 @@ android {
         applicationId = "com.example.deeplviewer"
         minSdk = 21
         targetSdk = 36
-        versionCode = 50
-        versionName = "9.6"
+        versionCode = 51
+        versionName = "10.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunner = "com.karumi.shot.ShotTestRunner"
