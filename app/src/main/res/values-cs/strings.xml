@@ -1,5 +1,6 @@
 <resources>
     <!-- Translatable strings used in our GUI. Non-translatable strings should be added to /values/strings_not_translatable.xml instead. -->
+    <string name="app_name">DeepL</string>
     <string name="image">Obrázek</string>
     <string name="copy_clipboard">Text byl zkopírován</string>
     <string name="network_err">Ups, nepodařilo se připojit k serveru DeepL</string>

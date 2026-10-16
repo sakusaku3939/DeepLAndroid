@@ -14,7 +14,6 @@ import androidx.webkit.WebViewFeature
 import com.example.deeplviewer.R
 import com.example.deeplviewer.config.WebViewConfig
 import com.example.deeplviewer.helper.UrlHelper
-import com.example.deeplviewer.helper.CookieManagerHelper
 import com.example.deeplviewer.webview.MyWebViewClient
 import com.example.deeplviewer.webview.NestedScrollWebView
 import com.example.deeplviewer.webview.WebAppInterface
@@ -56,18 +55,7 @@ class FloatingTextSelection : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        if (::webView.isInitialized) {
-            CookieManagerHelper().saveCookies(this)
-        }
         finish()
-    }
-
-    override fun onDestroy() {
-        if (::webView.isInitialized) {
-            (webView.parent as? android.view.ViewGroup)?.removeView(webView)
-            webView.destroy()
-        }
-        super.onDestroy()
     }
 
     override fun finish() {

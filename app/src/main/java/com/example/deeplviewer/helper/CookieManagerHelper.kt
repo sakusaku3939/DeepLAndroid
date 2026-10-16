@@ -3,6 +3,7 @@ package com.example.deeplviewer.helper
 import android.content.Context
 import android.util.Log
 import android.webkit.CookieManager
+import android.webkit.WebView
 import com.example.deeplviewer.R
 import java.net.URLEncoder
 import androidx.core.content.edit
@@ -23,8 +24,12 @@ class CookieManagerHelper {
         )
     }
 
-    fun saveCookies(context: Context) {
-        if (isAutoDeleteEnabled(context)) {
+    fun saveCookies(context: Context, webView: WebView) {
+        val cookieManager = getCookieManager()
+        val isCookieAutoDeleted = context.getSharedPreferences("config", Context.MODE_PRIVATE)
+            .getBoolean(context.getString(R.string.key_auto_delete_cookies), false)
+
+        if (isCookieAutoDeleted) {
             clearCookies()
         } else {
             cookieManager.acceptCookie()
@@ -33,9 +38,6 @@ class CookieManagerHelper {
         }
     }
 
-    private fun isAutoDeleteEnabled(context: Context): Boolean =
-        context.getSharedPreferences("config", Context.MODE_PRIVATE)
-            .getBoolean(context.getString(R.string.key_auto_delete_cookies), false)
 
     // Disable cookie values in SharedPreferences according to the bug fix for cookie expiration in v8.5
     fun migrateCookie(context: Context) {
@@ -50,7 +52,6 @@ class CookieManagerHelper {
 
     private fun clearCookies() {
         getCookieManager().removeAllCookies { success ->
-            getCookieManager().flush()
             if (success) {
                 Log.d("CookieManagerHelper", "Cookies successfully removed.")
             } else {

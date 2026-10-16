@@ -1,5 +1,5 @@
 #### [EN](https://github.com/sakusaku3939/DeepLAndroid#readme) | [JA](README_JA.md) | [RU](README_RU.md) | [DE](README_DE.md) | [FR](README_FR.md) | [IT](README_IT.md) | [TR](README_TR.md) | [ZH](README_ZH.md) | [CS](README_CS.md)
-# DeepLAndroid
+# DeepL Android
 ![platform](https://img.shields.io/badge/platform-android-green) ![release](https://img.shields.io/github/v/release/sakusaku3939/DeepLAndroid.svg) ![license](https://img.shields.io/github/license/sakusaku3939/DeepLAndroid) ![downloads](https://img.shields.io/github/downloads/sakusaku3939/DeepLAndroid/total.svg) ![Screenshot Diff Check](https://github.com/sakusaku3939/DeepLAndroid/actions/workflows/screenshot_diff_check.yml/badge.svg)
 
 DeepL çeviri için resmi olmayan bir Android uygulamasıdır.  
@@ -10,14 +10,7 @@ JavaScript gereksiz öğeleri gizlemek için kullanılır.
     alt="Get it on F-Droid"
     height="80">](https://f-droid.org/packages/com.example.deeplviewer)
 
-<table>
-  <tr>
-    <td width="25%"><a href="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png"><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" alt="Açılış logosu" width="100%"></a></td>
-    <td width="25%"><a href="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png"><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" alt="Japoncadan İngilizceye çeviri" width="100%"></a></td>
-    <td width="25%"><a href="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png"><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" alt="İngilizceden Japoncaya çeviri" width="100%"></a></td>
-    <td width="25%"><a href="fastlane/metadata/android/en-US/images/phoneScreenshots/4.png"><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/4.png" alt="Ayarlar" width="100%"></a></td>
-  </tr>
-</table>
+![image](https://user-images.githubusercontent.com/53967490/89320092-fe2fdf00-d6bb-11ea-97d6-84fd66f73395.png)
 
 ## Özellikler
 - WebView ile yalnızca çeviri ekranını görüntüleyin.

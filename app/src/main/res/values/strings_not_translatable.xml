@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Only not translatable strings should be added here -->
-    <string name="app_name" translatable="false">DeepLAndroid</string>
     <string name="key_dark_mode" translatable="false">defaultDarkMode</string>
     <string name="key_switch_popup_mode" translatable="false">isEnabledPopupMode</string>
     <string name="key_switch_translate_button" translatable="false">isEnabledTranslateButton</string>
