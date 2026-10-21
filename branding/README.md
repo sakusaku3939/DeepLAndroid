@@ -1,11 +1,13 @@
 # App branding
 
-- `app-icon.svg`: approved concept 01A, with the final vertical spacing.
+- `app-icon.svg`: centered speech symbol without the app name.
 - `header-logo.svg`: approved concept 01C, with a wider symbol-to-name gap for the app header.
 
-Both SVGs contain outlined text and need no font at runtime. Android uses generated
+The header SVG contains outlined text and needs no font at runtime. Android uses generated
 VectorDrawables; the header and splash logo share a theme-aware foreground color.
-The launcher foreground is inset to keep the complete name inside adaptive masks.
+The launcher foreground uses a centered 47.25 x 54 dp symbol on a 108 x 108 dp
+layer, within Android's adaptive icon safe zone. Store artwork uses the symbol
+at 74% of the image height.
 The PNG/WebP resources cover legacy launchers and store listings.
 
 To regenerate from the repository root:

@@ -20,7 +20,8 @@ SVG = "http://www.w3.org/2000/svg"
 ET.register_namespace("android", ANDROID)
 BACKGROUND = "#f9fbff"
 FOREGROUND = "#123b58"
-SAFE_SCALE = 0.66
+# Keep the 47.25 x 54 dp symbol centered with comfortable launcher padding.
+SAFE_SCALE = 0.675
 SAFE_INSET = 108 * (1 - SAFE_SCALE) / 2
 
 
@@ -67,7 +68,7 @@ def svg(paths, viewport, background=None, round_background=False, color=FOREGROU
 
 
 def raster(source, size, target):
-    # Render larger, then downsample so low-density text stays antialiased.
+    # Render larger, then downsample to keep low-density edges antialiased.
     png = resvg_py.svg_to_bytes(svg_string=source, width=size * 4, height=size * 4)
     image = Image.open(BytesIO(png)).convert("RGBA").resize((size, size), Image.Resampling.LANCZOS)
     target.parent.mkdir(parents=True, exist_ok=True)
@@ -81,7 +82,7 @@ def main():
     icon_paths = list(transformed_paths(icon))
     safe_paths = list(transformed_paths(icon, Transform(SAFE_SCALE, 0, 0, SAFE_SCALE, SAFE_INSET, SAFE_INSET)))
     header_paths = list(transformed_paths(header, Transform(1, 0, 0, 1, -22, -18)))
-    # The first group contains the speech symbol; subsequent paths are the name.
+    # Use the untransformed speech symbol for the in-app mini logos.
     symbol = icon.find(f"{{{SVG}}}g/{{{SVG}}}g/{{{SVG}}}path")
     symbol_paths = list(transformed_paths(symbol))
 
