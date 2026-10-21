@@ -18,6 +18,8 @@
             android:name="android.supports_theme_icon"
             android:value="true" />
 
+        <activity android:name=".activity.DiagnosticExportActivity" android:exported="false" />
+
         <activity
             android:name=".activity.SettingsActivity"
             android:exported="false"

@@ -11,6 +11,7 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        com.example.deeplviewer.diagnostics.Diagnostics.initialize(this)
         switchTheme()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
             removeOldAppShortcut()

@@ -25,6 +25,7 @@ class MyWebChromeClient(
             private fun handleUrl(url: String) {
                 if (handled || url.isEmpty() || url == "about:blank") return
                 handled = true
+                com.example.deeplviewer.diagnostics.Diagnostics.event("popup_navigation", mapOf("url" to com.example.deeplviewer.diagnostics.DiagnosticPrivacy.url(url), "internal" to isDeepLInternalUrl(url)))
                 if (isDeepLInternalUrl(url)) {
                     mainWebView.loadUrl(url)
                 } else {

@@ -29,6 +29,10 @@
             app:title="@string/auto_delete_cookies" />
     </PreferenceCategory>
 
+    <PreferenceCategory app:title="@string/diagnostics_title">
+        <Preference app:key="diagnostic_export" app:title="@string/diagnostics_save" />
+    </PreferenceCategory>
+
     <PreferenceCategory app:title="@string/about_this_app">
         <Preference
             app:key="@string/key_version"

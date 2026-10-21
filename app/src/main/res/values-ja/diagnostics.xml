@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="diagnostics_title">診断</string>
+    <string name="diagnostics_save">診断ログを保存</string>
+    <string name="diagnostics_saving">診断ログを保存中…</string>
+    <string name="diagnostics_saved">診断ログを保存しました</string>
+    <string name="diagnostics_save_failed">診断ログを保存できませんでした</string>
+</resources>

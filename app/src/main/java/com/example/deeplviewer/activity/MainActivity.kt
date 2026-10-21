@@ -97,7 +97,8 @@ class MainActivity : AppCompatActivity() {
 
         // Load the initial URL
         val targetUrl = UrlHelper.buildWebViewUrl(startUrl, receivedText)
-        webView.loadUrl(targetUrl)
+        com.example.deeplviewer.diagnostics.Diagnostics.webView(webView)
+        webViewClient.loadUrl(webView, targetUrl)
     }
 
     /**
@@ -173,7 +174,7 @@ class MainActivity : AppCompatActivity() {
             val newPageType = if (isCurrentlyWrite) "translator" else "write"
             val newUrl = UrlHelper.buildPageUrl(newPageType, urlParam ?: "")
             startUrl = newUrl
-            webView.loadUrl(newUrl)
+            webViewClient.loadUrl(webView, newUrl)
             updateWriteButtonIcon(button)
         }
     }

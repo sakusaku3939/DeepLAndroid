@@ -89,6 +89,11 @@ class SettingsActivity : AppCompatActivity() {
                 return@setOnPreferenceChangeListener true
             }
 
+            findPreference<Preference>("diagnostic_export")?.setOnPreferenceClickListener {
+                startActivity(Intent(requireContext(), DiagnosticExportActivity::class.java))
+                true
+            }
+
             val versionButton = findPreference<Preference>(getString(R.string.key_version))
             versionButton?.summary = "v${BuildConfig.VERSION_NAME}"
             versionButton?.setOnPreferenceClickListener {

@@ -1,5 +1,6 @@
 package com.example.deeplviewer.helper
 
+import com.example.deeplviewer.diagnostics.Diagnostics
 import android.content.Context
 import android.util.Log
 import android.webkit.CookieManager
@@ -25,14 +26,17 @@ class CookieManagerHelper {
 
     fun saveCookies(context: Context) {
         if (isAutoDeleteEnabled(context)) {
+            Diagnostics.event("cookie_auto_delete")
             clearCookies()
         } else {
+            Diagnostics.event("cookie_flush")
             getCookieManager().flush()
         }
     }
 
     fun persistCookies(context: Context) {
         if (!isAutoDeleteEnabled(context)) {
+            Diagnostics.event("cookie_flush")
             getCookieManager().flush()
         }
     }
@@ -47,13 +51,17 @@ class CookieManagerHelper {
         val savedCookie = sharedPreferences.getString("cookie", null)
 
         if (savedCookie != null) {
+            Diagnostics.event("cookie_legacy_migration")
             clearCookies()
             sharedPreferences.edit { clear() }
         }
     }
 
     private fun clearCookies() {
+        Diagnostics.event("cookie_delete_started")
         getCookieManager().removeAllCookies { success ->
+            Diagnostics.event("cookie_delete_finished", mapOf("removed" to success))
+            Diagnostics.event("cookie_flush")
             getCookieManager().flush()
             if (success) {
                 Log.d("CookieManagerHelper", "Cookies successfully removed.")

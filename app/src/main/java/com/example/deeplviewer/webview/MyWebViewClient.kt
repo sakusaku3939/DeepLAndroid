@@ -1,5 +1,12 @@
 package com.example.deeplviewer.webview
 
+import android.net.http.SslError
+import android.webkit.SslErrorHandler
+import android.webkit.WebResourceResponse
+import android.webkit.RenderProcessGoneDetail
+import com.example.deeplviewer.diagnostics.Diagnostics
+import com.example.deeplviewer.diagnostics.DiagnosticPrivacy
+import com.example.deeplviewer.activity.DiagnosticExportActivity
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -27,6 +34,22 @@ import com.example.deeplviewer.webview.MyWebChromeClient.Companion.DEEPL_INTERNA
 class MyWebViewClient(
     private val activity: Activity,
 ) : WebViewClient() {
+    private val viewId = java.util.UUID.randomUUID().toString()
+    private var loadId = 0
+    private var awaitingStart = false
+
+    private fun record(name: String, url: String?, fields: Map<String, Any?> = emptyMap()) {
+        Diagnostics.event(name, mapOf("view_id" to viewId, "load_id" to loadId,
+            "url" to DiagnosticPrivacy.url(url)) + fields)
+    }
+
+    fun loadUrl(view: WebView, url: String) {
+        loadId++
+        awaitingStart = true
+        record("load_requested", url)
+        view.loadUrl(url)
+    }
+
     var hasFinishedInitialLoad: Boolean = false
         private set
 
@@ -34,11 +57,19 @@ class MyWebViewClient(
 
     override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
         val url = request?.url.toString()
-        return !DEEPL_INTERNAL_REGEX.matches(url)
+        val blocked = !DEEPL_INTERNAL_REGEX.matches(url)
+        record("navigation_decision", url, mapOf("blocked" to blocked,
+            "main_frame" to request?.isForMainFrame,
+            "redirect" to if (Build.VERSION.SDK_INT >= 24) request?.isRedirect else null,
+            "gesture" to request?.hasGesture()))
+        return blocked
     }
 
     override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
         super.onPageStarted(view, url, favicon)
+        if (!awaitingStart) loadId++
+        awaitingStart = false
+        record("page_started", url, mapOf("network" to org.json.JSONObject(Diagnostics.networkState())))
         // Inject polyfills early when DOCUMENT_START_SCRIPT is unavailable.
         // Also guard by API 29+ because isFeatureSupported() returns true on API 28
         // but the actual call crashes with NoClassDefFoundError (WebViewRenderProcessClient
@@ -51,6 +82,7 @@ class MyWebViewClient(
     }
 
     override fun onPageFinished(view: WebView, url: String) {
+        record("page_finished", url, mapOf("attached" to view.isAttachedToWindow))
         CookieManagerHelper().persistCookies(activity)
         if (!hasFinishedInitialLoad) {
             hasFinishedInitialLoad = true
@@ -71,6 +103,7 @@ class MyWebViewClient(
 
     override fun doUpdateVisitedHistory(view: WebView, url: String?, isReload: Boolean) {
         super.doUpdateVisitedHistory(view, url, isReload)
+        record("history_updated", url, mapOf("reload" to isReload))
         saveDeepLState(url)
     }
 
@@ -79,18 +112,53 @@ class MyWebViewClient(
         request: WebResourceRequest,
         error: WebResourceError?
     ) {
+        record("web_error", request.url.toString(), mapOf(
+            "main_frame" to request.isForMainFrame,
+            "android_error_code" to if (Build.VERSION.SDK_INT >= 23) error?.errorCode else null,
+            "chromium_error" to DiagnosticPrivacy.chromiumError(if (Build.VERSION.SDK_INT >= 23) error?.description?.toString() else null),
+            "network" to org.json.JSONObject(Diagnostics.networkState())))
         if (request.isForMainFrame) {
-            activity.setContentView(R.layout.network_err)
+            if (activity is com.example.deeplviewer.activity.FloatingTextSelection) {
+                activity.showNetworkError()
+            } else {
+                activity.setContentView(R.layout.network_err)
+            }
+            record("error_screen_shown", request.url.toString())
+            activity.findViewById<View>(R.id.save_diagnostics).setOnClickListener {
+                activity.startActivity(Intent(activity, DiagnosticExportActivity::class.java))
+            }
 
             val button: ImageButton = activity.findViewById(R.id.reload)
             val listener = ReloadButtonListener()
             button.setOnClickListener(listener)
 
             val errorDescription =
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) error?.description.toString() else ""
+                DiagnosticPrivacy.chromiumError(if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) error?.description?.toString() else null)
             Toast.makeText(activity, errorDescription, Toast.LENGTH_LONG).show()
             Log.e("onReceivedError", errorDescription)
         }
+    }
+
+    override fun onPageCommitVisible(view: WebView, url: String) {
+        record("page_visible", url)
+        super.onPageCommitVisible(view, url)
+    }
+
+    override fun onReceivedHttpError(view: WebView, request: WebResourceRequest, response: WebResourceResponse) {
+        record("http_error", request.url.toString(), mapOf("status" to response.statusCode,
+            "main_frame" to request.isForMainFrame))
+        super.onReceivedHttpError(view, request, response)
+    }
+
+    override fun onReceivedSslError(view: WebView, handler: SslErrorHandler, error: SslError) {
+        record("ssl_error", error.url, mapOf("primary_error" to error.primaryError))
+        super.onReceivedSslError(view, handler, error)
+    }
+
+    @RequiresApi(26)
+    override fun onRenderProcessGone(view: WebView, detail: RenderProcessGoneDetail): Boolean {
+        record("renderer_gone", view.url, mapOf("crashed" to detail.didCrash(), "priority" to detail.rendererPriorityAtExit()))
+        return super.onRenderProcessGone(view, detail)
     }
 
     /**
@@ -184,6 +252,7 @@ class MyWebViewClient(
 
     private inner class ReloadButtonListener : View.OnClickListener {
         override fun onClick(view: View) {
+            record("retry_clicked", null)
             val i = Intent(activity, MainActivity::class.java)
             activity.finish()
             activity.overridePendingTransition(0, 0)

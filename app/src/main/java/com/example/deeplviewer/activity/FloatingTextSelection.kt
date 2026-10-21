@@ -27,6 +27,15 @@ class FloatingTextSelection : AppCompatActivity() {
     private lateinit var webViewClient: MyWebViewClient
     private lateinit var layout: View
     private lateinit var startUrl: String
+    private var popupDialog: BottomSheetDialog? = null
+    private var showingError = false
+
+    fun showNetworkError() {
+        showingError = true
+        popupDialog?.setOnDismissListener(null)
+        popupDialog?.dismiss()
+        setContentView(R.layout.network_err)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,15 +100,18 @@ class FloatingTextSelection : AppCompatActivity() {
         webView.addJavascriptInterface(WebAppInterface(this), "Android")
 
         webViewClient.loadFinishedListener = {
-            setWebViewHeight()
-            showWebViewWithAnimation()
+            if (!showingError) {
+                setWebViewHeight()
+                showWebViewWithAnimation()
+            }
         }
 
         showBottomSheetDialog()
 
         // Load the initial URL
         val targetUrl = UrlHelper.buildWebViewUrl(startUrl, initialText)
-        webView.loadUrl(targetUrl)
+        com.example.deeplviewer.diagnostics.Diagnostics.webView(webView)
+        webViewClient.loadUrl(webView, targetUrl)
     }
 
     /**
@@ -138,6 +150,7 @@ class FloatingTextSelection : AppCompatActivity() {
     @SuppressLint("RestrictedApi", "VisibleForTests")
     private fun showBottomSheetDialog() {
         val dialog = BottomSheetDialog(this)
+        popupDialog = dialog
         dialog.setContentView(layout)
         dialog.setOnDismissListener { finish() }
         dialog.behavior.disableShapeAnimations()

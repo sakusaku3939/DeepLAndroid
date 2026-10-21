@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="diagnostics_title">Diagnostics</string>
+    <string name="diagnostics_save">Save diagnostic logs</string>
+    <string name="diagnostics_saving">Saving diagnostic logs…</string>
+    <string name="diagnostics_saved">Diagnostic logs saved</string>
+    <string name="diagnostics_save_failed">Could not save diagnostic logs</string>
+</resources>
