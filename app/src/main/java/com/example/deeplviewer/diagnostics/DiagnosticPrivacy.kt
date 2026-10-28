@@ -8,7 +8,7 @@ object DiagnosticPrivacy {
         val uri = URI(value ?: "")
         if (uri.scheme !in listOf("https", "http")) return "[non-http]"
         if (uri.host != "www.deepl.com") return "${uri.scheme}://[other-host]/[redacted]"
-        val route = Regex("^/(?:[a-z]{2}/)?(translator|write)(?:/l/[a-z]{2,3}(?:-[a-z0-9]{2,8})*/[a-z]{2,3}(?:-[a-z0-9]{2,8})*/?)?/?$")
+        val route = Regex("^/(?:[a-z]{2}/)?(translator|write)(?:/l/[a-z]{2,3}(?:-[a-zA-Z0-9]{2,8})*/[a-z]{2,3}(?:-[a-zA-Z0-9]{2,8})*/?)?/?$")
         "${uri.scheme}://www.deepl.com" + if (route.matches(uri.path)) uri.path else "/[redacted]"
     }.getOrDefault("[invalid-url]")
 

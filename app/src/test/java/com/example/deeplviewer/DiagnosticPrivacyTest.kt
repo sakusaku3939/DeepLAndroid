@@ -5,6 +5,13 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class DiagnosticPrivacyTest {
+    @Test fun canonicalLanguageCodesRemainVisibleWithoutTranslationText() {
+        assertEquals("https://www.deepl.com/en/translator/l/zh-Hans/en-US",
+            DiagnosticPrivacy.url("https://www.deepl.com/en/translator/l/zh-Hans/en-US?token=secret#zh-Hans/en-US/private"))
+        assertEquals("https://www.deepl.com/[redacted]",
+            DiagnosticPrivacy.url("https://www.deepl.com/en/translator/l/ru/en-US,/en/translator/l/ru/en-US"))
+    }
+
     @Test fun urlsNeverIncludeTextOrUnknownPaths() {
         assertEquals("https://www.deepl.com/en/translator/l/en/de", DiagnosticPrivacy.url("https://www.deepl.com/en/translator/l/en/de?token=secret#en/de/private"))
         assertEquals("https://www.deepl.com/[redacted]", DiagnosticPrivacy.url("https://www.deepl.com/login/private-token"))

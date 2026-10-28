@@ -169,8 +169,20 @@ object UrlHelper {
         if (normalizedSource == "auto" ||
             normalizedSource.substringBefore('-') == normalizedTarget.substringBefore('-')) return null
 
-        return "/l/$normalizedSource/$normalizedTarget"
+        return "/l/${canonicalLanguageCode(normalizedSource)}/${canonicalLanguageCode(normalizedTarget)}"
     }
+
+    // DeepL paths are case-sensitive: lowercase regional codes trigger redirects.
+    private fun canonicalLanguageCode(language: String): String =
+        language.split('-').mapIndexed { index, part ->
+            when {
+                index == 0 -> part
+                part.length == 2 && part.all { it in 'a'..'z' } -> part.uppercase(Locale.US)
+                part.length == 4 && part.all { it in 'a'..'z' } ->
+                    part.replaceFirstChar { it.uppercaseChar() }
+                else -> part
+            }
+        }.joinToString("-")
 
     private fun getUiLanguage(): String {
         return Locale.getDefault().language
@@ -186,19 +198,19 @@ object UrlHelper {
             ?.lowercase(Locale.US)
             ?.takeIf { Regex("[a-z]{2}(?:-[a-z0-9]{2,8})?").matches(it) }
             ?: getUiLanguage()
-        val normalizedTarget = target.takeUnless { it == DEFAULT_SOURCE_LANGUAGE }
+        val normalizedTarget = target.takeUnless { it.substringBefore('-') == DEFAULT_SOURCE_LANGUAGE }
             ?: DEFAULT_FALLBACK_TARGET_LANGUAGE
 
-        return LanguagePair(DEFAULT_SOURCE_LANGUAGE, normalizedTarget)
+        return LanguagePair(DEFAULT_SOURCE_LANGUAGE, canonicalLanguageCode(normalizedTarget))
     }
 
     private fun buildDefaultLanguagePath(uiLanguage: String): String {
         val target = uiLanguage.lowercase(Locale.US)
             .takeIf { Regex("[a-z]{2}(?:-[a-z0-9]{2,8})?").matches(it) }
-            ?.takeUnless { it == DEFAULT_SOURCE_LANGUAGE }
+            ?.takeUnless { it.substringBefore('-') == DEFAULT_SOURCE_LANGUAGE }
             ?: DEFAULT_FALLBACK_TARGET_LANGUAGE
 
-        return "/l/$DEFAULT_SOURCE_LANGUAGE/$target"
+        return "/l/$DEFAULT_SOURCE_LANGUAGE/${canonicalLanguageCode(target)}"
     }
 
     private fun encodeUrlText(text: String): String {
