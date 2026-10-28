@@ -1,6 +1,7 @@
 (function () {
-    if (window.__deeplViewerLanguageStateSaverInstalled === 3) return;
-    window.__deeplViewerLanguageStateSaverInstalled = 3;
+    if (!window.DeepLState || window !== window.top) return;
+    if (window.__deeplViewerLanguageStateSaverInstalled === 4) return;
+    window.__deeplViewerLanguageStateSaverInstalled = 4;
 
     let lastSavedUrl = '';
     let lastSavedLanguagePair = '';
@@ -14,7 +15,7 @@
         lastSavedUrl = url;
 
         try {
-            Android.saveDeepLUrl(url);
+            window.DeepLState.postMessage(JSON.stringify({ type: 'url' }));
         } catch (e) {
             // Android bridge may not be ready during very early document execution.
         }
@@ -75,7 +76,7 @@
         lastSavedLanguagePair = observedLanguagePair;
 
         try {
-            Android.saveDeepLLanguage(sourceLanguage, targetLanguage);
+            window.DeepLState.postMessage(JSON.stringify({ type: 'languages', source: sourceLanguage, target: targetLanguage }));
         } catch (e) {
             // Android bridge may not be ready during very early document execution.
         }

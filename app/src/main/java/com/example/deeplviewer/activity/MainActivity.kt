@@ -92,9 +92,6 @@ class MainActivity : AppCompatActivity() {
         setupWebViewClient()
         setupCookies()
 
-        // Add JavaScript interface for communication
-        webView.addJavascriptInterface(WebAppInterface(this), "Android")
-
         // Load the initial URL
         val targetUrl = UrlHelper.buildWebViewUrl(startUrl, receivedText)
         com.example.deeplviewer.diagnostics.Diagnostics.webView(webView)
@@ -109,6 +106,7 @@ class MainActivity : AppCompatActivity() {
         webView.setBackgroundColor(Color.TRANSPARENT)
         WebViewConfig.applyBasicSettings(webView)
         WebViewConfig.applyOptimizedSettings(webView)
+        WebAppInterface.install(webView)
         if (com.example.deeplviewer.BuildConfig.DEBUG) {
             WebView.setWebContentsDebuggingEnabled(true)
         }

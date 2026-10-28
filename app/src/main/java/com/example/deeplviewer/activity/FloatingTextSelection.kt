@@ -96,8 +96,7 @@ class FloatingTextSelection : AppCompatActivity() {
         initializeWebView()
         setupWebViewClient()
 
-        // Add JavaScript interface for communication
-        webView.addJavascriptInterface(WebAppInterface(this), "Android")
+        WebAppInterface.install(webView)
 
         webViewClient.loadFinishedListener = {
             if (!showingError) {

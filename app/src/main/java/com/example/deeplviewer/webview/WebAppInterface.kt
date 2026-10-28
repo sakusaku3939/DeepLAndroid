@@ -1,35 +1,25 @@
 package com.example.deeplviewer.webview
 
 import android.content.Context
-import android.util.Base64
-import android.webkit.JavascriptInterface
-import androidx.annotation.Keep
+import android.webkit.WebView
+import android.widget.Toast
 import androidx.core.content.edit
+import androidx.webkit.WebMessageCompat
+import androidx.webkit.WebViewCompat
+import androidx.webkit.WebViewFeature
+import com.example.deeplviewer.R
 import com.example.deeplviewer.helper.UrlHelper
+import org.json.JSONObject
 
-@Keep
-class WebAppInterface(private val context: Context) {
-    @JavascriptInterface
-    fun stringToBase64String(s: String): String {
-        return Base64.encodeToString(s.toByteArray(), Base64.DEFAULT)
-    }
-
-    @JavascriptInterface
-    fun getAssetsText(fileName: String): String {
-        if (fileName !in ALLOWED_ASSET_FILES) return ""
-        return context.assets.open(fileName).reader(Charsets.UTF_8).use { it.readText() }
-    }
-
-    @JavascriptInterface
-    fun saveDeepLUrl(url: String) {
+class WebAppInterface private constructor(private val context: Context) {
+    private fun saveDeepLUrl(url: String) {
         val pageType = UrlHelper.extractPageType(url)
         val urlParam = UrlHelper.extractUrlParam(url)
 
         saveDeepLState(pageType, urlParam)
     }
 
-    @JavascriptInterface
-    fun saveDeepLLanguage(sourceLanguage: String, targetLanguage: String) {
+    private fun saveDeepLLanguage(sourceLanguage: String, targetLanguage: String) {
         val target = targetLanguage.normalizeLanguageCode() ?: return
 
         val configPrefs = context.getSharedPreferences("config", Context.MODE_PRIVATE)
@@ -64,11 +54,32 @@ class WebAppInterface(private val context: Context) {
         }
     }
 
-    private companion object {
-        val LANGUAGE_CODE_REGEX = Regex("^[a-z]{2,3}(?:-[a-z0-9]{2,8})*$")
-        val ALLOWED_ASSET_FILES = setOf(
-            "brand-symbol-light.svg",
-            "brand-wordmark-light.svg"
-        )
+    companion object {
+        private val LANGUAGE_CODE_REGEX = Regex("^[a-z]{2,3}(?:-[a-z0-9]{2,8})*$")
+
+        /** Install once per WebView, before loading any page. */
+        fun install(webView: WebView) {
+            if (!WebViewFeature.isFeatureSupported(WebViewFeature.WEB_MESSAGE_LISTENER)) {
+                Toast.makeText(webView.context, R.string.webview_update_for_language_saving, Toast.LENGTH_LONG).show()
+                return
+            }
+            val bridge = WebAppInterface(webView.context)
+            WebViewCompat.addWebMessageListener(webView, "DeepLState", setOf("https://www.deepl.com")) {
+                    view, message, origin, isMainFrame, _ ->
+                if (!isMainFrame || origin.scheme != "https" || origin.host != "www.deepl.com" ||
+                    origin.port !in listOf(-1, 443) || message.type != WebMessageCompat.TYPE_STRING) return@addWebMessageListener
+                val data = message.data ?: return@addWebMessageListener
+                if (data.length > 512) return@addWebMessageListener
+                val payload = runCatching { JSONObject(data) }.getOrNull() ?: return@addWebMessageListener
+                when (payload.opt("type")) {
+                    "url" -> view.url?.let(bridge::saveDeepLUrl)
+                    "languages" -> {
+                        val source = payload.opt("source") as? String ?: return@addWebMessageListener
+                        val target = payload.opt("target") as? String ?: return@addWebMessageListener
+                        bridge.saveDeepLLanguage(source, target)
+                    }
+                }
+            }
+        }
     }
 }

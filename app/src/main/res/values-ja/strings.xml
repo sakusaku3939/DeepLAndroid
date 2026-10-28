@@ -17,4 +17,5 @@
     <string name="auto_delete_cookies">終了時にCookieを自動的に削除する</string>
     <string name="about_this_app">このアプリについて</string>
     <string name="version">バージョン</string>
+    <string name="webview_update_for_language_saving">選択した言語を保存するには、Android System WebViewを更新してください。</string>
 </resources>

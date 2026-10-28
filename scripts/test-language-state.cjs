@@ -10,10 +10,6 @@ const savedPairs = [];
 const languages = { source: 'en', target: 'de' };
 let mutationCallback;
 const context = {
-    Android: {
-        saveDeepLUrl() {},
-        saveDeepLLanguage(source, target) { savedPairs.push([source, target]); }
-    },
     document: {
         documentElement: {},
         querySelector(selector) {
@@ -27,6 +23,13 @@ const context = {
         observe() {}
     },
     window: {
+        DeepLState: {
+            postMessage(data) {
+                const message = JSON.parse(data);
+                if (message.type === 'languages') savedPairs.push([message.source, message.target]);
+                else assert.deepEqual(message, { type: 'url' });
+            }
+        },
         location: { href: 'https://www.deepl.com/en/translator/l/en/de', pathname: '/en/translator/l/en/de' },
         history: { pushState() {}, replaceState() {} },
         addEventListener() {},
@@ -34,6 +37,7 @@ const context = {
         setInterval() {}
     }
 };
+context.window.top = context.window;
 vm.createContext(context);
 vm.runInContext(script, context);
 
@@ -72,3 +76,9 @@ assert.deepEqual(savedPairs.at(-1), ['fr', 'ja'], 'swapping languages saves both
 vm.runInContext(script, context);
 assert.equal(savedPairs.length, 3, 'installation is idempotent');
 console.log('Language persistence regressions passed.');
+
+// Unsupported WebViews and child frames must not install observers or timers.
+for (const window of [{}, { DeepLState: {}, top: {} }]) {
+    vm.runInNewContext(script, { window });
+    assert.equal(window.__deeplViewerLanguageStateSaverInstalled, undefined);
+}

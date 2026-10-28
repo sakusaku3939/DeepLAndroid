@@ -18,4 +18,5 @@
     <string name="auto_delete_cookies">Automatically delete cookies when exiting the app</string>
     <string name="about_this_app">About this app</string>
     <string name="version">Version</string>
+    <string name="webview_update_for_language_saving">Update Android System WebView to remember language selections.</string>
 </resources>

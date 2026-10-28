@@ -195,6 +195,16 @@ class MyWebViewClient(
         return context.assets.open(fileName).reader(Charsets.UTF_8).use { it.readText() }
     }
 
+    private fun patchDarkTheme(view: WebView) {
+        val images = listOf("brand-symbol-light.svg", "brand-wordmark-light.svg").map { fileName ->
+            val bytes = view.context.assets.open(fileName).use { it.readBytes() }
+            org.json.JSONObject.quote("data:image/svg+xml;base64," +
+                android.util.Base64.encodeToString(bytes, android.util.Base64.NO_WRAP))
+        }
+        val script = getAssetsText(view.context, "patch-darkThemeFix.js")
+        view.evaluateJavascript("$script(${images.joinToString(",")});", null)
+    }
+
     /**
      * Switches the WebView theme based on the system's dark mode setting
      */
@@ -216,7 +226,7 @@ class MyWebViewClient(
     private fun setAlgorithmicDark(view: WebView) {
         if (WebViewFeature.isFeatureSupported(WebViewFeature.ALGORITHMIC_DARKENING)) {
             WebSettingsCompat.setAlgorithmicDarkeningAllowed(view.settings, true)
-            view.loadJavaScript("patch-darkThemeFix.js")
+            patchDarkTheme(view)
         } else {
             Toast.makeText(
                 activity,
@@ -233,7 +243,7 @@ class MyWebViewClient(
     private fun setForceDark(view: WebView) {
         if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
             WebSettingsCompat.setForceDark(view.settings, WebSettingsCompat.FORCE_DARK_ON)
-            view.loadJavaScript("patch-darkThemeFix.js")
+            patchDarkTheme(view)
         } else {
             Toast.makeText(
                 activity,
