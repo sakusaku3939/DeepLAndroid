@@ -4,7 +4,7 @@
         'nav[class^="md"]',
         '#primary-heading-container',
         'h2#translation-modes-heading + div > div:first-child',
-        'div[data-testid="translator"] > div:not(:first-child)',
+        'div[data-testid="translator"] > [data-layout-id="mainSectionWrapper"] ~ div',
         'footer',
         'div[data-testid="chrome-extension-toast"]',
         'div[data-testid="firefox-extension-toast"]',
