@@ -19,8 +19,8 @@ ANDROID = "http://schemas.android.com/apk/res/android"
 SVG = "http://www.w3.org/2000/svg"
 ET.register_namespace("android", ANDROID)
 BACKGROUND = "#f9fbff"
-FOREGROUND = "#123b58"
-# Keep the 47.25 x 54 dp symbol centered with comfortable launcher padding.
+FOREGROUND = "#1f3c51"
+# Keep the 47.25 x 45.9 dp symbol within the launcher safe zone with comfortable padding.
 SAFE_SCALE = 0.675
 SAFE_INSET = 108 * (1 - SAFE_SCALE) / 2
 
@@ -90,7 +90,7 @@ def main():
     wordmark_paths = [path for child in list(header.find(f"{{{SVG}}}g"))[1:]
                       for path in transformed_paths(child)]
     (assets / "brand-symbol-light.svg").write_text(
-        svg(symbol_paths, "26 22 56 64", color="#FBFBFB"), encoding="utf-8")
+        svg(symbol_paths, "26 26.8 56 54.4", color="#FBFBFB"), encoding="utf-8")
     (assets / "brand-wordmark-light.svg").write_text(
         svg(wordmark_paths, "112 40 212 34", color="#FBFBFB"), encoding="utf-8")
 

@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="108dp" android:height="108dp" android:viewportWidth="108" android:viewportHeight="108">
-    <path android:fillColor="@color/ic_launcher_foreground" android:pathData="M54 14 85.25 30.25Q89 32.75 89 37.75V67.75Q89 71.5 84 74L70.25 81.5V94L50.25 82.75L22.75 67.75Q19 65.25 19 60.25V37.75Q19 32.75 24 30.25L54 14ZM35.25 39V46.5H69V39H35.25ZM35.25 55.25V62.75H59V55.25H35.25Z" />
+    <path android:fillColor="@color/ic_launcher_foreground" android:pathData="M33 24H75Q89 24 89 38V64Q89 78 75 78H53L26 92L33 78Q19 78 19 64V38Q19 24 33 24ZM36.75 40C34.6788 40 33 41.6787 33 43.75C33 45.8212 34.6788 47.5 36.75 47.5H63.25C65.3213 47.5 67 45.8212 67 43.75C67 41.6787 65.3213 40 63.25 40H36.75ZM36.75 54C34.6788 54 33 55.6788 33 57.75C33 59.8213 34.6788 61.5 36.75 61.5H53.25C55.3213 61.5 57 59.8213 57 57.75C57 55.6788 55.3213 54 53.25 54H36.75Z" />
 </vector>
