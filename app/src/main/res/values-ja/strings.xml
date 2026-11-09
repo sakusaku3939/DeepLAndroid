@@ -12,7 +12,7 @@
     <string name="theme_default">システムのデフォルト</string>
     <string name="selection_menu_options">選択メニューのオプション</string>
     <string name="use_popup_mode">ポップアップモードを使用</string>
-    <string name="show_translate_button">選択メニューにDeepL翻訳ボタンを表示する</string>
+    <string name="show_translate_button">選択メニューに翻訳ボタンを表示する</string>
     <string name="app_options">アプリのオプション</string>
     <string name="auto_delete_cookies">終了時にCookieを自動的に削除する</string>
     <string name="about_this_app">このアプリについて</string>

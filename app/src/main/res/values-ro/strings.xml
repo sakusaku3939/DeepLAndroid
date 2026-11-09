@@ -11,7 +11,7 @@
     <string name="theme_default">Implicit sistem</string>
     <string name="selection_menu_options">Opțiuni meniu de selecție</string>
     <string name="use_popup_mode">Utilizați modul pop-up</string>
-    <string name="show_translate_button">Afișați butonul DeepL în meniul de selecție a textului</string>
+    <string name="show_translate_button">Afișați butonul de traducere în meniul de selecție a textului</string>
     <string name="app_options">Opțiuni aplicație</string>
     <string name="auto_delete_cookies">Ștergeți automat cookie-urile la ieșirea din aplicație</string>
     <string name="about_this_app">Despre această aplicație</string>

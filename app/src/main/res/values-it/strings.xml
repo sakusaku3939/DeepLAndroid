@@ -11,7 +11,7 @@
     <string name="theme_default">Predefinito di Sistema</string>
     <string name="selection_menu_options">Opzioni del menu di selezione</string>
     <string name="use_popup_mode">Usa modalità pop-up</string>
-    <string name="show_translate_button">Mostra il pulsante DeepL nel menù di selezione del testo</string>
+    <string name="show_translate_button">Mostra il pulsante di traduzione nel menù di selezione del testo</string>
     <string name="app_options">Opzioni dell\'app</string>
     <string name="auto_delete_cookies">Elimina automaticamente i cookie alla chiusura dell\'app</string>
     <string name="about_this_app">Informazioni app</string>
