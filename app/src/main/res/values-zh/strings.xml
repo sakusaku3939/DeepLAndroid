@@ -17,4 +17,5 @@
     <string name="auto_delete_cookies">退出应用时自动删除 cookie</string>
     <string name="about_this_app">关于此应用</string>
     <string name="version">版本</string>
+    <string name="attribution">使用 DeepL 网站的非官方应用。</string>
 </resources>

@@ -16,4 +16,5 @@
     <string name="auto_delete_cookies">Автоматически удалять куки при выходе из приложения</string>
     <string name="about_this_app">О программе</string>
     <string name="version">Версия</string>
+    <string name="attribution">Неофициальное приложение, использующее сайт DeepL.</string>
 </resources>

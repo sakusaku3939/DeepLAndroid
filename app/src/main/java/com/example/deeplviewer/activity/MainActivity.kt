@@ -142,8 +142,12 @@ class MainActivity : AppCompatActivity() {
      */
     private fun setupWebViewClient() {
         val toolbar = findViewById<View>(R.id.toolbar)
+        val attribution = findViewById<View>(R.id.attribution)
         webViewClient = MyWebViewClient(this)
-        webViewClient.loadFinishedListener = { toolbar.visibility = View.VISIBLE }
+        webViewClient.loadFinishedListener = {
+            toolbar.visibility = View.VISIBLE
+            attribution.visibility = View.VISIBLE
+        }
         webView.webViewClient = webViewClient
         webView.webChromeClient = MyWebChromeClient(webView)
     }

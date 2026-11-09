@@ -171,7 +171,7 @@ object Diagnostics {
             val recentFailures = events.lineSequence().filter { line ->
                 runCatching { JSONObject(line).optString("event") in setOf("web_error", "http_error", "ssl_error", "renderer_gone") }.getOrDefault(false)
             }.toList().takeLast(10).joinToString("\n")
-            entry("summary.txt", "DeepLAndroid diagnostics\nExported at ${System.currentTimeMillis()} (Unix ms)\n$env\n\nRecent failures\n$recentFailures\n\nPrivacy: text, cookies, headers, query/fragment and unknown URL paths omitted. UA device tokens omitted. Network values describe Android-observable state, not proof that a blocker is absent. Events capped at two 512 KiB files; crash is the latest retained crash, possibly from a previous session.\n")
+            entry("summary.txt", "DA Translator diagnostics\nExported at ${System.currentTimeMillis()} (Unix ms)\n$env\n\nRecent failures\n$recentFailures\n\nPrivacy: text, cookies, headers, query/fragment and unknown URL paths omitted. UA device tokens omitted. Network values describe Android-observable state, not proof that a blocker is absent. Events capped at two 512 KiB files; crash is the latest retained crash, possibly from a previous session.\n")
             entry("environment.json", env)
             entry("events.jsonl", events)
             snapshot.getValue("crash.txt").takeIf { it.isNotEmpty() }?.let { entry("crash.txt", it) }

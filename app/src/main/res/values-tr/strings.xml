@@ -16,4 +16,5 @@
     <string name="auto_delete_cookies">Uygulamadan çıkarken çerezleri otomatik olarak sil</string>
     <string name="about_this_app">Bu uygulama hakkında</string>
     <string name="version">Sürüm</string>
+    <string name="attribution">DeepL web sitesini kullanan resmi olmayan uygulama.</string>
 </resources>

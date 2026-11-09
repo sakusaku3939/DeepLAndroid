@@ -19,4 +19,5 @@
     <string name="about_this_app">About this app</string>
     <string name="version">Version</string>
     <string name="webview_update_for_language_saving">Update Android System WebView to remember language selections.</string>
+    <string name="attribution">Unofficial app that uses the DeepL website.</string>
 </resources>

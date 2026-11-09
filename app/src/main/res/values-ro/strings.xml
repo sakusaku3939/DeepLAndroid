@@ -16,4 +16,5 @@
     <string name="auto_delete_cookies">Ștergeți automat cookie-urile la ieșirea din aplicație</string>
     <string name="about_this_app">Despre această aplicație</string>
     <string name="version">Versiune</string>
+    <string name="attribution">Aplicație neoficială care folosește site-ul DeepL.</string>
 </resources>

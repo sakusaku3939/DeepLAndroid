@@ -16,4 +16,5 @@
     <string name="auto_delete_cookies">Supprimer automatiquement les cookies à la fermeture de l\'application</string>
     <string name="about_this_app">À propos de cette app</string>
     <string name="version">Version</string>
+    <string name="attribution">Application non officielle utilisant le site web de DeepL.</string>
 </resources>

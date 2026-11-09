@@ -42,7 +42,7 @@ class DiagnosticExportActivity : AppCompatActivity() {
         if (destination != null) model.save(destination!!)
         else if (savedInstanceState == null) {
             Diagnostics.event("export_requested")
-            runCatching { createDocument.launch("DeepLAndroid-diagnostics-${System.currentTimeMillis()}.zip") }
+            runCatching { createDocument.launch("DATranslator-diagnostics-${System.currentTimeMillis()}.zip") }
                 .onFailure {
                     Toast.makeText(this, R.string.diagnostics_save_failed, Toast.LENGTH_LONG).show()
                     finish()
