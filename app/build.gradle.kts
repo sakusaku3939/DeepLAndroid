@@ -9,7 +9,7 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.deeplviewer"
+        applicationId = "com.sakusaku3939.datranslator"
         minSdk = 21
         targetSdk = 36
         versionCode = 53
@@ -63,7 +63,7 @@ android {
 }
 
 shot {
-    applicationId = "com.example.deeplviewer"
+    applicationId = "com.sakusaku3939.datranslator"
     tolerance = 0.2
 }
 

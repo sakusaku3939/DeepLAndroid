@@ -7,6 +7,6 @@
         <intent
             android:action="android.intent.action.VIEW"
             android:targetClass="com.example.deeplviewer.activity.SettingsActivity"
-            android:targetPackage="com.example.deeplviewer" />
+            android:targetPackage="com.sakusaku3939.datranslator" />
     </shortcut>
 </shortcuts>
