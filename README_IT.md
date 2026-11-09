@@ -2,13 +2,9 @@
 # DA Translator
 ![platform](https://img.shields.io/badge/platform-android-green) ![release](https://img.shields.io/github/v/release/sakusaku3939/DeepLAndroid.svg) ![license](https://img.shields.io/github/license/sakusaku3939/DeepLAndroid) ![downloads](https://img.shields.io/github/downloads/sakusaku3939/DeepLAndroid/total.svg) ![Screenshot Diff Check](https://github.com/sakusaku3939/DeepLAndroid/actions/workflows/screenshot_diff_check.yml/badge.svg)
 
-Questa è un'applicazione Android non ufficiale per traduzioni DeepL.
+Questa è un'applicazione Android non ufficiale per traduzioni DeepL (precedentemente nota come DeepLAndroid).
 Usa una tecnologia chiamata WebView, una componente GUI di Android, per farla sembrare come un'app nativa.
 JavaScript è usato per nascondere tutto tranne gli elementi più necessari.
-
-[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
-    alt="Get it on F-Droid"
-    height="80">](https://f-droid.org/packages/com.example.deeplviewer)
 
 <table>
   <tr>

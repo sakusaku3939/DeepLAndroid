@@ -2,13 +2,9 @@
 # DA Translator
 ![platform](https://img.shields.io/badge/platform-android-green) ![release](https://img.shields.io/github/v/release/sakusaku3939/DeepLAndroid.svg) ![license](https://img.shields.io/github/license/sakusaku3939/DeepLAndroid) ![downloads](https://img.shields.io/github/downloads/sakusaku3939/DeepLAndroid/total.svg) ![Screenshot Diff Check](https://github.com/sakusaku3939/DeepLAndroid/actions/workflows/screenshot_diff_check.yml/badge.svg)
 
-这是一个非官方的 DeepL 翻译 Android 应用。
+这是一个非官方的 DeepL 翻译 Android 应用（原名 DeepLAndroid）。
 它使用了 WebView 技术，这是 Android 图形用户界面的一个组件，使其看起来像一个原生应用。
 为了隐藏所有不必要的元素，只保留最必要的部分，使用了 JavaScript。
-
-[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
-    alt="在 F-Droid 获取"
-    height="80">](https://f-droid.org/packages/com.example.deeplviewer)
 
 <table>
   <tr>

@@ -2,13 +2,9 @@
 # DA Translator
 ![platform](https://img.shields.io/badge/platform-android-green) ![release](https://img.shields.io/github/v/release/sakusaku3939/DeepLAndroid.svg) ![license](https://img.shields.io/github/license/sakusaku3939/DeepLAndroid) ![downloads](https://img.shields.io/github/downloads/sakusaku3939/DeepLAndroid/total.svg) ![Screenshot Diff Check](https://github.com/sakusaku3939/DeepLAndroid/actions/workflows/screenshot_diff_check.yml/badge.svg)
 
-DeepL çeviri için resmi olmayan bir Android uygulamasıdır.  
+DeepL çeviri için resmi olmayan bir Android uygulamasıdır (eski adıyla DeepLAndroid).  
 Yerel bir uygulama gibi görünmesini sağlamak için bir Android Arayüz bileşeni olan WebView adlı bir teknoloji kullanır.  
 JavaScript gereksiz öğeleri gizlemek için kullanılır.
-
-[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
-    alt="Get it on F-Droid"
-    height="80">](https://f-droid.org/packages/com.example.deeplviewer)
 
 <table>
   <tr>
