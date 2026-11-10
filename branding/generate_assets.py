@@ -19,7 +19,7 @@ ANDROID = "http://schemas.android.com/apk/res/android"
 SVG = "http://www.w3.org/2000/svg"
 ET.register_namespace("android", ANDROID)
 BACKGROUND = "#f9fbff"
-FOREGROUND = "#1f3c51"
+FOREGROUND = "#1c313f"
 # Keep the 47.25 x 45.9 dp symbol within the launcher safe zone with comfortable padding.
 SAFE_SCALE = 0.675
 SAFE_INSET = 108 * (1 - SAFE_SCALE) / 2

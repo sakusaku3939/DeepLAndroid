@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="brand">#1F3C51</color>
+    <color name="brand">#1C313F</color>
     <color name="ic_launcher_foreground">@color/brand</color>
     <color name="ic_launcher_background">#F9FBFF</color>
     <color name="app_logo_foreground">@color/brand</color>
