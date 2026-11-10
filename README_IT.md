@@ -1,6 +1,6 @@
-#### [EN](https://github.com/sakusaku3939/DeepLAndroid#readme) | [JA](README_JA.md) | [RU](README_RU.md) | [DE](README_DE.md) | [FR](README_FR.md) | [IT](README_IT.md) | [TR](README_TR.md) | [ZH](README_ZH.md) | [CS](README_CS.md)
+#### [EN](https://github.com/sakusaku3939/DA-Translator#readme) | [JA](README_JA.md) | [RU](README_RU.md) | [DE](README_DE.md) | [FR](README_FR.md) | [IT](README_IT.md) | [TR](README_TR.md) | [ZH](README_ZH.md) | [CS](README_CS.md)
 # DA Translator
-![platform](https://img.shields.io/badge/platform-android-green) ![release](https://img.shields.io/github/v/release/sakusaku3939/DeepLAndroid.svg) ![license](https://img.shields.io/github/license/sakusaku3939/DeepLAndroid) ![downloads](https://img.shields.io/github/downloads/sakusaku3939/DeepLAndroid/total.svg) ![Screenshot Diff Check](https://github.com/sakusaku3939/DeepLAndroid/actions/workflows/screenshot_diff_check.yml/badge.svg)
+![platform](https://img.shields.io/badge/platform-android-green) ![release](https://img.shields.io/github/v/release/sakusaku3939/DA-Translator.svg) ![license](https://img.shields.io/github/license/sakusaku3939/DA-Translator) ![downloads](https://img.shields.io/github/downloads/sakusaku3939/DA-Translator/total.svg) ![Screenshot Diff Check](https://github.com/sakusaku3939/DA-Translator/actions/workflows/screenshot_diff_check.yml/badge.svg)
 
 Questa è un'applicazione Android non ufficiale per traduzioni DeepL (precedentemente nota come DeepLAndroid).
 Usa una tecnologia chiamata WebView, una componente GUI di Android, per farla sembrare come un'app nativa.
@@ -25,4 +25,4 @@ JavaScript è usato per nascondere tutto tranne gli elementi più necessari.
 Questo progetto è stato tradotto usando DeepL. Se ci sono errori di traduzione, sentitevi liberi di inviare una pull request!
 
 ## Licenza
-[MIT](https://github.com/sakusaku3939/DeepLAndroid/blob/master/LICENSE)
+[MIT](https://github.com/sakusaku3939/DA-Translator/blob/master/LICENSE)
