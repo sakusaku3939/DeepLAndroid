@@ -1,0 +1,2 @@
+Renamed the app to DA Translator (formerly DeepLAndroid) with a new icon and colors for trademark reasons.
+The package name has changed, so this version installs as a separate app. Please uninstall the old app. Settings are not carried over.
